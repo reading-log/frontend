@@ -1,9 +1,12 @@
 import { css } from '@emotion/react'
 
 const search = css`
-  width: 240px;
+  display: flex;
+  align-items: center;
+  width: 60%;
   height: 30px;
   margin-top: 30px;
+  margin-bottom: 25px;
   position: relative;
   input {
     background: transparent;
@@ -20,8 +23,7 @@ const search = css`
     }
   }
   img {
-    float: right;
-    margin-top: 7px;
+    margin-left: auto;
   }
 `
 

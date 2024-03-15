@@ -6,7 +6,7 @@ export const globalStyles = css`
   }
 
   div {
-    background: #ffeded;
+    background: silver;
     width: 393px;
     height: 100vh;
     margin: auto;

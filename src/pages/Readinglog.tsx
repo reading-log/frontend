@@ -1,13 +1,10 @@
-// import { css } from '@emotion/react'
-import BackButton from '../components/BackButton'
 import Search from '../components/Search'
-import Title from '../components/Title'
+import Topbar from '../components/Topbar'
 
 const ReadingLog = () => {
   return (
     <div>
-      <Title />
-      <BackButton />
+      <Topbar />
       <Search placeholder="책 제목으로 검색하기" />
     </div>
   )
