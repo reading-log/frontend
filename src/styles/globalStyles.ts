@@ -6,9 +6,13 @@ export const globalStyles = css`
   }
 
   div {
-    background: silver;
+    /* background: silver; */
     width: 393px;
     height: 100vh;
     margin: auto;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100vw;
   }
 `

@@ -1,7 +1,9 @@
 import { css } from '@emotion/react'
-import categoriesArray from './Sample/Sample'
+import categories from '../Sample/Sample'
+// import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
-const category = css`
+const categoryBox = css`
   display: flex;
   align-items: center;
   background-color: #f3f0f0;
@@ -11,19 +13,19 @@ const category = css`
   margin-bottom: 20px;
   ul {
     list-style: none;
+    padding: 0;
+    margin: auto;
     li {
       margin-right: 10px;
       float: left;
     }
   }
 `
+
 const Category = () => {
   return (
-    <div css={category}>
-      <ul>
-        <li>전체</li>
-        {categoriesArray.map((list, id) => id < 3 && <li key={id}>{list}</li>)}
-      </ul>
+    <div css={categoryBox}>
+      <ul>{categories.map((list, id) => id < 4 && <li key={id}>{list}</li>)}</ul>
     </div>
   )
 }
