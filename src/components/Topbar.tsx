@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 
 /* 회원가입 & 리딩로그 & 나의 로그 적용 */
 const topbar = css`
-  width: 100%;
+  width: 393px;
   height: auto;
   text-align: center;
   padding-top: 20px;
+  padding-bottom: 15px;
+  background: #ffff;
+  top: 0px;
+  position: fixed;
 `
 const title = css`
   font-family: 'Josefin Slab', serif;
@@ -16,7 +20,6 @@ const title = css`
   font-size: 27px;
   font-weight: bold;
   color: #836565;
-  padding-top: 20px;
   margin-left: -38px;
 `
 

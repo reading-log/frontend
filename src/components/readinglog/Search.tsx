@@ -3,9 +3,10 @@ import { css } from '@emotion/react'
 const search = css`
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 60%;
   height: 30px;
-  margin-top: 30px;
+  margin-top: 90px;
   margin-bottom: 25px;
   position: relative;
   input {
@@ -13,7 +14,7 @@ const search = css`
     width: 100%;
     height: 30px;
     text-align: center;
-    border: 1px solid #836565;
+    border: 2px solid #836565;
     position: absolute;
     &:focus {
       outline: none;
