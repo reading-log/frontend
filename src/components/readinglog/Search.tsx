@@ -6,7 +6,6 @@ const search = css`
   justify-content: center;
   width: 60%;
   height: 30px;
-  margin-top: 90px;
   margin-bottom: 25px;
   position: relative;
   input {

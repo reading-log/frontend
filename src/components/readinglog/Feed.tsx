@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 const feedBox = css`
   background: #f8f6f6;
-  width: 80%;
   height: auto;
   border-radius: 6px;
   margin-bottom: 30px;
