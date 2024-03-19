@@ -13,10 +13,9 @@ export const globalStyles = css`
   body {
     width: 100vw;
     height: 100vh;
-    color: #002020;
+    color: #000000;
     margin: 0;
 
-    margin: auto;
     /*웹 배경 이미지색 맞추기*/
     background-color: #f4f5f4;
     /*단어 넘치면 쪼개기*/
@@ -26,14 +25,6 @@ export const globalStyles = css`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
-    div {
-      /**
-      Todo:
-      나중에 폰트 설정하기 
-      */
-      font-family: 'Noto Sans KR', sans-serif;
-    }
 
     /*텍스트 줄 높이*/
     line-height: normal;

@@ -1,12 +1,34 @@
-import { AllLayout } from '../components/Layouts'
+import { css } from '@emotion/react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { title1 } from '../styles/common'
 
 const Splash = () => {
-  //보여주고 리딩로그로 리다이렉트
+  const navigate = useNavigate()
+
+  /** 리딩로그로 리다이렉트*/
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/readinglog')
+    }, 2000)
+  }, [navigate])
+
   return (
-    <AllLayout>
-      <h1>임시화면</h1>
-    </AllLayout>
+    <div css={splashBox}>
+      <h1 css={title1}>ReadingLog</h1>
+    </div>
   )
 }
 
 export default Splash
+
+/**스플래쉬 박스 */
+const splashBox = css`
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
