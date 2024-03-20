@@ -1,5 +1,48 @@
 import { css } from '@emotion/react'
 import { useState } from 'react'
+import { FeedProps } from '../../types/feed'
+
+const Feed: React.FC<FeedProps> = ({ user }) => {
+  const [imageSrc, setImageSrc] = useState('../../assets/images/free-icon-love.png')
+
+  const oneLine: string = '한 줄 평이 여기에 표시됩니다. 한 줄 평이 여기에 표시됩니다.'
+  const like: number = 0
+
+  const handleToggle = () => {
+    // 좋아요 하트 아이콘
+    setImageSrc(prev => {
+      if (prev === '../../assets/images/free-icon-love.png') {
+        return '../../assets/images/free-icon-love-fill.png'
+      } else {
+        return '../../assets/images/free-icon-love.png'
+      }
+    })
+  }
+
+  return (
+    <div css={feedBox}>
+      <div css={bookTitle}>
+        <span>{user.title}</span>
+      </div>
+
+      <div css={bookInfo}>
+        <div css={tempImg}>
+          <img src={user.img} alt="BookImg" />
+        </div>
+        <span>"{oneLine}"</span>
+      </div>
+
+      <div css={userInfo}>
+        <span>{user.nickname}</span>
+        <span>{user.date}</span>
+        <img src={imageSrc} onClick={handleToggle} alt="Like" />
+        <span>{like}</span>
+      </div>
+    </div>
+  )
+}
+
+export default Feed
 
 const feedBox = css`
   background: #f8f6f6;
@@ -37,8 +80,13 @@ const bookInfo = css`
 const tempImg = css`
   background: #d9d9d9;
   display: inline-block;
-  width: 72px;
-  height: 97px;
+  width: 80px;
+  height: auto;
+  margin-left: 15px;
+  img {
+    width: 80px;
+    height: auto;
+  }
 `
 
 const userInfo = css`
@@ -61,55 +109,3 @@ const userInfo = css`
     margin-right: 5px;
   }
 `
-
-interface User {
-  title: string
-  nickname: string
-  date: string
-}
-
-interface FeedProps {
-  user: User
-}
-
-const Feed: React.FC<FeedProps> = ({ user }) => {
-  const [imageSrc, setImageSrc] = useState('../assets/images/free-icon-love.png')
-
-  const oneLine: string = '한 줄 평이 여기에 표시됩니다. 한 줄 평이 여기에 표시됩니다.'
-  const like: number = 0
-
-  const handleToggle = () => {
-    // 좋아요 하트 아이콘
-    setImageSrc(prev => {
-      if (prev === '../assets/images/free-icon-love.png') {
-        return '../assets/images/free-icon-love-fill.png'
-      } else {
-        return '../assets/images/free-icon-love.png'
-      }
-    })
-  }
-
-  return (
-    <div css={feedBox}>
-      <div css={bookTitle}>
-        <span>{user.title}</span>
-      </div>
-
-      <div css={bookInfo}>
-        <div css={tempImg}>
-          <img></img>
-        </div>
-        <span>"{oneLine}"</span>
-      </div>
-
-      <div css={userInfo}>
-        <span>{user.nickname}</span>
-        <span>{user.date}</span>
-        <img src={imageSrc} onClick={handleToggle} />
-        <span>{like}</span>
-      </div>
-    </div>
-  )
-}
-
-export default Feed

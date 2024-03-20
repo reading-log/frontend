@@ -12,7 +12,7 @@ const Topbar = () => {
   return (
     <div css={topbar}>
       <button onClick={handleClick} css={backBtn}>
-        <img src="../assets/images/뒤로가기버튼.png" />
+        <img src="/assets/images/뒤로가기버튼.png" alt="Back" />
       </button>
       <h1 css={title}>ReadingLog</h1>
     </div>
