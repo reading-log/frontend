@@ -7,6 +7,7 @@ import MyLog from '../pages/MyLog'
 import Splash from '../pages/Splash'
 
 import categories from '../components/Sample/CategorySample'
+import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
         {categories.map(category => (
           <Route key={category} path={category === '전체' ? `/readinglog/allType` : `/readinglog/${category}`} element={<ReadingLog selectedCategory={category} />} />
         ))}
+        <Route path="/readinglog/detail" element={<ReadingLogDetail />}></Route>
         {categories.map(category => (
           <Route key={category} path={category === '전체' ? `/readinglog/allType/search` : `/readinglog/${category}/search`} element={<SearchResult selectedCategory={category} />} />
         ))}

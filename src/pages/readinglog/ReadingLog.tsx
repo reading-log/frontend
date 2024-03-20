@@ -11,12 +11,8 @@ import extendedFeedSamples from '../../components/Sample/FeedSample'
 
 const ReadingLog: React.FC<CategoryProps> = ({ selectedCategory }) => {
   const allLogs = extendedFeedSamples
-
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const feedByCategory = selectedCategory === '전체' ? allLogs : allLogs.filter(feed => selectedCategory === feed.category)
-  // console.log('allLogs:', allLogs)
-  // console.log('selectedCategory:', selectedCategory)
-  // console.log('feedByCategory:', feedByCategory)
 
   return (
     <AllLayout>
@@ -25,12 +21,11 @@ const ReadingLog: React.FC<CategoryProps> = ({ selectedCategory }) => {
         <Category />
         <Filtering />
 
-        {feedByCategory &&
-          feedByCategory.map((log, id) => (
-            <span key={id}>
-              <Feed user={log} />
-            </span>
-          ))}
+        {feedByCategory.map((feed, id) => (
+          <span key={id}>
+            <Feed user={feed} />
+          </span>
+        ))}
       </div>
     </AllLayout>
   )

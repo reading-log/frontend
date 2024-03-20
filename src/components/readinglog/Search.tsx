@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 type SearchProp = {

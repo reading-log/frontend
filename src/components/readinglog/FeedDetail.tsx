@@ -1,37 +1,30 @@
 import { css } from '@emotion/react'
-import { FeedProps, FeedType } from '../../types/feed'
+import { FeedProps } from '../../types/feed'
 import LikeCount from './LikeCount'
-import { useNavigate } from 'react-router-dom'
 
-const Feed: React.FC<FeedProps> = ({ user }) => {
-  const navigate = useNavigate()
-
-  const handleFeedClick = (feed: FeedType) => {
-    navigate('/readinglog/detail', { state: { feed } })
-  }
+const FeedDetail: React.FC<FeedProps> = ({ user }) => {
   return (
     <div css={feedBox}>
-      <div css={bookTitle} onClick={() => handleFeedClick(user)}>
-        <span>{user.title}</span>
+      <div css={bookTitle}>
+        <div css={userInfo}>
+          <span>{user.nickname}</span>
+          <span>{user.date}</span>
+          <LikeCount />
+        </div>
       </div>
 
-      <div css={bookInfo} onClick={() => handleFeedClick(user)}>
+      <div css={bookInfo}>
         <div css={tempImg}>
           <img src={user.img} alt="BookImg" />
         </div>
-        <span>"{user.oneLine}"</span>
-      </div>
-
-      <div css={userInfo}>
-        <span onClick={() => handleFeedClick(user)}>{user.nickname}</span>
-        <span onClick={() => handleFeedClick(user)}>{user.date}</span>
-        <LikeCount />
+        <span>{user.title}</span>
+        <span>카테고리: {user.category}</span>
       </div>
     </div>
   )
 }
 
-export default Feed
+export default FeedDetail
 
 const feedBox = css`
   background: #f8f6f6;
@@ -58,12 +51,6 @@ const bookInfo = css`
   width: 93%;
   height: 100px;
   margin-top: 15px;
-  span {
-    width: 70%;
-    font-size: 13px;
-    margin-top: 15px;
-    margin-left: 15px;
-  }
 `
 
 const tempImg = css`
