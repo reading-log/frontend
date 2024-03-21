@@ -10,7 +10,7 @@ const Splash = () => {
   useEffect(() => {
     setTimeout(() => {
       navigate('/readinglog')
-    }, 2000)
+    }, 1000)
   }, [navigate])
 
   return (

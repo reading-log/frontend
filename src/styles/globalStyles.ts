@@ -54,7 +54,6 @@ export const globalStyles = css`
   /*엘리먼트 전체 적용*/
   * {
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
     resize: none;
     /* 인풋 포커스 해제 */
     &:focus {
