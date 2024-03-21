@@ -49,7 +49,7 @@ const ReadingLogDetail = () => {
             >
               하이라이트
             </span>
-            ㅣ
+            ㅣ{/** 선택(하이라이트, 서평) 칸막이 */}
             <span
               onClick={() => handleReviewToggle()}
               css={
@@ -90,7 +90,7 @@ const outterBox = css`
   border-radius: 5px;
   padding: 10px;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 0.5rem;
 `
 
 const oneLineInnerBox = css`

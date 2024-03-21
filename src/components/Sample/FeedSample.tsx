@@ -186,8 +186,8 @@ const feedSamples = [
 ]
 
 const duplicationCount = 10 // 복사할 횟수
-const originalLength = feedSamples.length // 늘릴 배열 길이 계산
-const extendedLength = originalLength * duplicationCount
+const originalLength = feedSamples.length // feed 항목 개수
+const extendedLength = originalLength * duplicationCount // 늘릴 배열 길이 계산
 
 const extendedFeedSamples = new Array(extendedLength)
 
@@ -197,6 +197,9 @@ for (let i = 0; i < extendedLength; i++) {
   extendedFeedSamples[i] = {
     ...feedSamples[originalIndex],
     id: i + 1,
+    author: '나카네쓰아키지음, 황미숙 옮김',
+    publisher: '민음사',
+    profileImg: '../../assets/images/profileImg.jpg',
     highlight: [
       [
         { content: '좋은 사회에서 나온 척도라도 모든 사회 발전을 이끌 수는 없다. 이것 또는 저것을 아주 택할 게 아니라, 사안에 따라 이것과 저것을 두루 택해야 한다.' },

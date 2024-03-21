@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import { useState } from 'react'
 
 const LikeCount = () => {
@@ -14,11 +15,21 @@ const LikeCount = () => {
     })
   }
   return (
-    <div>
+    <span css={like}>
       <img src={imageSrc} onClick={handleToggle} alt="Like" />
       <span>0</span>
-    </div>
+    </span>
   )
 }
 
 export default LikeCount
+
+const like = css`
+  display: flex;
+  align-items: center;
+  float: right;
+  img {
+    width: 18px;
+    margin-right: 10px;
+  }
+`

@@ -5,11 +5,14 @@ export interface Highlight {
 
 export type FeedType = {
   id: number
-  category: string
-  img: string
-  title: string
+  profileImg: string
   nickname: string
   date: string
+  title: string
+  author: string
+  publisher: string
+  category: string
+  img: string
   oneLine: string
   highlight: Highlight[]
   review: string
