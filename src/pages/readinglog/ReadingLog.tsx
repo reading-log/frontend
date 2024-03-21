@@ -23,7 +23,7 @@ const ReadingLog: React.FC<CategoryProps> = ({ selectedCategory }) => {
 
         {feedByCategory.map((feed, id) => (
           <span key={id}>
-            <Feed user={feed} />
+            <Feed feed={feed} />
           </span>
         ))}
       </div>

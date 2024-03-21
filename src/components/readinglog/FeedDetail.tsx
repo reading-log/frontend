@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import { FeedProps } from '../../types/feed'
 import LikeCount from './LikeCount'
 
-const FeedDetail: React.FC<FeedProps> = ({ user }) => {
+const FeedDetail: React.FC<FeedProps> = ({ feed }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     const year = date.getFullYear()
@@ -11,16 +11,17 @@ const FeedDetail: React.FC<FeedProps> = ({ user }) => {
     return `${year}/${month}/${day}`
   }
 
+  const likeCount = feed.like
   return (
     <div css={feedBox}>
       <span css={userInfo}>
-        <img src={user.profileImg} css={profileImg} />
+        <img src={feed.profileImg} css={profileImg} />
         <span
           css={css`
             font-weight: bold;
           `}
         >
-          {user.nickname}
+          {feed.nickname}
         </span>
         <br />
         <span
@@ -28,19 +29,19 @@ const FeedDetail: React.FC<FeedProps> = ({ user }) => {
             color: #848484;
           `}
         >
-          {formatDate(user.date)}
+          {formatDate(feed.date)}
         </span>
-        <LikeCount />
+        <LikeCount likeCount={likeCount} />
       </span>
 
       <div css={bookInfo}>
         <div css={tempImg}>
-          <img src={user.img} alt="BookImg" />
+          <img src={feed.bookImg} alt="BookImg" />
         </div>
-        <p>{user.author}</p>
-        <p>{user.publisher}</p>
-        <p>{user.title}</p>
-        <p>카테고리: {user.category}</p>
+        <p>{feed.author}</p>
+        <p>{feed.publisher}</p>
+        <p>{feed.title}</p>
+        <p>카테고리: {feed.category}</p>
       </div>
     </div>
   )

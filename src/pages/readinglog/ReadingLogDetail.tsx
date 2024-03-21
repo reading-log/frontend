@@ -8,8 +8,8 @@ import { useState } from 'react'
 const ReadingLogDetail = () => {
   const location = useLocation()
   const { feed } = location.state
-  const [showHighlight, setShowHighlight] = useState(true) // 초기에 하이라이트를 보이기
-  const [showReview, setShowReview] = useState(false) // 초기에 서평은 숨김
+  const [showHighlight, setShowHighlight] = useState(true) // 처음에 하이라이트를 보이기
+  const [showReview, setShowReview] = useState(false) // 처음에 서평은 숨김
 
   const handleHighlightToggle = () => {
     setShowHighlight(true)
@@ -24,7 +24,7 @@ const ReadingLogDetail = () => {
   return (
     <HeaderLayout>
       <div>
-        <FeedDetail user={feed} />
+        <FeedDetail feed={feed} />
         <div css={outterBox}>
           <div css={oneLineInnerBox}>
             <span>"</span>
@@ -109,7 +109,7 @@ const innerBox = css`
   border-radius: 5px;
   padding: 20px;
   margin-top: 10px;
-  & > p:nth-child(2) {
+  & > p:nth-of-type(2) {
     font-size: 11px;
     float: right;
   }

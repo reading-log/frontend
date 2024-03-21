@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import magnifier from '../../assets/images/돋보기.png'
 
 type SearchProp = {
   placeholder: string
@@ -27,7 +28,7 @@ const Search: React.FC<SearchProp> = ({ placeholder }) => {
       <form css={search} onSubmit={handleSubmit}>
         <input type="text" value={searchKeyWord} onChange={handleChange} placeholder={placeholder} />
         <button>
-          <img src="../../assets/images/돋보기.png" alt="Search" />
+          <img src={magnifier} alt="Search" />
         </button>
       </form>
     </>

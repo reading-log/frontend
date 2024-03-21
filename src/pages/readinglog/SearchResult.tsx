@@ -3,7 +3,7 @@ import { AllLayout } from '../../components/Layouts'
 import Feed from '../../components/readinglog/Feed'
 import { flexCenter } from '../../styles/common'
 import Search from '../../components/readinglog/Search'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useSearchQuery } from '../../hooks/useSearchQuery'
 import { useEffect, useState } from 'react'
 import { CategoryProps, FeedType } from '../../types/feed'
@@ -15,7 +15,7 @@ const SearchResult: React.FC<CategoryProps> = ({ selectedCategory }) => {
   const [logs, setLogs] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
-  const { data: searchResult } = useSearchQuery(keyword)
+  const searchResult = useSearchQuery(keyword).data
 
   useEffect(() => {
     setLogs(searchResult)
@@ -38,7 +38,7 @@ const SearchResult: React.FC<CategoryProps> = ({ selectedCategory }) => {
 
         {feedByCategory.map((feed, id) => (
           <span key={id} onClick={() => handleFeedClick(feed)}>
-            <Feed user={feed} />
+            <Feed feed={feed} />
           </span>
         ))}
       </div>

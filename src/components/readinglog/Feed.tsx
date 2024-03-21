@@ -3,29 +3,31 @@ import { FeedProps, FeedType } from '../../types/feed'
 import LikeCount from './LikeCount'
 import { useNavigate } from 'react-router-dom'
 
-const Feed: React.FC<FeedProps> = ({ user }) => {
+const Feed: React.FC<FeedProps> = ({ feed }) => {
+  const likeCount: number = feed.like
   const navigate = useNavigate()
 
   const handleFeedClick = (feed: FeedType) => {
     navigate('/readinglog/detail', { state: { feed } })
   }
+
   return (
     <div css={feedBox}>
-      <div css={bookTitle} onClick={() => handleFeedClick(user)}>
-        <span>{user.title}</span>
+      <div css={bookTitle} onClick={() => handleFeedClick(feed)}>
+        <span>{feed.title}</span>
       </div>
 
-      <div css={bookInfo} onClick={() => handleFeedClick(user)}>
+      <div css={bookInfo} onClick={() => handleFeedClick(feed)}>
         <div css={tempImg}>
-          <img src={user.img} alt="BookImg" />
+          <img src={feed.bookImg} alt="BookImg" />
         </div>
-        <span>"{user.oneLine}"</span>
+        <span>"{feed.oneLine}"</span>
       </div>
 
       <div css={userInfo}>
-        <span onClick={() => handleFeedClick(user)}>{user.nickname}</span>
-        <span onClick={() => handleFeedClick(user)}>{user.date}</span>
-        <LikeCount />
+        <span onClick={() => handleFeedClick(feed)}>{feed.nickname}</span>
+        <span onClick={() => handleFeedClick(feed)}>{feed.date}</span>
+        <LikeCount likeCount={likeCount} />
       </div>
     </div>
   )
@@ -87,7 +89,7 @@ const userInfo = css`
   font-size: 13px;
   span {
     margin-right: 10px;
-    &:last-child {
+    &:last-of-type {
       margin-right: 15px;
     }
   }

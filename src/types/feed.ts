@@ -8,18 +8,19 @@ export type FeedType = {
   profileImg: string
   nickname: string
   date: string
+  like: number
+  bookImg: string
   title: string
   author: string
   publisher: string
   category: string
-  img: string
   oneLine: string
   highlight: Highlight[]
   review: string
 }
 
 export type FeedProps = {
-  user: FeedType
+  feed: FeedType
 }
 
 export type CategoryProps = {
