@@ -1,47 +1,38 @@
 import { css } from '@emotion/react'
 import { FeedProps } from '../../types/feed'
-import LikeCount from './LikeCount'
+import { useState } from 'react'
+import blackHeart from '../../assets/images/free-icon-love.png'
+import redHeart from '../../assets/images/free-icon-love-fill.png'
+import UserInfo from './UserInfo'
+import BookDetailInfo from './BookDetailInfo'
 
 const FeedDetail: React.FC<FeedProps> = ({ feed }) => {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}/${month}/${day}`
+  const [isLike, setIsLike] = useState(false)
+  const [imageSrc, setImageSrc] = useState(blackHeart)
+
+  const handleToggle = () => {
+    // 좋아요 하트 아이콘
+    setIsLike(prev => !prev)
+    if (isLike) {
+      setImageSrc(redHeart)
+    } else {
+      setImageSrc(blackHeart)
+    }
   }
 
-  const likeCount = feed.like
   return (
     <div css={feedBox}>
       <span css={userInfo}>
-        <img src={feed.profileImg} css={profileImg} />
-        <span
-          css={css`
-            font-weight: bold;
-          `}
-        >
-          {feed.nickname}
+        <UserInfo feed={feed} />
+
+        <span css={likeBox}>
+          <img src={imageSrc} onClick={handleToggle} alt="Like" />
+          <span>{feed.like}</span>
         </span>
-        <br />
-        <span
-          css={css`
-            color: #848484;
-          `}
-        >
-          {formatDate(feed.date)}
-        </span>
-        <LikeCount likeCount={likeCount} />
       </span>
 
       <div css={bookInfo}>
-        <div css={tempImg}>
-          <img src={feed.bookImg} alt="BookImg" />
-        </div>
-        <p>{feed.author}</p>
-        <p>{feed.publisher}</p>
-        <p>{feed.title}</p>
-        <p>카테고리: {feed.category}</p>
+        <BookDetailInfo feed={feed} />
       </div>
     </div>
   )
@@ -63,13 +54,6 @@ const userInfo = css`
   margin: 1rem;
   float: left;
 `
-const profileImg = css`
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  margin-right: 1rem;
-  float: left;
-`
 
 const bookInfo = css`
   background: #fbfbfb;
@@ -84,14 +68,12 @@ const bookInfo = css`
   }
 `
 
-const tempImg = css`
-  background: #d9d9d9;
-  display: inline-block;
-  width: 80px;
-  height: auto;
-  margin-right: 1rem;
+const likeBox = css`
+  display: flex;
+  align-items: center;
+  float: right;
   img {
-    width: 80px;
-    height: auto;
+    width: 18px;
+    margin-right: 10px;
   }
 `
