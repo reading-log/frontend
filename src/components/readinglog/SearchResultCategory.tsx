@@ -2,16 +2,19 @@ import { css } from '@emotion/react'
 import categories from '../Sample/CategorySample'
 // import { Swiper, SwiperSlide } from 'swiper/react'
 // import 'swiper/css'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
-const Category = () => {
+const SearchResultCategory = () => {
+  const [searchParams] = useSearchParams()
+  const keyword = searchParams.get('q') || ''
+
   return (
     <div css={categoryBox}>
       <div>
         {categories.map(
           (category, id) =>
             id < 6 && (
-              <Link key={id} to={category === '전체' ? '/readinglog/allType' : `/readinglog/${category}`}>
+              <Link key={id} to={category === '전체' ? `/readinglog/allType/search?q=${keyword}` : `/readinglog/${category}/search?q=${keyword}`}>
                 <strong>{category}</strong>
               </Link>
             ),
@@ -20,7 +23,7 @@ const Category = () => {
     </div>
   )
 }
-export default Category
+export default SearchResultCategory
 
 const categoryBox = css`
   display: flex;

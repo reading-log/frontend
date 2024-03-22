@@ -20,11 +20,6 @@ export const globalStyles = css`
     background-color: #f4f5f4;
     /*단어 넘치면 쪼개기*/
     word-break: break-all;
-    /* 드래그 방지 */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 
     /*텍스트 줄 높이*/
     line-height: normal;
