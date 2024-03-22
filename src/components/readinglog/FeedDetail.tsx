@@ -1,20 +1,14 @@
 import { css } from '@emotion/react'
-import { FeedProps, FeedType } from '../../types/feed'
-import { useNavigate } from 'react-router-dom'
+import { FeedProps } from '../../types/feed'
 import { useState } from 'react'
 import blackHeart from '../../assets/images/free-icon-love.png'
 import redHeart from '../../assets/images/free-icon-love-fill.png'
-import BookInfo from './BookInfo'
+import UserInfo from './UserInfo'
+import BookDetailInfo from './BookDetailInfo'
 
-const Feed: React.FC<FeedProps> = ({ feed }) => {
+const FeedDetail: React.FC<FeedProps> = ({ feed }) => {
   const [isLike, setIsLike] = useState(false)
   const [imageSrc, setImageSrc] = useState(blackHeart)
-
-  const navigate = useNavigate()
-
-  const handleFeedClick = (feed: FeedType) => {
-    navigate('/readinglog/detail', { state: { feed } })
-  }
 
   const handleToggle = () => {
     // 좋아요 하트 아이콘
@@ -28,48 +22,49 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 
   return (
     <div css={feedBox}>
-      <BookInfo feed={feed} />
-
-      <div css={userInfo}>
-        <span onClick={() => handleFeedClick(feed)}>{feed.nickname}</span>
-        <span onClick={() => handleFeedClick(feed)}>{feed.date}</span>
+      <span css={userInfo}>
+        <UserInfo feed={feed} />
 
         <span css={likeBox}>
           <img src={imageSrc} onClick={handleToggle} alt="Like" />
           <span>{feed.like}</span>
         </span>
+      </span>
+
+      <div css={bookInfo}>
+        <BookDetailInfo feed={feed} />
       </div>
     </div>
   )
 }
 
-export default Feed
+export default FeedDetail
 
 const feedBox = css`
-  background: #f8f6f6;
+  background: #e4e4e4;
   height: auto;
   border-radius: 6px;
-  margin-bottom: 30px;
+  margin-bottom: 0.5rem;
 `
 
 const userInfo = css`
+  width: 90%;
+  height: auto;
+  font-size: 15px;
+  margin: 1rem;
+  float: left;
+`
+
+const bookInfo = css`
+  background: #fbfbfb;
   display: flex;
-  align-items: center;
-  justify-content: right;
   width: 100%;
-  height: 30px;
-  font-size: 13px;
-  span {
-    margin-right: 10px;
-    &:last-of-type {
-      margin-right: 15px;
-    }
-  }
-  img {
-    width: 15px;
-    margin-top: 2px;
-    margin-left: 10px;
-    margin-right: 5px;
+  height: auto;
+  border-radius: 0 0 6px 6px;
+  padding: 1rem;
+  margin-top: 15px;
+  p {
+    width: 100%;
   }
 `
 

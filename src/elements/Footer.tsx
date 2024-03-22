@@ -5,7 +5,7 @@ const Footer = () => {
   const menuList = [
     {
       title: '리딩로그',
-      url: '/readinglog',
+      url: '/readinglog/allType' || '/readinglog/allType/search',
       icon: 'home',
     },
     {
