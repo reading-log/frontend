@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { onJoin } from '../apis/userApi'
 import { HeaderLayout } from '../components/Layouts'
-import { calcRem, colors, flexCenter } from '../styles/common'
+import { calcRem, colors, flexCenter } from '../styles/theme'
 
 interface IFormValues {
   profileImage: File[]
@@ -221,7 +221,7 @@ const joinBox = css`
       margin-top: ${calcRem(11)};
       border: 1px solid ${colors.main1};
       color: ${colors.main1};
-      background-color: ${colors.bg2};
+      background-color: ${colors.innerBoxStroke};
     }
   }
 `

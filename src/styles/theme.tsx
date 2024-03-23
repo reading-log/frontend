@@ -36,28 +36,29 @@ export const title3 = css`
 export const body1 = css`
   font-size: ${calcRem(16)};
   font-weight: 400;
-  font-family: 'AppleSDGothicNeo', sans-serif;
 `
 
 /**본문 텍스트2 */
 export const body2 = css`
   font-size: ${calcRem(14)};
   font-weight: 400;
-  font-family: 'AppleSDGothicNeo', sans-serif;
 `
 
 /**본문 텍스트3 */
 export const body3 = css`
   font-size: ${calcRem(12)};
   font-weight: 400;
-  font-family: 'AppleSDGothicNeo', sans-serif;
 `
 
 /**색상 컬러 */
 export const colors = {
   main1: '#836565',
-  bg1: '#EAE5E5',
-  bg2: '#F3F0F0',
+  boxFill: '#EAE5E5',
+  boxStroke: '#C1B2B2',
+  innerBoxStroke: '#F3F0F0',
+  edit_innerboxFill: '#F6F3F3',
+  button1: '#947A7A',
+  button2: '#DAD1D1',
   black: '#000000',
   gray: '#8C8C8C',
   red: '#F14E4E',

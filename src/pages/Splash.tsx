@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DefaultLayout } from '../components/Layouts'
-import { title1 } from '../styles/common'
+import { title1 } from '../styles/theme'
 
 const Splash = () => {
   const navigate = useNavigate()

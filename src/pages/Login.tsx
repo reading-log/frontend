@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { onLogin } from '../apis/userApi'
-import { body2, calcRem, colors, title2 } from '../styles/common'
+import { body2, calcRem, colors, title2 } from '../styles/theme'
 import { socialList } from '../utils/socialUtils'
 
 interface IFormValues {
@@ -42,7 +42,7 @@ const Login = () => {
       </div>
       <div className="otherLogin">
         <Link to="/join">회원가입</Link>
-        <span>|</span>
+        <span />
         <Link to="/account/find-pw">비밀번호 찾기</Link>
       </div>
     </div>
@@ -60,7 +60,6 @@ const loginBox = css`
   flex-direction: column;
   align-items: center;
   ${body2}
-  font-family: "AppleSDGothicNeo", sans-serif;
 
   .formBox {
     display: flex;
@@ -76,9 +75,15 @@ const loginBox = css`
   }
 
   .otherLogin {
+    display: flex;
     margin-top: ${calcRem(76)};
+    font-size: ${calcRem(12)};
     span {
-      margin: 0 ${calcRem(3)};
+      display: inline-block;
+      height: ${calcRem(12)};
+      width: ${calcRem(1)};
+      background-color: #000000;
+      margin: 0 ${calcRem(5)};
     }
   }
 `

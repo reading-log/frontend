@@ -1,11 +1,7 @@
 import { DefaultLayout } from '../components/Layouts'
 
 const NotFound = () => {
-  return (
-    <DefaultLayout>
-      <div>404 Not Found</div>
-    </DefaultLayout>
-  )
+  return <DefaultLayout>404 Not Found</DefaultLayout>
 }
 
 export default NotFound
