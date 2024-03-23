@@ -1,6 +1,6 @@
-import { css } from '@emotion/react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { DefaultLayout } from '../components/Layouts'
 import { title1 } from '../styles/common'
 
 const Splash = () => {
@@ -14,21 +14,10 @@ const Splash = () => {
   }, [navigate])
 
   return (
-    <div css={splashBox}>
+    <DefaultLayout>
       <h1 css={title1}>ReadingLog</h1>
-    </div>
+    </DefaultLayout>
   )
 }
 
 export default Splash
-
-/**스플래쉬 박스 */
-const splashBox = css`
-  width: 100%;
-  position: absolute;
-  overflow: auto;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`

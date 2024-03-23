@@ -8,6 +8,7 @@ export const globalStyles = css`
     margin: auto;
     position: relative;
     background-color: #fcfcfb;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   body {
@@ -48,6 +49,7 @@ export const globalStyles = css`
 
   /*엘리먼트 전체 적용*/
   * {
+    font-family: 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
     resize: none;
     /* 인풋 포커스 해제 */

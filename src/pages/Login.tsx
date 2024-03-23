@@ -15,9 +15,10 @@ const Login = () => {
 
   /**로그인 요청 */
   const onHandleLogin = (data: IFormValues) => {
-    onLogin(data).then(() => {
-      // 로그인 성공시
-    })
+    if (data.email === '' || data.password === '') return alert('아이디와 비밀번호를 입력해주세요.')
+    onLogin(data)
+      .then()
+      .catch(() => alert('비밀번호 또는 아이디가 일치하지 않습니다.'))
   }
 
   return (
@@ -25,7 +26,7 @@ const Login = () => {
       <form className="formBox" onSubmit={handleSubmit(onHandleLogin)}>
         <h2 css={logo}>ReadingLog</h2>
         <div css={inputBox}>
-          <input type="text" placeholder="아이디" {...register('email')} />
+          <input type="text" placeholder="아이디" className="input1" {...register('email')} />
           <input type="password" placeholder="비밀번호" {...register('password')} />
         </div>
         <button type="submit" className="loginBtn">
@@ -34,15 +35,15 @@ const Login = () => {
       </form>
       <div css={socialBox}>
         {socialList.map((social, index) => (
-          <button key={index}>
+          <a key={index} href={`${import.meta.env.VITE_API_URL}oauth2/authorization/${social.site}`}>
             <img src={social.btnImage} alt={social.site} />
-          </button>
+          </a>
         ))}
       </div>
       <div className="otherLogin">
-        <Link to="/account">회원가입</Link>
+        <Link to="/join">회원가입</Link>
         <span>|</span>
-        <Link to="/account">비밀번호 찾기</Link>
+        <Link to="/account/find-pw">비밀번호 찾기</Link>
       </div>
     </div>
   )
@@ -95,8 +96,13 @@ const inputBox = css`
   margin-bottom: ${calcRem(16)};
 
   input {
+    border: 1px solid ${colors.main1};
     width: ${calcRem(169)};
     height: ${calcRem(25)};
+  }
+
+  .input1 {
+    border-bottom: none;
   }
 `
 
