@@ -6,10 +6,11 @@ import { flexCenter } from '../../styles/common'
 import Filtering from '../../components/readinglog/Filtering'
 import { useInfiniteQuery } from 'react-query'
 import React, { useEffect, useState } from 'react'
-import axiosFeed from '../../utils/feedUtil'
+// import axiosFeed from '../../utils/feedUtil'
 
 import categories from '../../components/Sample/CategorySample'
 import extendedFeedSamples from '../../components/Sample/FeedSample'
+import { FeedType } from '../../types/feed'
 
 const ReadingLog = () => {
   const [selectedCategory, setSelectedCategory] = useState('전체')
@@ -20,7 +21,8 @@ const ReadingLog = () => {
 
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const allLogs = extendedFeedSamples
-  const feedByCategory = selectedCategory === '전체' ? allLogs : allLogs.filter(feed => selectedCategory === feed.category)
+  // const feedByCategory = selectedCategory === '전체' ? allLogs : allLogs.filter(feed => selectedCategory === feed.category)
+  const feedByCategory = selectedCategory === '전체' ? allLogs.slice(0, 15) : allLogs.filter(feed => selectedCategory === feed.category).slice(0, 15)
   console.log('feedByCategory', feedByCategory)
 
   return (
