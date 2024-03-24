@@ -6,12 +6,17 @@ import Search from '../../components/readinglog/Search'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useSearchQuery } from '../../hooks/useSearchQuery'
 import { useEffect, useState } from 'react'
-import { CategoryProps, FeedType } from '../../types/feed'
+import { FeedType } from '../../types/feed'
 import Filtering from '../../components/readinglog/Filtering'
 
-import SearchResultCategory from '../../components/readinglog/SearchResultCategory'
+import categories from '../../components/Sample/CategorySample'
 
-const SearchResult: React.FC<CategoryProps> = ({ selectedCategory }) => {
+const SearchResult = () => {
+  const [selectedCategory, setSelectedCategory] = useState('전체')
+
+  const handleClick = (category: string) => {
+    setSelectedCategory(category)
+  }
   const [logs, setLogs] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
@@ -33,7 +38,26 @@ const SearchResult: React.FC<CategoryProps> = ({ selectedCategory }) => {
     <AllLayout>
       <div css={feedContainer}>
         <Search placeholder={keyword} />
-        <SearchResultCategory />
+
+        <div css={categoryBox}>
+          <div>
+            {categories.map(
+              (category, id) =>
+                id < 6 && (
+                  <span
+                    key={id}
+                    onClick={() => handleClick(category)}
+                    css={css`
+                      font-weight: ${selectedCategory === category ? 'bold' : ''};
+                    `}
+                  >
+                    {category}
+                  </span>
+                ),
+            )}
+          </div>
+        </div>
+
         <Filtering />
 
         {feedByCategory.map((feed, id) => (
@@ -51,4 +75,26 @@ export default SearchResult
 const feedContainer = css`
   ${flexCenter}
   flex-direction: column;
+`
+
+const categoryBox = css`
+  display: flex;
+  align-items: center;
+  background-color: #f3f0f0;
+  width: 80%;
+  height: 33px;
+  border-radius: 6px;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  div {
+    padding: 0;
+    margin: auto;
+    span {
+      margin-right: 10px;
+      float: left;
+      .active {
+        font-weight: 800;
+      }
+    }
+  }
 `

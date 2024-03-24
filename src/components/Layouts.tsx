@@ -12,10 +12,9 @@ export const HeaderLayout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Topbar />
-      <div css={[containerHeaderBox, container]}>{children}</div>
-      {/* <div css={container}>
+      <div css={container}>
         <div css={containerHeaderBox}>{children}</div>
-      </div> */}
+      </div>
     </>
   )
 }

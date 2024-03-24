@@ -65,7 +65,7 @@ const ReadingLogDetail = () => {
               서평
             </span>
           </div>
-          {feed.highlight[0].map((highlight: Highlight, id: number) => (
+          {feed.highlight.map((highlight: Highlight, id: number) => (
             <div css={showHighlight ? innerBox : [hide, innerBox]} key={id}>
               <p>{highlight.content}</p>
               <p>p.{feed.highlight[1].page}</p>

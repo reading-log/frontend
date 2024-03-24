@@ -3,11 +3,13 @@ import Account from '../pages/Account'
 import Login from '../pages/Login'
 import ReadingLog from '../pages/readinglog/ReadingLog'
 import SearchResult from '../pages/readinglog/SearchResult'
-import MyLog from '../pages/MyLog'
+import MyLog from '../pages/mylog/MyLog'
 import Splash from '../pages/Splash'
-
-import categories from '../components/Sample/CategorySample'
 import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
+import BookRegister from '../pages/mylog/BookRegister'
+import BookAutoRegister from '../pages/mylog/BookAutoRegister'
+import Record from '../pages/mylog/Record'
+import BookSearchResult from '../pages/mylog/BookSearchResult'
 
 const Router = () => {
   return (
@@ -15,14 +17,17 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/login" element={<Login />} />
-        {categories.map(category => (
-          <Route key={category} path={category === '전체' ? `/readinglog/allType` : `/readinglog/${category}`} element={<ReadingLog selectedCategory={category} />} />
-        ))}
+        {/* 리딩로그 메뉴 페이지 */}
+        <Route path="/readinglog" element={<ReadingLog />} />
         <Route path="/readinglog/detail" element={<ReadingLogDetail />}></Route>
-        {categories.map(category => (
-          <Route key={category} path={category === '전체' ? `/readinglog/allType/search` : `/readinglog/${category}/search`} element={<SearchResult selectedCategory={category} />} />
-        ))}
+        <Route path="/readinglog/search" element={<SearchResult />} />
+        {/* 나의 로그 메뉴 페이지 */}
         <Route path="/mylog" element={<MyLog />} />
+        <Route path="/mylog/record" element={<Record />} />
+        <Route path="/mylog/search" element={<BookSearchResult />} />
+        <Route path="/mylog/book_register" element={<BookRegister />} />
+        <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} />
+
         <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>

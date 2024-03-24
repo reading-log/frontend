@@ -2,19 +2,27 @@ import { css } from '@emotion/react'
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import magnifier from '../../assets/images/돋보기.png'
+import { axiosSearchResults } from '../../utils/bookSearchUtil'
 
 type SearchProp = {
   placeholder: string
 }
 
-const Search: React.FC<SearchProp> = ({ placeholder }) => {
+const BookSearch: React.FC<SearchProp> = ({ placeholder }) => {
   const navigate = useNavigate()
   const [searchKeyWord, setSearchKeyWord] = useState('')
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      navigate(`/readinglog/search?q=${searchKeyWord}`) // 리딩로그 검색 결과 페이지로 이동
+      navigate(`/mylog/search?q=${searchKeyWord}`) // 나의로그 책 목록 결과 페이지로 이동
+      //   try {
+      //     const data = await axiosSearchResults(searchKeyWord)
+      //     console.log(data) // 받아온 데이터 확인
+      //     navigate(`/mylog/search?q=${searchKeyWord}`) // 나의로그 책 목록 결과 페이지로 이동
+      //   } catch (error) {
+      //     console.error('Error fetching search results:', error)
+      //   }
     },
     [navigate, searchKeyWord],
   )
@@ -35,7 +43,7 @@ const Search: React.FC<SearchProp> = ({ placeholder }) => {
   )
 }
 
-export default Search
+export default BookSearch
 
 const search = css`
   display: flex;
