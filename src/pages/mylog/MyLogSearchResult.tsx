@@ -30,7 +30,7 @@ const MyLogSearchResult = () => {
             <>
               {/* <img src={BookImg} css={image} /> */}
               <Link
-                to="/mylog/book"
+                to="/mylog/books"
                 css={css`
                   margin-top: 3rem;
                 `}

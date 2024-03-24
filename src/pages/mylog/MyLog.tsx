@@ -21,7 +21,7 @@ const MyLog = () => {
             <>
               <img src={BookImg} css={image} />
               <Link
-                to="/mylog/record"
+                to="/mylog/books"
                 css={css`
                   margin-top: 3rem;
                 `}

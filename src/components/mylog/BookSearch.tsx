@@ -14,7 +14,7 @@ const BookSearch: React.FC<SearchProp> = ({ placeholder }) => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      navigate(`/mylog/book/search?q=${searchKeyWord}`) // 나의로그 책 목록 결과 페이지로 이동
+      navigate(`/mylog/books/search?q=${searchKeyWord}`) // 나의로그 책 목록 결과 페이지로 이동
     },
     [navigate, searchKeyWord],
   )

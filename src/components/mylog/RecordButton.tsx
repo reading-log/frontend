@@ -5,7 +5,7 @@ const RecordButton = () => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/mylog/book') //  나의로그 책 검색하기
+    navigate('/mylog/books') //  나의로그 책 검색하기
   }
   return (
     <>

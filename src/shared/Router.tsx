@@ -25,8 +25,8 @@ const Router = () => {
         {/* 나의 로그 메뉴 페이지 */}
         <Route path="/mylog" element={<MyLog />} />
         <Route path="/mylog/search" element={<MyLogSearchResult />} />
-        <Route path="/mylog/book" element={<BookSearchPage />} />
-        <Route path="/mylog/book/search" element={<BookSearchResult />} />
+        <Route path="/mylog/books" element={<BookSearchPage />} />
+        <Route path="/mylog/books/search" element={<BookSearchResult />} />
         <Route path="/mylog/book_register" element={<BookRegister />} />
         <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} />
         <Route path="/account" element={<Account />} />
