@@ -8,8 +8,9 @@ import Splash from '../pages/Splash'
 import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
 import BookRegister from '../pages/mylog/BookRegister'
 import BookAutoRegister from '../pages/mylog/BookAutoRegister'
-import Record from '../pages/mylog/Record'
 import BookSearchResult from '../pages/mylog/BookSearchResult'
+import MyLogSearchResult from '../pages/mylog/MyLogSearchResult'
+import BookSearchPage from '../pages/mylog/BookSearchPage'
 
 const Router = () => {
   return (
@@ -23,11 +24,11 @@ const Router = () => {
         <Route path="/readinglog/search" element={<SearchResult />} />
         {/* 나의 로그 메뉴 페이지 */}
         <Route path="/mylog" element={<MyLog />} />
-        <Route path="/mylog/record" element={<Record />} />
-        <Route path="/mylog/search" element={<BookSearchResult />} />
+        <Route path="/mylog/search" element={<MyLogSearchResult />} />
+        <Route path="/mylog/book" element={<BookSearchPage />} />
+        <Route path="/mylog/book/search" element={<BookSearchResult />} />
         <Route path="/mylog/book_register" element={<BookRegister />} />
         <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} />
-
         <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>

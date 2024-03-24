@@ -3,10 +3,11 @@ import { AllLayout } from '../../components/Layouts'
 import { flexCenter } from '../../styles/common'
 import { Link } from 'react-router-dom'
 import MyLogList from '../../components/mylog/MyLogList'
+import MyLogSearch from '../../components/mylog/MyLogSearch'
 
 import BookImg from '../../assets/images/book.png'
 import myLogSamples from '../../components/Sample/MyLogSample'
-import BookSearch from '../../components/mylog/BookSearch'
+import RecordButton from '../../components/mylog/RecordButton'
 
 const MyLog = () => {
   const myLogs = myLogSamples // 나의 로그 기록 있음
@@ -31,8 +32,9 @@ const MyLog = () => {
           ) : (
             <>
               <div css={searchBar}>
-                <BookSearch placeholder="나의 로그 검색하기" />
+                <MyLogSearch placeholder="나의 로그 검색하기" />
                 <MyLogList myLogList={myLogs} />
+                <RecordButton />
               </div>
             </>
           )}

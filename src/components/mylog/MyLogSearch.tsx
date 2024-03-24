@@ -7,14 +7,14 @@ type SearchProp = {
   placeholder: string
 }
 
-const BookSearch: React.FC<SearchProp> = ({ placeholder }) => {
+const MyLogSearch: React.FC<SearchProp> = ({ placeholder }) => {
   const navigate = useNavigate()
   const [searchKeyWord, setSearchKeyWord] = useState('')
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      navigate(`/mylog/book/search?q=${searchKeyWord}`) // 나의로그 책 목록 결과 페이지로 이동
+      navigate(`/mylog/search?q=${searchKeyWord}`) // 나의로그 로그 목록 결과 페이지로 이동
     },
     [navigate, searchKeyWord],
   )
@@ -35,7 +35,7 @@ const BookSearch: React.FC<SearchProp> = ({ placeholder }) => {
   )
 }
 
-export default BookSearch
+export default MyLogSearch
 
 const search = css`
   display: flex;

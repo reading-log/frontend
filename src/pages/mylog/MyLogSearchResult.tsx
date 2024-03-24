@@ -8,13 +8,13 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { FeedType } from '../../types/feed'
 
 import BookImg from '../../assets/images/book.png'
-import { useBookSearchQuery } from '../../hooks/useBookSearchQuery'
+import { useMyLogSearchQuery } from '../../hooks/useMyLogSearchQuery'
 
-const BookSearchResult = () => {
+const MyLogSearchResult = () => {
   const [bookList, setBookList] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
-  const searchResult = useBookSearchQuery(keyword).data
+  const searchResult = useMyLogSearchQuery(keyword).data
 
   useEffect(() => {
     setBookList(searchResult)
@@ -28,14 +28,14 @@ const BookSearchResult = () => {
             <BookList bookList={bookList} />
           ) : (
             <>
-              <img src={BookImg} css={image} />
+              {/* <img src={BookImg} css={image} /> */}
               <Link
-                to="/mylog/book_register"
+                to="/mylog/book"
                 css={css`
                   margin-top: 3rem;
                 `}
               >
-                ️✍️ 직접 기록하기 ✍
+                ️✍️ 책 등록하기 ✍
               </Link>
             </>
           )}
@@ -45,7 +45,7 @@ const BookSearchResult = () => {
   )
 }
 
-export default BookSearchResult
+export default MyLogSearchResult
 
 const feedContainer = css`
   ${flexCenter}
