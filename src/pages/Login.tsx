@@ -1,9 +1,12 @@
 import { css } from '@emotion/react'
+import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { onLogin } from '../apis/userApi'
+import { useToken } from '../hooks/useToken'
 import { body2, calcRem, colors, title2 } from '../styles/theme'
 import { socialList } from '../utils/socialUtils'
+import NotAllow from './NotAllow'
 
 interface IFormValues {
   email: string
@@ -11,15 +14,25 @@ interface IFormValues {
 }
 
 const Login = () => {
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm<IFormValues>()
 
   /**로그인 요청 */
   const onHandleLogin = (data: IFormValues) => {
     if (data.email === '' || data.password === '') return alert('아이디와 비밀번호를 입력해주세요.')
     onLogin(data)
-      .then()
-      .catch(() => alert('비밀번호 또는 아이디가 일치하지 않습니다.'))
+      .then(res => {
+        //헤더에서 토큰 가져와서 쿠키에 저장
+        const token = res.headers.authorization
+        Cookies.set('accessToken', token)
+        navigate('/readinglog')
+      })
+      .catch(() => alert('아이디 또는 비밀번호가 일치하지 않습니다.'))
   }
+
+  /**로그인 되어있으면 리턴 */
+  const isLogin = useToken()
+  if (isLogin) return <NotAllow />
 
   return (
     <div css={loginBox}>

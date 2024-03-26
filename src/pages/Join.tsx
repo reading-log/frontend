@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { onJoin } from '../apis/userApi'
 import { HeaderLayout } from '../components/Layouts'
+import { useToken } from '../hooks/useToken'
 import { calcRem, colors, flexCenter } from '../styles/theme'
+import NotAllow from './NotAllow'
 
 interface IFormValues {
   profileImage: File[]
@@ -15,6 +17,7 @@ interface IFormValues {
 
 const Join = () => {
   const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -31,6 +34,7 @@ const Join = () => {
     /** formdata에 추가 */
     for (const [key, value] of Object.entries(data)) {
       if (key === 'profileImage') {
+        // 값이 있을때만 추가
         value[0] && formData.append(key, value[0])
       } else {
         formData.append(key, value)
@@ -42,10 +46,17 @@ const Join = () => {
         alert('회원가입이 완료되었습니다.')
         navigate('/login')
       })
-      .catch(() => {
+      .catch(res => {
+        if (res.response.data.code === 409) {
+          return alert('이미 존재하는 계정 또는 닉네임입니다. ')
+        }
         alert('회원가입에 실패했습니다. 잠시후 다시 시도해주세요.')
       })
   }
+
+  /**로그인 되어있으면 리턴 */
+  const isLogin = useToken()
+  if (isLogin) return <NotAllow />
 
   return (
     <HeaderLayout>
