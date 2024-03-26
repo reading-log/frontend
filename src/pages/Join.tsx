@@ -30,8 +30,8 @@ const Join = () => {
 
     /** formdata에 추가 */
     for (const [key, value] of Object.entries(data)) {
-      if (key === 'profileImage' && value[0]) {
-        formData.append('profileImage', value[0])
+      if (key === 'profileImage') {
+        value[0] && formData.append(key, value[0])
       } else {
         formData.append(key, value)
       }
