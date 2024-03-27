@@ -1,14 +1,14 @@
 import { css } from '@emotion/react'
-import { AllLayout } from '../../components/Layouts'
-import { flexCenter } from '../../styles/common'
-import BookList from '../../components/mylog/BookList'
-import BookSearch from '../../components/mylog/BookSearch'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import { AllLayout } from '../../components/Layouts'
+import BookList from '../../components/mylog/BookList'
+import BookSearch from '../../components/mylog/BookSearch'
 import { Book } from '../../types/book'
 
 import BookImg from '../../assets/images/book.png'
 import { useBookSearchQuery } from '../../hooks/useBookSearchQuery'
+import { flexCenter } from '../../styles/theme'
 
 const BookSearchResult = () => {
   const location = useLocation()

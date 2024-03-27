@@ -1,13 +1,13 @@
 import { css } from '@emotion/react'
-import { AllLayout } from '../../components/Layouts'
-import { flexCenter } from '../../styles/common'
 import { Link } from 'react-router-dom'
+import { AllLayout } from '../../components/Layouts'
 import MyLogList from '../../components/mylog/MyLogList'
 import MyLogSearch from '../../components/mylog/MyLogSearch'
 
 import BookImg from '../../assets/images/book.png'
 import myLogSamples from '../../components/Sample/MyLogSample'
 import RecordButton from '../../components/mylog/RecordButton'
+import { flexCenter } from '../../styles/theme'
 
 const MyLog = () => {
   const myLogs = myLogSamples // 나의 로그 기록 있음

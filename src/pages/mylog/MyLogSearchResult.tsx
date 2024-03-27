@@ -1,13 +1,13 @@
 import { css } from '@emotion/react'
-import { AllLayout } from '../../components/Layouts'
-import { flexCenter } from '../../styles/common'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { useMyLogSearchQuery } from '../../hooks/useMyLogSearchQuery'
-import MyLogSearch from '../../components/mylog/MyLogSearch'
-import { Book } from '../../types/book'
+import { AllLayout } from '../../components/Layouts'
 import MyLogList from '../../components/mylog/MyLogList'
+import MyLogSearch from '../../components/mylog/MyLogSearch'
 import RecordButton from '../../components/mylog/RecordButton'
+import { useMyLogSearchQuery } from '../../hooks/useMyLogSearchQuery'
+import { flexCenter } from '../../styles/theme'
+import { Book } from '../../types/book'
 
 const MyLogSearchResult = () => {
   const [myLogList, setMyLogList] = useState<Book[]>([])

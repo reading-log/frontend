@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { AllLayout } from '../../components/Layouts'
 import BookSearch from '../../components/mylog/BookSearch'
-import { flexCenter } from '../../styles/common'
+import { flexCenter } from '../../styles/theme'
 
 const BookSearchPage = () => {
   return (

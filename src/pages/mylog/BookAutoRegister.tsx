@@ -1,9 +1,9 @@
 import { css } from '@emotion/react'
-import { AllLayout } from '../../components/Layouts'
-import { flexCenter } from '../../styles/common'
-import BookInput from '../../components/mylog/BookInput'
 import { useLocation } from 'react-router-dom'
 import BookImg from '../../assets/images/book.png'
+import { AllLayout } from '../../components/Layouts'
+import BookInput from '../../components/mylog/BookInput'
+import { flexCenter } from '../../styles/theme'
 
 const BookAutoRegister = () => {
   const location = useLocation()

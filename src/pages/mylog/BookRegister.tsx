@@ -1,8 +1,9 @@
 import { css } from '@emotion/react'
 import { AllLayout } from '../../components/Layouts'
-import { flexCenter } from '../../styles/common'
+
 import BookImg from '../../assets/images/book.png'
 import BookInput from '../../components/mylog/BookInput'
+import { flexCenter } from '../../styles/theme'
 
 const BookRegister = () => {
   return (
