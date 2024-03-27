@@ -28,17 +28,14 @@ const Feed: React.FC<FeedProps> = ({ feed }) => {
 
   return (
     <div css={feedBox}>
-      <BookInfo feed={feed} />
-
       <div css={userInfo}>
         <span onClick={() => handleFeedClick(feed)}>{feed.nickname}</span>
-        <span onClick={() => handleFeedClick(feed)}>{feed.date}</span>
-
         <span css={likeBox}>
           <img src={imageSrc} onClick={handleToggle} alt="Like" />
           <span>{feed.like}</span>
         </span>
       </div>
+      <BookInfo feed={feed} />
     </div>
   )
 }
@@ -53,32 +50,27 @@ const feedBox = css`
 `
 
 const userInfo = css`
+  background-color: #eae5e5;
   display: flex;
   align-items: center;
-  justify-content: right;
   width: 100%;
-  height: 30px;
-  font-size: 13px;
-  span {
-    margin-right: 10px;
-    &:last-of-type {
-      margin-right: 15px;
-    }
-  }
-  img {
-    width: 15px;
-    margin-top: 2px;
-    margin-left: 10px;
-    margin-right: 5px;
+  height: auto;
+  border-radius: 6px;
+  span:nth-of-type(1) {
+    font-size: 14px;
+    padding: 12px 20px 12px 20px;
+    margin-right: auto;
   }
 `
 
 const likeBox = css`
   display: flex;
   align-items: center;
-  float: right;
+  margin-left: auto;
   img {
     width: 18px;
-    margin-right: 10px;
+  }
+  span {
+    margin-left: -0.5rem;
   }
 `

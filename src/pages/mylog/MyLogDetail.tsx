@@ -1,13 +1,14 @@
+import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { HeaderLayout } from '../../components/Layouts'
 import { css } from '@emotion/react'
 import { Highlight } from '../../types/feed'
 import FeedDetail from '../../components/readinglog/FeedDetail'
-import { useState } from 'react'
+import SnowmanButton from '../../components/mylog/SnowmanButton'
 
-const ReadingLogDetail = () => {
+const MyLogDetail = () => {
   const location = useLocation()
-  const { feed } = location.state
+  const { myLog } = location.state
   const [showHighlight, setShowHighlight] = useState(true) // 처음에 하이라이트를 보이기
   const [showReview, setShowReview] = useState(false) // 처음에 서평은 숨김
 
@@ -21,15 +22,20 @@ const ReadingLogDetail = () => {
     setShowHighlight(false)
   }
 
+  console.log('highlight', myLog.highlight)
+
   return (
     <HeaderLayout>
-      <div css={readingLogDetailBox}>
-        <FeedDetail feed={feed} />
+      <div css={myLogDetailBox}>
+        <FeedDetail feed={myLog} />
 
         <div css={outterBox}>
           <div css={oneLineInnerBox}>
-            <p>한 줄 평</p>
-            <p>{feed.oneLine}</p>
+            <div>
+              한 줄 평
+              <SnowmanButton />
+            </div>
+            <div>{myLog.oneLine}</div>
           </div>
         </div>
 
@@ -63,24 +69,26 @@ const ReadingLogDetail = () => {
           >
             서평
           </span>
-          {feed.highlight.map((highlight: Highlight, id: number) => (
-            <div css={showHighlight ? innerBox : [hide, innerBox]} key={id}>
+          <SnowmanButton />
+          {myLog.highlight.map((highlight: Highlight, id: number) => (
+            <div key={id} css={showHighlight ? innerBox : [hide, innerBox]}>
               <p>{highlight.content}</p>
               <p>p.{highlight.page}</p>
             </div>
           ))}
           <div css={showReview ? innerBox : [hide, innerBox]}>
-            <span>{feed.review}</span>
+            <p>{myLog.review}</p>
           </div>
+          <button css={plus}>+</button>
         </div>
       </div>
     </HeaderLayout>
   )
 }
 
-export default ReadingLogDetail
+export default MyLogDetail
 
-const readingLogDetailBox = css`
+const myLogDetailBox = css`
   background: #eae5e5;
   border: 1px solid #c1b2b2;
   border-radius: 6px;
@@ -102,7 +110,7 @@ const oneLineInnerBox = css`
   background: #ffffff;
   font-size: 12px;
   padding: 0rem;
-  p {
+  div {
     &:nth-of-type(1) {
       font-size: 16px;
       font-weight: bold;
@@ -136,4 +144,15 @@ const innerBox = css`
 
 const hide = css`
   display: none;
+`
+
+const plus = css`
+  background: #dad1d1;
+  width: 100%;
+  height: 29px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 6px;
+  margin: auto;
+  margin-top: 1rem;
 `

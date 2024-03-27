@@ -1,9 +1,9 @@
 export interface Highlight {
-  content: string[]
   page: number
+  content: string
 }
 
-export type FeedType = {
+export interface FeedType {
   id: number
   profileImg: string
   nickname: string
@@ -19,10 +19,6 @@ export type FeedType = {
   review: string
 }
 
-export type FeedProps = {
+export interface FeedProps {
   feed: FeedType
-}
-
-export type CategoryProps = {
-  selectedCategory: string
 }
