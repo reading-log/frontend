@@ -1,34 +1,39 @@
 import { css } from '@emotion/react'
 import { AllLayout } from '../../components/Layouts'
 import { flexCenter } from '../../styles/common'
-import BookList from '../../components/mylog/BookList'
-import BookSearch from '../../components/mylog/BookSearch'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { FeedType } from '../../types/feed'
-
-import BookImg from '../../assets/images/book.png'
 import { useMyLogSearchQuery } from '../../hooks/useMyLogSearchQuery'
+import MyLogSearch from '../../components/mylog/MyLogSearch'
+import { Book } from '../../types/book'
+import MyLogList from '../../components/mylog/MyLogList'
+import RecordButton from '../../components/mylog/RecordButton'
 
 const MyLogSearchResult = () => {
-  const [bookList, setBookList] = useState<FeedType[]>([])
+  const [myLogList, setMyLogList] = useState<Book[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
   const searchResult = useMyLogSearchQuery(keyword).data
 
   useEffect(() => {
-    setBookList(searchResult)
+    setMyLogList(searchResult)
   }, [searchResult])
   return (
     <>
       <AllLayout>
         <div css={feedContainer}>
-          <BookSearch placeholder={keyword} />
-          {bookList.length !== 0 ? (
-            <BookList bookList={bookList} />
-          ) : (
+          <MyLogSearch placeholder={keyword} />
+
+          {myLogList === undefined || myLogList === null || myLogList.length === 0 ? (
             <>
-              {/* <img src={BookImg} css={image} /> */}
+              {/* 키워드 검색 시 해당 로그 목록이 없을 경우 */}
+              <h1
+                css={css`
+                  margin-top: 3rem;
+                `}
+              >
+                로그 검색 결과가 없습니다.
+              </h1>
               <Link
                 to="/mylog/books"
                 css={css`
@@ -37,6 +42,12 @@ const MyLogSearchResult = () => {
               >
                 ️✍️ 책 등록하기 ✍
               </Link>
+            </>
+          ) : (
+            <>
+              {/* 키워드 검색 시 해당 로그 목록이 있을 경우 */}
+              <MyLogList myLogList={myLogList} />
+              <RecordButton />
             </>
           )}
         </div>
@@ -55,10 +66,4 @@ const feedContainer = css`
     color: #836565;
     font-weight: bold;
   }
-`
-
-const image = css`
-  width: 200px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 `

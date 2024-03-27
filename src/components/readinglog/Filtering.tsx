@@ -1,15 +1,42 @@
-import { useState } from 'react'
+import { css } from '@emotion/react'
+import categories from '../../components/Sample/CategorySample'
 
-const Filtering = () => {
-  const [select, setSelect] = useState('new')
-
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelect(e.target.value)
+interface FilteringProps {
+  setCategoryId: (categoryId: number) => void
+  selectedCategory: string
+  setSelectedCategory: (categoryName: string) => void
+  filterName: string
+  setFilterName: (filterName: string) => void
+}
+const Filtering: React.FC<FilteringProps> = ({ setCategoryId, selectedCategory, setSelectedCategory, filterName, setFilterName }) => {
+  const handleClick = (categoryName: string, categoryId: number) => {
+    setSelectedCategory(categoryName)
+    setCategoryId(categoryId)
   }
+
   return (
     <>
-      <select value={select} onChange={handleSelect}>
-        <option value="new">최신순</option>
+      <div css={categoryBox}>
+        <div>
+          {categories.map(
+            (category, id) =>
+              id < 6 && (
+                <span
+                  key={id}
+                  onClick={() => handleClick(category.name, category.categoryId)}
+                  css={css`
+                    font-weight: ${selectedCategory === category.name ? 'bold' : ''};
+                  `}
+                >
+                  {category.name}
+                </span>
+              ),
+          )}
+        </div>
+      </div>
+
+      <select value={filterName} onChange={e => setFilterName(e.target.value)}>
+        <option value="latest">최신순</option>
         <option value="popular">인기순</option>
       </select>
     </>
@@ -17,3 +44,22 @@ const Filtering = () => {
 }
 
 export default Filtering
+
+const categoryBox = css`
+  display: flex;
+  align-items: center;
+  background-color: #f3f0f0;
+  width: 80%;
+  height: 33px;
+  border-radius: 6px;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  div {
+    padding: 0;
+    margin: auto;
+    span {
+      margin-right: 10px;
+      float: left;
+    }
+  }
+`

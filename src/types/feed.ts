@@ -1,6 +1,6 @@
 export interface Highlight {
-  content: string
   page: number
+  content: string
 }
 
 export interface FeedType {

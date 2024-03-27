@@ -24,8 +24,7 @@ export default RecordButton
 const recordBtn = css`
   color: #836565;
   font-size: 16px;
-  position: fixed;
-  z-index: 10;
+  font-weight: bold;
   button {
     background: #ddd5d5;
     width: 47px;

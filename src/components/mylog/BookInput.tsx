@@ -12,7 +12,7 @@ interface BookProp {
 const BookInput: React.FC<BookProp> = ({ isActive, bookInfo }) => {
   const { register, watch, handleSubmit } = useForm()
 
-  const selectCategory = categories.filter(category => category !== '전체')
+  const selectCategory = categories.filter(category => category.name !== '전체')
 
   const onSubmit = () => {
     console.log(watch('title'))
@@ -25,15 +25,15 @@ const BookInput: React.FC<BookProp> = ({ isActive, bookInfo }) => {
     <form css={form} method="POST" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <span>제목:</span>
-        <input {...register('title')} placeholder={'제목을 입력하세요'} value={isActive ? watch('title') : bookInfo[0].title} readOnly={!isActive} css={isActive ? inputRegister : ''} />
+        <input {...register('title')} placeholder={'제목을 입력하세요'} value={isActive ? watch('title') : bookInfo.title} readOnly={!isActive} css={isActive ? inputRegister : ''} />
       </div>
       <div>
         <span>지은이:</span>
-        <input {...register('author')} placeholder="지은이를 입력하세요" value={isActive ? watch('author') : bookInfo[0].author} readOnly={!isActive} css={isActive ? inputRegister : ''} />
+        <input {...register('author')} placeholder="지은이를 입력하세요" value={isActive ? watch('author') : bookInfo.author} readOnly={!isActive} css={isActive ? inputRegister : ''} />
       </div>
       <div>
         <span>출판사:</span>
-        <input {...register('publisher')} placeholder="출판사를 입력하세요" value={isActive ? watch('publisher') : bookInfo[0].publisher} readOnly={!isActive} css={isActive ? inputRegister : ''} />
+        <input {...register('publisher')} placeholder="출판사를 입력하세요" value={isActive ? watch('publisher') : bookInfo.publisher} readOnly={!isActive} css={isActive ? inputRegister : ''} />
       </div>
       <div>
         <span>카테고리:</span>
@@ -42,7 +42,7 @@ const BookInput: React.FC<BookProp> = ({ isActive, bookInfo }) => {
             카테고리를 선택하세요
           </option>
           {selectCategory.map((category, id) => (
-            <option key={id}>{category}</option>
+            <option key={id}>{category.name}</option>
           ))}
         </select>
       </div>

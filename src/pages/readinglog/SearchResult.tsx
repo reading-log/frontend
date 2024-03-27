@@ -5,18 +5,16 @@ import { flexCenter } from '../../styles/common'
 import Search from '../../components/readinglog/Search'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useSearchQuery } from '../../hooks/useSearchQuery'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FeedType } from '../../types/feed'
 import Filtering from '../../components/readinglog/Filtering'
-
-import categories from '../../components/Sample/CategorySample'
+import { useFeedInfiniteScroll } from '../../hooks/useFeedInfiniteScroll'
 
 const SearchResult = () => {
   const [selectedCategory, setSelectedCategory] = useState('전체')
+  const [categoryId, setCategoryId] = useState(0)
+  const [filterName, setFilterName] = useState('latest')
 
-  const handleClick = (category: string) => {
-    setSelectedCategory(category)
-  }
   const [logs, setLogs] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
@@ -29,39 +27,28 @@ const SearchResult = () => {
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const feedByCategory = selectedCategory === '전체' ? logs : logs.filter(feed => selectedCategory === feed.category)
 
-  const navigate = useNavigate()
-  const handleFeedClick = (feed: FeedType) => {
-    navigate('/readinglog/detail', { state: { feed } })
-  }
+  console.log('feedByCategory', feedByCategory)
+  console.log('searchResult', searchResult)
 
   return (
     <AllLayout>
       <div css={feedContainer}>
         <Search placeholder={keyword} />
 
-        <div css={categoryBox}>
-          <div>
-            {categories.map(
-              (category, id) =>
-                id < 6 && (
-                  <span
-                    key={id}
-                    onClick={() => handleClick(category)}
-                    css={css`
-                      font-weight: ${selectedCategory === category ? 'bold' : ''};
-                    `}
-                  >
-                    {category}
-                  </span>
-                ),
-            )}
-          </div>
-        </div>
-
-        <Filtering />
-
+        <Filtering setCategoryId={setCategoryId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} filterName={filterName} setFilterName={setFilterName} />
+        <span
+          css={
+            feedByCategory.length === 0 || feedByCategory === null || feedByCategory === undefined
+              ? show
+              : css`
+                  display: none;
+                `
+          }
+        >
+          검색 결과가 없습니다.
+        </span>
         {feedByCategory.map((feed, id) => (
-          <span key={id} onClick={() => handleFeedClick(feed)}>
+          <span key={id}>
             <Feed feed={feed} />
           </span>
         ))}
@@ -77,24 +64,7 @@ const feedContainer = css`
   flex-direction: column;
 `
 
-const categoryBox = css`
-  display: flex;
-  align-items: center;
-  background-color: #f3f0f0;
-  width: 80%;
-  height: 33px;
-  border-radius: 6px;
-  margin-top: 60px;
-  margin-bottom: 15px;
-  div {
-    padding: 0;
-    margin: auto;
-    span {
-      margin-right: 10px;
-      float: left;
-      .active {
-        font-weight: 800;
-      }
-    }
-  }
+const show = css`
+  display: inline;
+  margin-top: 1rem;
 `

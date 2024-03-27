@@ -10,16 +10,12 @@ const BookInfo: React.FC<FeedProps> = ({ feed }) => {
   }
 
   return (
-    <div>
-      <div css={bookTitle} onClick={() => handleFeedClick(feed)}>
-        <span>{feed.title}</span>
-      </div>
-
-      <div css={bookInfo} onClick={() => handleFeedClick(feed)}>
-        <div css={tempImg}>
-          <img src={feed.bookImg} alt="BookImg" />
-        </div>
-        <span>"{feed.oneLine}"</span>
+    <div css={bookInfo} onClick={() => handleFeedClick(feed)}>
+      <img src={feed.bookImg} alt="BookImg" />
+      <div css={textContainer}>
+        <p>{feed.title}</p>
+        <p>{feed.author}</p>
+        <p>"{feed.oneLine}"</p>
       </div>
     </div>
   )
@@ -27,41 +23,33 @@ const BookInfo: React.FC<FeedProps> = ({ feed }) => {
 
 export default BookInfo
 
-const bookTitle = css`
-  display: flex;
-  align-items: center;
-  background-color: #f3f0f0;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  span {
-    font-size: 16px;
-    padding: 12px 20px 12px 20px;
-    margin: auto;
-  }
-`
-
 const bookInfo = css`
   display: flex;
   width: 93%;
-  height: 100px;
-  margin-top: 15px;
-  span {
-    width: 70%;
-    font-size: 13px;
-    margin-top: 15px;
-    margin-left: 15px;
+  height: auto;
+  margin: 1rem;
+  img {
+    width: 6.5rem;
+    height: auto;
+    margin-bottom: 1rem;
   }
 `
 
-const tempImg = css`
-  background: #d9d9d9;
-  display: inline-block;
-  width: 80px;
-  height: auto;
+const textContainer = css`
+  display: flex;
+  flex-direction: column;
   margin-left: 15px;
-  img {
-    width: 80px;
-    height: auto;
+  p {
+    font-size: 12px;
+    line-height: 1rem;
+    margin-top: 0.5rem;
+    &:nth-of-type(1) {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.2rem;
+    }
+    &:last-of-type {
+      margin-top: 1.5rem;
+    }
   }
 `

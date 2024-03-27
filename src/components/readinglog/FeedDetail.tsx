@@ -60,7 +60,6 @@ const bookInfo = css`
   display: flex;
   width: 100%;
   height: auto;
-  border-radius: 0 0 6px 6px;
   padding: 1rem;
   margin-top: 15px;
   p {

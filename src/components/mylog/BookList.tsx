@@ -1,16 +1,16 @@
 import { css } from '@emotion/react'
-import { FeedType } from '../../types/feed'
 import { useNavigate } from 'react-router-dom'
+import { Book } from '../../types/book'
 
 interface BookList {
-  bookList: FeedType[]
+  bookList: Book[]
 }
 
 const BookList: React.FC<BookList> = ({ bookList }) => {
   const navigate = useNavigate()
 
-  const handleClick = () => {
-    navigate('/mylog/book_auto_register', { state: { bookList } })
+  const handleClick = (book: Book) => {
+    navigate('/mylog/book_auto_register', { state: { book } })
   }
 
   return (
@@ -20,12 +20,12 @@ const BookList: React.FC<BookList> = ({ bookList }) => {
       `}
     >
       {bookList.map((book, id) => (
-        <div key={id} css={bookBox} onClick={handleClick}>
+        <div key={id} css={bookBox} onClick={() => handleClick(book)}>
+          <img src={book.cover} />
           <div css={contentWrapper}>
-            <img src={book.bookImg} />
-            <span>{book.title}</span>
-            <span>{book.author}</span>
-            <span>{book.publisher}</span>
+            <p>{book.title}</p>
+            <p>{book.author}</p>
+            <p>{book.publisher}</p>
           </div>
         </div>
       ))}
@@ -37,16 +37,27 @@ export default BookList
 
 const bookBox = css`
   background: #eae5e5;
+  display: flex;
   height: auto;
   border-radius: 6px;
   padding: 1rem;
   margin-bottom: 0.5rem;
   img {
-    width: 70px;
+    width: 6.5rem;
   }
 `
 
 const contentWrapper = css`
-  display: flex;
-  align-items: center;
+  p {
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
+    &:nth-of-type(1) {
+      margin-top: 1rem;
+    }
+  }
 `

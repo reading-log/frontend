@@ -30,13 +30,13 @@ const MyLog = () => {
               </Link>
             </>
           ) : (
-            <>
-              <div css={searchBar}>
-                <MyLogSearch placeholder="나의 로그 검색하기" />
-                <MyLogList myLogList={myLogs} />
+            <div>
+              <MyLogSearch placeholder="나의 로그 검색하기" />
+              <MyLogList myLogList={myLogs} />
+              <div css={recordBtn}>
                 <RecordButton />
               </div>
-            </>
+            </div>
           )}
         </div>
       </AllLayout>
@@ -49,6 +49,7 @@ const feedContainer = css`
   ${flexCenter}
   flex-direction: column;
   height: 100%;
+  text-align: center;
   a {
     color: #836565;
     font-weight: bold;
@@ -61,9 +62,9 @@ const image = css`
   margin-bottom: 2rem;
 `
 
-const searchBar = css`
-  form {
-    top: 0.11rem;
-    position: relative;
-  }
+const recordBtn = css`
+  margin-top: -22.5rem;
+  margin-left: 17rem;
+  position: fixed;
+  z-index: 10;
 `

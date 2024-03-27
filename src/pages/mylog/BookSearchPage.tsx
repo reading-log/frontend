@@ -3,7 +3,7 @@ import { AllLayout } from '../../components/Layouts'
 import BookSearch from '../../components/mylog/BookSearch'
 import { flexCenter } from '../../styles/common'
 
-const Record = () => {
+const BookSearchPage = () => {
   return (
     <>
       <AllLayout>
@@ -15,7 +15,7 @@ const Record = () => {
   )
 }
 
-export default Record
+export default BookSearchPage
 
 const feedContainer = css`
   ${flexCenter}

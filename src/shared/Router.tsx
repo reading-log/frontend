@@ -11,6 +11,7 @@ import BookAutoRegister from '../pages/mylog/BookAutoRegister'
 import BookSearchResult from '../pages/mylog/BookSearchResult'
 import MyLogSearchResult from '../pages/mylog/MyLogSearchResult'
 import BookSearchPage from '../pages/mylog/BookSearchPage'
+import MyLogDetail from '../pages/mylog/MyLogDetail'
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/readinglog/search" element={<SearchResult />} />
         {/* 나의 로그 메뉴 페이지 */}
         <Route path="/mylog" element={<MyLog />} />
+        <Route path="/mylog/detail" element={<MyLogDetail />} />
         <Route path="/mylog/search" element={<MyLogSearchResult />} />
         <Route path="/mylog/books" element={<BookSearchPage />} />
         <Route path="/mylog/books/search" element={<BookSearchResult />} />
