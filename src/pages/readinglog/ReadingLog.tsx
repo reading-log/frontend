@@ -15,10 +15,10 @@ const ReadingLog = () => {
   const containerRef = useRef(null)
 
   // useFeedInfiniteScroll 훅을 사용하여 피드 데이터 가져오기
-  const { getFeed, fetchNextPage, isSuccess, hasNextPage, refetch } = useFeedInfiniteScroll(selectedCategory, categoryId, filterName)
+  const { getFeed, fetchNextPage, isSuccess, hasNextPage } = useFeedInfiniteScroll(selectedCategory, categoryId, filterName)
 
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
-  const feedByCategory = isSuccess ? getFeed.pages.flatMap(page => page.feeds) : []
+  const feedByCategory = isSuccess ? getFeed?.pages.flatMap(page => page.feeds) : []
 
   // Intersection Observer 콜백 함수
   const handleObserver = (entities: any[]) => {
@@ -55,7 +55,7 @@ const ReadingLog = () => {
         <Search placeholder="책 제목으로 검색하기" />
         <Filtering setCategoryId={setCategoryId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} filterName={filterName} setFilterName={setFilterName} />
 
-        {feedByCategory.map((feed, id) => (
+        {feedByCategory?.map((feed, id) => (
           <span key={id}>
             <Feed feed={feed} />
           </span>

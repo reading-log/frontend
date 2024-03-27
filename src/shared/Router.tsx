@@ -13,6 +13,7 @@ import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogSearchResult from '../pages/mylog/MyLogSearchResult'
 import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
 import SearchResult from '../pages/readinglog/SearchResult'
+import ReadingLog from '../pages/readinglog/ReadingLog'
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
         {/**회원가입 */}
         <Route path="/join" element={<Join />} />
 
+        <Route path="/readinglog" element={<ReadingLog />} />
         <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
         <Route path="/readinglog/search" element={<SearchResult />} />
         {/* 나의 로그 메뉴 페이지 */}

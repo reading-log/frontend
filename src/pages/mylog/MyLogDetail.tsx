@@ -4,6 +4,7 @@ import { HeaderLayout } from '../../components/Layouts'
 import { css } from '@emotion/react'
 import { Highlight } from '../../types/feed'
 import FeedDetail from '../../components/readinglog/FeedDetail'
+import SnowmanButton from '../../components/mylog/SnowmanButton'
 
 const MyLogDetail = () => {
   const location = useLocation()
@@ -30,8 +31,11 @@ const MyLogDetail = () => {
 
         <div css={outterBox}>
           <div css={oneLineInnerBox}>
-            <p>한 줄 평</p>
-            <p>{myLog.oneLine}</p>
+            <div>
+              한 줄 평
+              <SnowmanButton />
+            </div>
+            <div>{myLog.oneLine}</div>
           </div>
         </div>
 
@@ -65,6 +69,7 @@ const MyLogDetail = () => {
           >
             서평
           </span>
+          <SnowmanButton />
           {myLog.highlight.map((highlight: Highlight, id: number) => (
             <div key={id} css={showHighlight ? innerBox : [hide, innerBox]}>
               <p>{highlight.content}</p>
@@ -105,7 +110,7 @@ const oneLineInnerBox = css`
   background: #ffffff;
   font-size: 12px;
   padding: 0rem;
-  p {
+  div {
     &:nth-of-type(1) {
       font-size: 16px;
       font-weight: bold;

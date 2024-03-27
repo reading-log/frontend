@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from 'react-query'
-import axios from 'axios'
+// import axios from 'axios'
+
 import extendedFeedSamples from '../components/Sample/FeedSample'
-import { API_BASE_URL } from '../apis/api'
 
 /* 피드 무한 스크롤 */
 export const useFeedInfiniteScroll = (category: string, categoryId: number, filterName: string) => {
@@ -11,7 +11,7 @@ export const useFeedInfiniteScroll = (category: string, categoryId: number, filt
     //     const startIndex = pageParam * pageSize
     //     const endIndex = startIndex + pageSize
 
-    //     const response = await axios.get(`${API_BASE_URL}/feeds/${categoryId}/${filterName}?pageSize=${pageSize}&startIndex=${startIndex}&page=${pageParam}`)
+    //     const response = await axios.get(`api/feeds/${categoryId}/${filterName}?pageSize=${pageSize}&startIndex=${startIndex}&page=${pageParam}`)
     //     const { data } = response
     //     let allFeed = data.feeds
 

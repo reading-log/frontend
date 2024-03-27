@@ -18,40 +18,50 @@ const SearchResult = () => {
   const [logs, setLogs] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
-  const searchResult = useSearchQuery(keyword).data
+  const { data, isLoading } = useSearchQuery(keyword) // 리딩로그 검색 훅
 
   useEffect(() => {
-    setLogs(searchResult)
-  }, [searchResult])
+    setLogs(data)
+  }, [data])
 
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const feedByCategory = selectedCategory === '전체' ? logs : logs.filter(feed => selectedCategory === feed.category)
 
   console.log('feedByCategory', feedByCategory)
-  console.log('searchResult', searchResult)
+  console.log('data', data)
 
   return (
     <AllLayout>
       <div css={feedContainer}>
         <Search placeholder={keyword} />
-
-        <Filtering setCategoryId={setCategoryId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} filterName={filterName} setFilterName={setFilterName} />
-        <span
-          css={
-            feedByCategory.length === 0 || feedByCategory === null || feedByCategory === undefined
-              ? show
-              : css`
-                  display: none;
-                `
-          }
-        >
-          검색 결과가 없습니다.
-        </span>
-        {feedByCategory.map((feed, id) => (
-          <span key={id}>
-            <Feed feed={feed} />
-          </span>
-        ))}
+        {isLoading ? (
+          <div>로딩 중</div>
+        ) : (
+          <>
+            <Filtering setCategoryId={setCategoryId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} filterName={filterName} setFilterName={setFilterName} />
+            {feedByCategory?.length > 0 ? (
+              <>
+                {/* 키워드 검색 시 해당 로그 목록이 있을 경우 */}
+                {feedByCategory.map((feed, id) => (
+                  <span key={id}>
+                    <Feed feed={feed} />
+                  </span>
+                ))}
+              </>
+            ) : (
+              <>
+                {/* 키워드 검색 시 해당 로그 목록이 없을 경우 */}
+                <span
+                  css={css`
+                    margin-top: 1rem;
+                  `}
+                >
+                  검색 결과가 없습니다.
+                </span>
+              </>
+            )}
+          </>
+        )}
       </div>
     </AllLayout>
   )
@@ -62,9 +72,4 @@ export default SearchResult
 const feedContainer = css`
   ${flexCenter}
   flex-direction: column;
-`
-
-const show = css`
-  display: inline;
-  margin-top: 1rem;
 `

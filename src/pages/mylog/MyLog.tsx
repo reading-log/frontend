@@ -8,16 +8,25 @@ import BookImg from '../../assets/images/book.png'
 import myLogSamples from '../../components/Sample/MyLogSample'
 import RecordButton from '../../components/mylog/RecordButton'
 import { flexCenter } from '../../styles/theme'
+import { Book } from '../../types/book'
 
 const MyLog = () => {
-  const myLogs = myLogSamples // 나의 로그 기록 있음
-  // const myLogs = null //나의 로그 기록 없음
+  const myLogs: Book[] = myLogSamples // 나의 로그 기록 있음
+  // const myLogs = '' //나의 로그 기록 없음
 
   return (
     <div>
       <AllLayout>
         <div css={feedContainer}>
-          {myLogs === null ? (
+          {myLogs?.length > 0 ? (
+            <div>
+              <MyLogSearch placeholder="나의 로그 검색하기" />
+              <MyLogList myLogList={myLogs} />
+              <div css={recordBtn}>
+                <RecordButton />
+              </div>
+            </div>
+          ) : (
             <>
               <img src={BookImg} css={image} />
               <Link
@@ -29,14 +38,6 @@ const MyLog = () => {
                 ️✍️ 기록하기 ✍
               </Link>
             </>
-          ) : (
-            <div>
-              <MyLogSearch placeholder="나의 로그 검색하기" />
-              <MyLogList myLogList={myLogs} />
-              <div css={recordBtn}>
-                <RecordButton />
-              </div>
-            </div>
           )}
         </div>
       </AllLayout>
