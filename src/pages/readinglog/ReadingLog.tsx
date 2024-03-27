@@ -1,11 +1,11 @@
 import { css } from '@emotion/react'
+import { useEffect, useRef, useState } from 'react'
 import { AllLayout } from '../../components/Layouts'
 import Feed from '../../components/readinglog/Feed'
-import Search from '../../components/readinglog/Search'
-import { flexCenter } from '../../styles/common'
 import Filtering from '../../components/readinglog/Filtering'
-import { useEffect, useRef, useState } from 'react'
+import Search from '../../components/readinglog/Search'
 import { useFeedInfiniteScroll } from '../../hooks/useFeedInfiniteScroll'
+import { flexCenter } from '../../styles/theme'
 
 const ReadingLog = () => {
   const [selectedCategory, setSelectedCategory] = useState('전체')

@@ -8,27 +8,19 @@ export const globalStyles = css`
     margin: auto;
     position: relative;
     background-color: #fcfcfb;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   body {
     width: 100vw;
     height: 100vh;
-    color: #002020;
+    color: #000000;
     margin: 0;
 
-    margin: auto;
     /*웹 배경 이미지색 맞추기*/
     background-color: #f4f5f4;
     /*단어 넘치면 쪼개기*/
     word-break: break-all;
-
-    div {
-      /**
-      Todo:
-      나중에 폰트 설정하기 
-      */
-      font-family: 'Noto Sans KR', sans-serif;
-    }
 
     /*텍스트 줄 높이*/
     line-height: normal;
@@ -57,8 +49,8 @@ export const globalStyles = css`
 
   /*엘리먼트 전체 적용*/
   * {
-    box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
     resize: none;
     /* 인풋 포커스 해제 */
     &:focus {
