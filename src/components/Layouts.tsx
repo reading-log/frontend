@@ -7,15 +7,19 @@ interface ILayoutProps {
   children: React.ReactNode
 }
 
+/**default 레이아웃 */
+export const DefaultLayout = ({ children }: ILayoutProps) => {
+  return <div css={containerDefault}>{children}</div>
+}
+
 /** 헤더만 있는 레이아웃 */
 export const HeaderLayout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Topbar />
-      <div css={[containerHeaderBox, container]}>{children}</div>
-      {/* <div css={container}>
+      <div css={container}>
         <div css={containerHeaderBox}>{children}</div>
-      </div> */}
+      </div>
     </>
   )
 }
@@ -50,7 +54,6 @@ const container = css`
   position: absolute;
   overflow: auto;
   height: calc(100vh - 4rem);
-  background-color: #aaaaaa;
 `
 
 const containerHeaderBox = css`
@@ -60,4 +63,15 @@ const containerHeaderBox = css`
 
 const containerBox = css`
   padding: 1rem;
+`
+
+/**스플래쉬 박스 */
+const containerDefault = css`
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
