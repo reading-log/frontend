@@ -73,11 +73,4 @@ const sortButton = css`
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
   }
-  form {
-    display: inline-block;
-    float: right;
-    button {
-      background: #dad1d1;
-    }
-  }
 `
