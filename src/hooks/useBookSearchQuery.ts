@@ -1,22 +1,22 @@
 import { useQuery } from 'react-query'
-import { axiosBookSearchResult } from '../apis/myLogApi'
+import axios from 'axios'
 
-export const useBookSearchQuery = (keyword: string) => {
+/* 나의로그 책 검색 */
+export const useBookSearchQuery = (searchKeyword: string) => {
   return useQuery(
-    ['search', keyword],
+    ['MyLogBookSearch', searchKeyword],
     async () => {
-      try {
-        const data = await axiosBookSearchResult(keyword)
-        // 대소문자 필터링
-        const filteredBooks = data.filter((bookList: { title: string }) => bookList.title.toLowerCase().includes(keyword.toLowerCase()))
-        return filteredBooks
-      } catch (err) {
-        console.error('Error fetching search results:', err)
-        throw err
-      }
+      const response = await axios.get(`/api/books/search?q=${searchKeyword}`)
+      const { data } = response.data
+      return data.item
     },
     {
-      enabled: !!keyword, // 항상 true 값으로 고정
+      enabled: !!searchKeyword, //검색어가 있을때만 실행
+      onSuccess: data => {},
+      onError: error => {
+        console.error('Error fetching search results:', error)
+        throw error
+      },
     },
   )
 }

@@ -1,30 +1,38 @@
 import { useQuery } from 'react-query'
-// import axios from 'axios'
+import axios from 'axios'
+
 import extendedFeedSamples from '../components/Sample/FeedSample'
 
-export const useSearchQuery = (keyword: string) => {
+/* 리딩로그 피드 검색 */
+export const useSearchQuery = (searchKeyword: string) => {
   // return useQuery(
-  //   ['search', keyword],
+  //   ['ReadingLogSearch', searchKeyword],
   //   async () => {
-  //     try {
-  //       const res = await axios(`/api/readinglog/search?keyword=${keyword}`)
-  //       const data = res.data
-  //       return data.filter(feed => feed.title.toLowerCase().includes(keyword))
-  //     } catch (err) {
-  //       alert(err)
-  //     }
+  //     const res = await axios.get(`/api/readinglog/search?keyword=${searchKeyword}`)
+  //     const { data } = res
+  //     return data
   //   },
   //   {
-  //     enabled: !!keyword, // 항상 true 값으로 고정
+  //     enabled: !!searchKeyword, //검색어가 있을때만 실행
+  //     onSuccess: data => {},
+  //     onError: error => {
+  //       alert(error)
+  //       throw error
+  //     },
   //   },
   // )
   return useQuery(
-    ['search', keyword],
+    ['ReadingLogSearch', searchKeyword],
     () => {
-      return extendedFeedSamples.filter(feedSample => feedSample.title.toLowerCase().includes(keyword))
+      return extendedFeedSamples.filter(feedSample => feedSample.title.toLowerCase().includes(searchKeyword))
     },
     {
-      enabled: !!keyword, // 항상 true 값으로 고정
+      enabled: !!searchKeyword, // 검색어가 있을때만 실행
+      onSuccess: data => {},
+      onError: error => {
+        alert(error)
+        throw error
+      },
     },
   )
 }

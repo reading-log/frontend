@@ -10,7 +10,7 @@ import { flexCenter } from '../../styles/theme'
 const ReadingLog = () => {
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const [categoryId, setCategoryId] = useState(0)
-  const [filterName, setFilterName] = useState('latest')
+  const [filterName, setFilterName] = useState('createdAt')
 
   const containerRef = useRef(null)
 
@@ -46,8 +46,6 @@ const ReadingLog = () => {
       }
     }
   }, [containerRef, hasNextPage])
-
-  console.log('feedByCategory', feedByCategory)
 
   return (
     <AllLayout>

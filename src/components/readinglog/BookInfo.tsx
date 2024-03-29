@@ -11,11 +11,11 @@ const BookInfo: React.FC<FeedProps> = ({ feed }) => {
 
   return (
     <div css={bookInfo} onClick={() => handleFeedClick(feed)}>
-      <img src={feed.bookImg} alt="BookImg" />
+      <img src={feed.bookCover} alt="BookImg" />
       <div css={textContainer}>
-        <p>{feed.title}</p>
-        <p>{feed.author}</p>
-        <p>"{feed.oneLine}"</p>
+        <p>{feed.bookTitle}</p>
+        <p>{feed.bookAuthor}</p>
+        <p>"{feed.content}"</p>
       </div>
     </div>
   )

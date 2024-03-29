@@ -27,15 +27,18 @@ const SearchResult = () => {
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const feedByCategory = selectedCategory === '전체' ? logs : logs.filter(feed => selectedCategory === feed.category)
 
-  console.log('feedByCategory', feedByCategory)
-  console.log('data', data)
-
   return (
     <AllLayout>
       <div css={feedContainer}>
         <Search placeholder={keyword} />
         {isLoading ? (
-          <div>로딩 중</div>
+          <div
+            css={css`
+              margin-top: 3rem;
+            `}
+          >
+            로딩 중
+          </div>
         ) : (
           <>
             <Filtering setCategoryId={setCategoryId} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} filterName={filterName} setFilterName={setFilterName} />

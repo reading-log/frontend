@@ -4,6 +4,13 @@ export interface Highlight {
 }
 
 export interface FeedType {
+  bookAuthor: string
+  bookCover: string
+  bookTitle: string
+  content: string
+  createdAt: string
+
+  /* 피드 더미 데이터 타입 */
   id: number
   profileImg: string
   nickname: string
@@ -18,6 +25,15 @@ export interface FeedType {
   highlight: Highlight[]
   review: string
 }
+
+// export interface Feed {
+//   bookAuthor: string
+//   bookCover: string
+//   bookTitle: string
+//   content: string
+//   createdAt: string
+//   nickname: string
+// }
 
 export interface FeedProps {
   feed: FeedType

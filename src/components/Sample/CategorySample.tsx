@@ -1,5 +1,4 @@
 const categories = [
-  { name: '전체', categoryId: 0 },
   { name: '추리', categoryId: 1 },
   { name: '교육', categoryId: 2 },
   { name: '자기계발', categoryId: 3 },

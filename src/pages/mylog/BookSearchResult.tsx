@@ -17,8 +17,6 @@ const BookSearchResult = () => {
   const keyword = searchParams.get('q') || ''
   const { data, isLoading } = useBookSearchQuery(keyword)
 
-  console.log('data:', data)
-
   return (
     <>
       <AllLayout>

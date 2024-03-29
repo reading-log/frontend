@@ -18,6 +18,7 @@ const MyLogSearchResult = () => {
   useEffect(() => {
     setMyLogList(searchResult)
   }, [searchResult])
+
   return (
     <>
       <AllLayout>

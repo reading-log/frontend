@@ -27,7 +27,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         {/**회원가입 */}
         <Route path="/join" element={<Join />} />
-
+        {/* 리딩 로그 메뉴 페이지 */}
         <Route path="/readinglog" element={<ReadingLog />} />
         <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
         <Route path="/readinglog/search" element={<SearchResult />} />

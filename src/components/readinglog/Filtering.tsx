@@ -8,6 +8,7 @@ interface FilteringProps {
   filterName: string
   setFilterName: (filterName: string) => void
 }
+
 const Filtering: React.FC<FilteringProps> = ({ setCategoryId, selectedCategory, setSelectedCategory, filterName, setFilterName }) => {
   const handleClick = (categoryName: string, categoryId: number) => {
     setSelectedCategory(categoryName)
@@ -18,6 +19,14 @@ const Filtering: React.FC<FilteringProps> = ({ setCategoryId, selectedCategory, 
     <>
       <div css={categoryBox}>
         <div>
+          <span
+            onClick={() => setSelectedCategory('전체')}
+            css={css`
+              font-weight: ${selectedCategory === '전체' ? 'bold' : ''};
+            `}
+          >
+            전체
+          </span>
           {categories.map(
             (category, id) =>
               id < 6 && (
@@ -36,7 +45,7 @@ const Filtering: React.FC<FilteringProps> = ({ setCategoryId, selectedCategory, 
       </div>
 
       <select value={filterName} onChange={e => setFilterName(e.target.value)}>
-        <option value="latest">최신순</option>
+        <option value="createdAt">최신순</option>
         <option value="popular">인기순</option>
       </select>
     </>
