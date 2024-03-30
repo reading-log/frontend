@@ -15,7 +15,7 @@ export const useBookSearchQuery = (searchKeyword: string) => {
       onSuccess: data => {},
       onError: error => {
         console.error('Error fetching search results:', error)
-        throw error
+        return error
       },
     },
   )

@@ -3,13 +3,19 @@ import Snowman from '../../assets/images/SnowmanBtn.png'
 import { css } from '@emotion/react'
 import { ButtonType } from '../../types/button'
 
-const SnowmanButton: React.FC<ButtonType> = ({ setChangeOneLine, setChangeHighlight, setChangeReview }) => {
-  // 모바일 환경에서도 버튼 클릭하면 옵션 2가지가 바로 보이도록 함.
+interface SnowmanBtn extends ButtonType {
+  onClick?: () => void
+}
+const SnowmanButton: React.FC<SnowmanBtn> = ({ onClick, setChangeOneLine, setChangeHighlight, setChangeReview }) => {
   const [isSelectVisible, setIsSelectVisible] = useState(false)
 
-  const handleChangeClick = () => {
+  const handleToggle = () => {
     // 수정&삭제 버튼(보이기 or 숨기기)
     setIsSelectVisible(prev => !prev)
+  }
+
+  const handleChangeClick = () => {
+    onClick && onClick() // 해당 요소만 수정
 
     if (setChangeOneLine) {
       setChangeOneLine(true) // 한 줄 평 수정하기
@@ -21,16 +27,13 @@ const SnowmanButton: React.FC<ButtonType> = ({ setChangeOneLine, setChangeHighli
   }
 
   const handleDeleteClick = () => {
-    // 수정&삭제 버튼(보이기 or 숨기기)
-    setIsSelectVisible(prev => !prev)
+    onClick && onClick() // 해당 요소만 식제
     console.log('삭제')
   }
 
-  const summaryId = 1234 // 임시
-
   return (
     <div css={snowmanBtn}>
-      <button onClick={() => setIsSelectVisible(prev => !prev)}>
+      <button onClick={handleToggle}>
         <img src={Snowman} alt="menu" />
       </button>
 
@@ -39,7 +42,6 @@ const SnowmanButton: React.FC<ButtonType> = ({ setChangeOneLine, setChangeHighli
           <button onClick={handleChangeClick}>수정</button>
 
           <form onSubmit={e => e.preventDefault()}>
-            {/* <form method="DELETE" action={`/api/summaries/${summaryId}`}> */}
             <button onClick={handleDeleteClick}>삭제</button>
           </form>
         </div>
@@ -52,6 +54,7 @@ export default SnowmanButton
 
 const snowmanBtn = css`
   font-size: 14px;
+  margin-left: 0.5rem;
   float: right;
   position: relative;
   select {

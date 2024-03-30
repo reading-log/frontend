@@ -1,32 +1,38 @@
 import { css } from '@emotion/react'
 import OneLineInput from './OneLineInput'
-import SaveButton from './SaveButton'
 import SnowmanButton from './SnowmanButton'
+import { useEffect, useState } from 'react'
+import { onOneLine } from '../../apis/myLogApi'
 
 type OneLineType = {
-  oneLine: string
+  oneLineTest: string
   changeOneLine: boolean
   setChangeOneLine: (oneLine: boolean) => void
 }
+//                             서버 연결되면 oneLine을 bookId 로 수정
+const OneLineBox: React.FC<OneLineType> = ({ oneLineTest, changeOneLine, setChangeOneLine }) => {
+  const [oneLine, setOneLine] = useState(oneLineTest) // 서버 연결되면 useState('')로 수정하기
 
-const OneLineBox: React.FC<OneLineType> = ({ oneLine, changeOneLine, setChangeOneLine }) => {
-  const handleCancel = () => {
-    // 한 줄 평 수정 중일 때 취소하기
-    if (setChangeOneLine) {
-      setChangeOneLine(false)
-    }
+  useEffect(() => {
+    // onOneLine(bookId)
+    //   .then(data => {
+    //     setOneLine(data)
+    //   })
+    //   .catch(error => {
+    //     // 에러 처리
+    //   })
+  }, [oneLine])
+
+  const handleSave = (updatedOneLine: string) => {
+    setOneLine(updatedOneLine)
+    setChangeOneLine(false)
   }
 
   return (
     <>
       {changeOneLine ? ( // 한 줄 평 수정할 경우
-        <>
-          <OneLineInput oneLine={oneLine} />
-          <div css={sortButton}>
-            <button onClick={handleCancel}>취소하기</button>
-            <SaveButton />
-          </div>
-        </>
+        // 서버 연결되면 oneLineTest={oneLineTest}만 삭제
+        <OneLineInput onSave={handleSave} oneLineTest={oneLineTest} oneLine={oneLine} setOneLine={setOneLine} setChangeOneLine={setChangeOneLine} />
       ) : (
         <div css={oneLineInnerBox}>
           <div>
@@ -59,18 +65,5 @@ const oneLineInnerBox = css`
       border-radius: 6px;
       padding: 0.5rem 1.3rem 0.5rem 1.3rem;
     }
-  }
-`
-
-const sortButton = css`
-  width: auto;
-  margin-top: 1rem;
-  button {
-    width: 9rem;
-    font-weight: bold;
-    border: 1px solid #947a7a;
-    border-radius: 6px;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
   }
 `

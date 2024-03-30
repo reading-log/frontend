@@ -3,6 +3,10 @@ export interface Highlight {
   content: string
 }
 
+export interface Review {
+  content: string
+}
+
 export interface FeedType {
   bookAuthor: string
   bookCover: string
@@ -23,7 +27,7 @@ export interface FeedType {
   category: string
   oneLine: string
   highlight: Highlight[]
-  review: string
+  review: Review[]
 }
 
 // export interface Feed {

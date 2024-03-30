@@ -1,24 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AllLayout } from '../../components/Layouts'
 import { css } from '@emotion/react'
 import FeedDetail from '../../components/readinglog/FeedDetail'
 import SnowmanButton from '../../components/mylog/SnowmanButton'
-import SaveButton from '../../components/mylog/SaveButton'
 import HighlightBox from '../../components/mylog/HighlightBox'
 import ReviewBox from '../../components/mylog/ReviewBox'
 import OneLineBox from '../../components/mylog/OneLineBox'
+import RecordList from '../../components/mylog/RecordList'
+import { onBookDetail } from '../../apis/myLogApi'
 
 const MyLogDetail = () => {
-  const location = useLocation()
-  const { myLog } = location.state
-
   const [changeOneLine, setChangeOneLine] = useState(false) // 한 줄 평 수정
   const [changeHighlight, setChangeHighlight] = useState(false) // 하이라이트 수정
   const [changeReview, setChangeReview] = useState(false) // 서평 수정
 
   const [showHighlight, setShowHighlight] = useState(true) // 처음에 하이라이트를 보이기
   const [showReview, setShowReview] = useState(false) // 처음에 서평은 숨김
+
+  const [bookDetail, setBookDetail] = useState([]) // 책 상세 정보
+  const location = useLocation()
+  const { myLog } = location.state
+
+  useEffect(() => {
+    // onBookDetail(myLog.bookId)
+    //   .then(data => {
+    //     setBookDetail(data)
+    //   })
+    //   .catch(error => {
+    //     // 에러 처리
+    //   })
+  }, [])
 
   const handleHighlightToggle = () => {
     setShowHighlight(true)
@@ -33,11 +45,18 @@ const MyLogDetail = () => {
   return (
     <AllLayout>
       <div css={myLogDetailBox}>
+        {/* 서버 연결되면 feed={bookDetail}로 변경 */}
         <FeedDetail feed={myLog} />
 
+        {/* 기록 */}
         <div css={outterBox}>
-          {/* 한 줄 평 */}
-          <OneLineBox oneLine={myLog.oneLine} changeOneLine={changeOneLine} setChangeOneLine={setChangeOneLine} />
+          <RecordList bookId={myLog.bookId} />
+        </div>
+
+        {/* 한 줄 평 */}
+        <div css={outterBox}>
+          {/* oneLineTest={myLog.oneLine} => 서버 연결되면 bookId={myLog.bookId}로 수정해야됨 */}
+          <OneLineBox oneLineTest={myLog.oneLine} changeOneLine={changeOneLine} setChangeOneLine={setChangeOneLine} />
         </div>
 
         <div css={outterBox}>
@@ -48,16 +67,8 @@ const MyLogDetail = () => {
           <span onClick={() => handleReviewToggle()} css={showReview ? colorBlack : colorGray}>
             서평
           </span>
-          <>
-            {/* 하이라이트 */}
-            {showHighlight && <SnowmanButton setChangeHighlight={setChangeHighlight} /> /* 수정&삭제 버튼 */}
-            <HighlightBox highlightList={myLog.highlight} showHighlight={showHighlight} changeHighlight={changeHighlight} setChangeHighlight={setChangeHighlight} />
-          </>
-          <>
-            {/* 서평 */}
-            {showReview && <SnowmanButton setChangeReview={setChangeReview} /> /* 수정&삭제 버튼 */}
-            <ReviewBox review={myLog.review} showReview={showReview} changeReview={changeReview} setChangeReview={setChangeReview} />
-          </>
+          <HighlightBox highlightList={myLog.highlight} showHighlight={showHighlight} changeHighlight={changeHighlight} setChangeHighlight={setChangeHighlight} />
+          <ReviewBox reviewList={myLog.review} showReview={showReview} changeReview={changeReview} setChangeReview={setChangeReview} />
         </div>
       </div>
     </AllLayout>
@@ -77,32 +88,12 @@ const outterBox = css`
   width: 100%;
   height: auto;
   padding: 1rem;
-  margin-top: 10px;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
   span {
     font-weight: bold;
   }
 `
-
-// const oneLineInnerBox = css`
-//   background: #ffffff;
-//   font-size: 12px;
-//   padding: 0rem;
-//   div {
-//     &:nth-of-type(1) {
-//       font-size: 16px;
-//       font-weight: bold;
-//       margin-bottom: 1rem;
-//     }
-//     &:nth-of-type(2) {
-//       width: auto;
-//       line-height: 1.2rem;
-//       border: 1px solid #eae5e5;
-//       border-radius: 6px;
-//       padding: 0.5rem 1.3rem 0.5rem 1.3rem;
-//     }
-//   }
-// `
 
 const colorBlack = css`
   color: black;

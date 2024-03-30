@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import { Highlight } from '../../types/feed'
 import { useState } from 'react'
 import SaveButton from './SaveButton'
+import SnowmanButton from './SnowmanButton'
 
 type HighlightType = {
   highlightList: Highlight[]
@@ -11,31 +12,54 @@ type HighlightType = {
 }
 
 const HighlightBox: React.FC<HighlightType> = ({ highlightList, showHighlight, changeHighlight, setChangeHighlight }) => {
-  const [highlights, setHighlights] = useState(highlightList) // 서버에서 주는 하이라이트 데이터
+  const [highlights, setHighlights] = useState(highlightList.map(highlight => ({ ...highlight, editing: false, cancelSaveVisible: false })))
+
   const previewHighlight = '하이라이트는 50자 이내로만 기입할 수 있습니다.'
 
-  const handleClick = () => {
+  const handlePlus = () => {
     const newHighlight = {
       content: '',
       page: 0,
+      editing: false, // 새로운 하이라이트 추가 시 editing 상태는 false로 설정
+      cancelSaveVisible: false,
     }
     setHighlights(prev => [...prev, newHighlight])
   }
 
-  const handleCancel = () => {
+  const handleCancel = (index: number) => {
     // 하이라이트 수정 중일 때 취소하기
-    if (setChangeHighlight) {
-      setHighlights(highlightList)
-      setChangeHighlight(false)
-    }
+    const updatedHighlights = [...highlights]
+    updatedHighlights[index].content = highlightList[index].content // 수정 취소 시 원래 하이라이트로 복원
+    updatedHighlights[index].page = highlightList[index].page
+    updatedHighlights[index].editing = false
+    updatedHighlights[index].cancelSaveVisible = false
+    setHighlights(updatedHighlights)
+    setChangeHighlight(false)
+  }
+
+  const handleEdit = (index: number) => {
+    const updatedHighlights = [...highlights]
+    updatedHighlights[index].editing = true
+    updatedHighlights[index].cancelSaveVisible = true
+    setHighlights(updatedHighlights)
+    setChangeHighlight(true)
+  }
+
+  const handleSave = (index: number) => {
+    // 수정 저장하기
+    const updatedHighlights = [...highlights]
+    updatedHighlights[index].editing = false
+    updatedHighlights[index].cancelSaveVisible = false
+    setHighlights(updatedHighlights)
+    setChangeHighlight(false)
   }
 
   return (
     <>
-      {changeHighlight ? ( // 하이라이트 수정할 경우
-        <>
-          {highlights.map((highlight: Highlight, id: number) => (
-            <div key={id} css={showHighlight ? innerBox : [hide, innerBox]}>
+      {highlights.map((highlight, index) => (
+        <div key={index} css={showHighlight ? innerBox : [hide, innerBox]}>
+          {highlight.editing ? ( // 해당 요소 수정 중일 때
+            <>
               <textarea
                 css={css`
                   height: 4.8rem;
@@ -43,33 +67,47 @@ const HighlightBox: React.FC<HighlightType> = ({ highlightList, showHighlight, c
                 maxLength={50}
                 placeholder={previewHighlight}
                 defaultValue={highlight.content}
+                onChange={e => {
+                  const updatedHighlights = [...highlights]
+                  updatedHighlights[index].content = e.target.value
+                  setHighlights(updatedHighlights)
+                }}
               ></textarea>
               <input
+                type="number"
                 defaultValue={highlight.page}
+                onChange={e => {
+                  const updatedHighlights = [...highlights]
+                  updatedHighlights[index].page = Math.abs(parseInt(e.target.value))
+                  setHighlights(updatedHighlights)
+                }}
                 css={css`
                   float: right;
                 `}
               />
-            </div>
-          ))}
-          {changeHighlight && showHighlight && (
-            <button onClick={handleClick} css={plus}>
-              +
-            </button>
+              {highlight.cancelSaveVisible && (
+                <div css={sortButton}>
+                  <button onClick={() => handleCancel(index)}>취소하기</button>
+                  <SaveButton onClick={() => handleSave(index)} />
+                </div>
+              )}
+            </>
+          ) : (
+            // 해당 요소 수정 중이 아닐 때
+            <>
+              {showHighlight && <SnowmanButton onClick={() => handleEdit(index)} />} {/* 수정&삭제 버튼 */}
+              <p>{highlight.content}</p>
+              <p>p.{highlight.page}</p>
+            </>
           )}
-          <div css={sortButton}>
-            <button onClick={handleCancel}>취소하기</button>
-            <SaveButton />
-          </div>
-        </>
-      ) : (
-        highlights.map((highlight: Highlight, id: number) => (
-          <div key={id} css={showHighlight ? innerBox : [hide, innerBox]}>
-            <p>{highlight.content}</p>
-            <p>p.{highlight.page}</p>
-          </div>
-        ))
-      )}
+        </div>
+      ))}
+      {!changeHighlight && // 수정 중이 아닐 때만 + 버튼 표시
+        showHighlight && (
+          <button css={plus} onClick={handlePlus}>
+            +
+          </button>
+        )}
     </>
   )
 }
@@ -93,9 +131,11 @@ const innerBox = css`
   textarea {
     background: #f6f3f3;
     width: 100%;
+    height: 6rem;
     border: none;
     word-wrap: break-word;
     padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-top: -0.5rem;
   }
   input {
     width: 3rem;
@@ -122,9 +162,9 @@ const plus = css`
 
 const sortButton = css`
   width: auto;
-  margin-top: 1rem;
+  margin-top: 2rem;
   button {
-    width: 9rem;
+    width: 8rem;
     font-weight: bold;
     border: 1px solid #947a7a;
     border-radius: 6px;

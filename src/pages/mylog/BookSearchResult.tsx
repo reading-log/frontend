@@ -21,12 +21,17 @@ const BookSearchResult = () => {
     <>
       <AllLayout>
         <div css={feedContainer}>
+          <BookSearch placeholder={keyword} />
           {isLoading ? (
-            <div>로딩 중</div>
+            <div
+              css={css`
+                margin-top: 3rem;
+              `}
+            >
+              로딩 중
+            </div>
           ) : (
             <>
-              <BookSearch placeholder={keyword} />
-
               {data?.length > 0 ? (
                 <>
                   {/* 키워드 검색 시 해당 책 목록이 있을 경우 */}
@@ -43,13 +48,13 @@ const BookSearchResult = () => {
                     책 검색 결과가 없습니다.
                   </h1>
                   <img src={BookImg} css={image} />
-                  <div>
-                    <Link to="/mylog/book_register">️✍️ 직접 기록하기 ✍</Link>
-                  </div>
                 </>
               )}
             </>
           )}
+          <Link to="/mylog/book_register" css={registerLink}>
+            ️✍️ 직접 기록하기 ✍
+          </Link>
         </div>
       </AllLayout>
     </>
@@ -68,6 +73,8 @@ const feedContainer = css`
   a {
     color: #836565;
     font-weight: bold;
+    margin-bottom: 10rem;
+    position: fixed;
   }
 `
 
@@ -76,4 +83,13 @@ const image = css`
   width: 200px;
   margin-top: 2rem;
   margin-bottom: 2rem;
+`
+
+const registerLink = css`
+  color: #836565;
+  font-weight: bold;
+  position: fixed;
+  bottom: -5rem;
+  left: 50%;
+  transform: translateX(-50%);
 `

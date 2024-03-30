@@ -9,10 +9,25 @@ import myLogSamples from '../../components/Sample/MyLogSample'
 import RecordButton from '../../components/mylog/RecordButton'
 import { flexCenter } from '../../styles/theme'
 import { Book } from '../../types/book'
+import { onBookList } from '../../apis/myLogApi'
+import { useEffect, useState } from 'react'
 
 const MyLog = () => {
-  const myLogs: Book[] = myLogSamples // 나의 로그 기록 있음
-  // const myLogs = '' //나의 로그 기록 없음
+  const myLogs: Book[] = myLogSamples // 나의 로그 기록 있음(서버 연결되면 삭제)
+  // const myLogs = '' // 나의 로그 기록 없음(서버 연결되면 삭제)
+
+  // const [myLogs, setMyLogs] = useState([]) // 서버 연결되면 주석 해제
+
+  useEffect(() => {
+    // 서버 연결되면 주석 해제
+    // onBookList()
+    //   .then(data => {
+    //     setMyLogs(data)
+    //   })
+    //   .catch(error => {
+    //     // 에러 처리
+    //   })
+  }, [myLogs])
 
   return (
     <div>
