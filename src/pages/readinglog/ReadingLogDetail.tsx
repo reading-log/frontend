@@ -23,55 +23,52 @@ const ReadingLogDetail = () => {
 
   return (
     <HeaderLayout>
-      <div>
+      <div css={readingLogDetailBox}>
         <FeedDetail feed={feed} />
+
         <div css={outterBox}>
           <div css={oneLineInnerBox}>
-            <span>"</span>
-            {feed.oneLine}
-            <span>"</span>
+            <p>한 줄 평</p>
+            <p>{feed.oneLine}</p>
           </div>
         </div>
 
         <div css={outterBox}>
-          <div css={selectBox}>
-            <span
-              onClick={() => handleHighlightToggle()}
-              css={
-                showHighlight
-                  ? css`
-                      font-weight: bold;
-                    `
-                  : css`
-                      font-weight: normal;
-                    `
-              }
-            >
-              하이라이트
-            </span>
-            ㅣ{/** 선택(하이라이트, 서평) 칸막이 */}
-            <span
-              onClick={() => handleReviewToggle()}
-              css={
-                showReview
-                  ? css`
-                      font-weight: bold;
-                    `
-                  : css`
-                      font-weight: normal;
-                    `
-              }
-            >
-              서평
-            </span>
-          </div>
-          {feed.highlight[0].map((highlight: Highlight, id: number) => (
+          <span
+            onClick={() => handleHighlightToggle()}
+            css={
+              showHighlight
+                ? css`
+                    color: black;
+                  `
+                : css`
+                    color: gray;
+                  `
+            }
+          >
+            하이라이트
+          </span>
+          ㅣ{/** 선택(하이라이트, 서평) 칸막이 */}
+          <span
+            onClick={() => handleReviewToggle()}
+            css={
+              showReview
+                ? css`
+                    color: black;
+                  `
+                : css`
+                    color: gray;
+                  `
+            }
+          >
+            서평
+          </span>
+          {feed.highlight.map((highlight: Highlight, id: number) => (
             <div css={showHighlight ? innerBox : [hide, innerBox]} key={id}>
               <p>{highlight.content}</p>
-              <p>p.{feed.highlight[1].page}</p>
+              <p>p.{highlight.page}</p>
             </div>
           ))}
-
           <div css={showReview ? innerBox : [hide, innerBox]}>
             <span>{feed.review}</span>
           </div>
@@ -83,49 +80,60 @@ const ReadingLogDetail = () => {
 
 export default ReadingLogDetail
 
+const readingLogDetailBox = css`
+  background: #eae5e5;
+  border: 1px solid #c1b2b2;
+  border-radius: 6px;
+`
+
 const outterBox = css`
-  background: #e4e4e4;
+  background: #ffffff;
   width: 100%;
   height: auto;
-  border-radius: 5px;
-  padding: 10px;
+  padding: 1rem;
   margin-top: 10px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  span {
+    font-weight: bold;
+  }
 `
 
 const oneLineInnerBox = css`
   background: #ffffff;
-  border-radius: 5px;
-  padding: 20px;
-  span {
-    font-size: 42px;
+  font-size: 12px;
+  padding: 0rem;
+  p {
+    &:nth-of-type(1) {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    &:nth-of-type(2) {
+      width: auto;
+      line-height: 1.2rem;
+      border: 1px solid #eae5e5;
+      border-radius: 6px;
+      padding: 0.5rem 1.3rem 0.5rem 1.3rem;
+    }
   }
 `
 
 const innerBox = css`
   background: #ffffff;
-  width: 100%;
   height: auto;
-  border-radius: 5px;
-  padding: 20px;
-  margin-top: 10px;
-  & > p:nth-of-type(2) {
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid #eae5e5;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+  p:nth-of-type(2) {
+    /* page */
     font-size: 11px;
     float: right;
   }
 `
 
-const selectBox = css`
-  background: #adadad;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 27px;
-  span {
-    padding: 5px 40px 5px 40px;
-  }
-`
 const hide = css`
   display: none;
 `

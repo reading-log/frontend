@@ -7,14 +7,14 @@ type SearchProp = {
   placeholder: string
 }
 
-const Search: React.FC<SearchProp> = ({ placeholder }) => {
+const MyLogSearch: React.FC<SearchProp> = ({ placeholder }) => {
   const navigate = useNavigate()
   const [searchKeyWord, setSearchKeyWord] = useState('')
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      navigate(`/readinglog/search?q=${searchKeyWord}`) // 리딩로그 검색 결과 페이지로 이동
+      navigate(`/mylog/search?q=${searchKeyWord}`) // 나의로그 로그 목록 결과 페이지로 이동
     },
     [navigate, searchKeyWord],
   )
@@ -26,28 +26,33 @@ const Search: React.FC<SearchProp> = ({ placeholder }) => {
   return (
     <>
       <form css={search} onSubmit={handleSubmit}>
-        <input type="text" value={searchKeyWord} onChange={handleChange} placeholder={placeholder} />
-        <button>
-          <img src={magnifier} alt="Search" />
-        </button>
+        <div css={searchContainer}>
+          <input type="text" value={searchKeyWord} onChange={handleChange} placeholder={placeholder} />
+          <button>
+            <img src={magnifier} alt="Search" />
+          </button>
+        </div>
       </form>
     </>
   )
 }
 
-export default Search
+export default MyLogSearch
 
 const search = css`
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 19rem;
+  width: 100%;
   height: 30px;
-  margin: auto;
   margin-bottom: 25px;
-  position: fixed;
-  top: 5rem;
   z-index: 10;
+`
+
+const searchContainer = css`
+  display: flex;
+  align-items: center;
+  width: 19rem;
+  position: fixed;
   input {
     background: transparent;
     width: 100%;
@@ -69,6 +74,6 @@ const search = css`
     background: none;
     border: none;
     margin-left: auto;
-    z-index: 1;
+    z-index: 10;
   }
 `
