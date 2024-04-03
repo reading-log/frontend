@@ -160,7 +160,7 @@ const container = css`
   ${flexCenter}
   flex-direction: column;
   p {
-    margin-top: ${calcRem(35)};
+    margin-top: ${calcRem(18)};
     margin-bottom: ${calcRem(14)};
   }
 `
@@ -170,7 +170,7 @@ const profileImgBox = css`
   height: ${calcRem(100)};
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: ${calcRem(39)};
+  margin-bottom: ${calcRem(30)};
   background-color: #d9d9d9;
 
   ${flexCenter}

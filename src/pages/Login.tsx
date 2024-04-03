@@ -89,7 +89,7 @@ const loginBox = css`
 
   .otherLogin {
     display: flex;
-    margin-top: ${calcRem(76)};
+    margin: ${calcRem(70)} 0;
     font-size: ${calcRem(12)};
     span {
       display: inline-block;
@@ -103,7 +103,7 @@ const loginBox = css`
 
 const logo = css`
   ${title2}
-  margin-top: ${calcRem(180)};
+  margin-top: ${calcRem(100)};
   margin-bottom: ${calcRem(67)};
 `
 
