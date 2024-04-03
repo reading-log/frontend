@@ -1,4 +1,13 @@
 import axios from 'axios'
+import { useQuery } from 'react-query'
+
+/**내가 등록한 책 목록 조회 */
+export const getMyBookList = async () => {
+  return useQuery(['MyBookList'], async () => {
+    const { data } = await axios.get(`/api/books`)
+    return data
+  })
+}
 
 /* 나의로그 페이지 - 등록한 책 목록 */
 export const onBookList = async () => {

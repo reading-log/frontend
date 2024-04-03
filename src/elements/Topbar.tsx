@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
-import back from '../assets/images/뒤로가기버튼.png'
 
 const Topbar = () => {
   const navigate = useNavigate()
@@ -13,7 +14,7 @@ const Topbar = () => {
   return (
     <div css={topbar}>
       <button onClick={handleClick} css={backBtn}>
-        <img src={back} alt="Back" />
+        <FontAwesomeIcon icon={faChevronLeft} size="xl" color="#836565" />
       </button>
       <h1 css={title}>ReadingLog</h1>
     </div>

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AllLayout } from '../../components/Layouts'
 import MyLogList from '../../components/mylog/MyLogList'
-import MyLogSearch from '../../components/mylog/MyLogSearch'
 import RecordButton from '../../components/mylog/RecordButton'
 import { useMyLogSearchQuery } from '../../hooks/useMyLogSearchQuery'
 import { flexCenter } from '../../styles/theme'
@@ -23,8 +22,7 @@ const MyLogSearchResult = () => {
     <>
       <AllLayout>
         <div css={feedContainer}>
-          <MyLogSearch placeholder={keyword} />
-
+          {/*  <MyLogSearch placeholder={keyword} /> */}
           {myLogList === undefined || myLogList === null || myLogList.length === 0 ? (
             <>
               {/* 키워드 검색 시 해당 로그 목록이 없을 경우 */}

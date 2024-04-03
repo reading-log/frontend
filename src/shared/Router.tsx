@@ -11,9 +11,9 @@ import BookSearchResult from '../pages/mylog/BookSearchResult'
 import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogSearchResult from '../pages/mylog/MyLogSearchResult'
+import ReadingLog from '../pages/readinglog/ReadingLog'
 import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
 import SearchResult from '../pages/readinglog/SearchResult'
-import ReadingLog from '../pages/readinglog/ReadingLog'
 
 const Router = () => {
   return (
@@ -31,7 +31,7 @@ const Router = () => {
         <Route path="/readinglog" element={<ReadingLog />} />
         <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
         <Route path="/readinglog/search" element={<SearchResult />} />
-        {/* 나의 로그 메뉴 페이지 */}
+        {/* 나의 로그 페이지 */}
         <Route path="/mylog" element={<MyLog />} />
         <Route path="/mylog/detail" element={<MyLogDetail />} />
         <Route path="/mylog/search" element={<MyLogSearchResult />} />

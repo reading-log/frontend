@@ -1,86 +1,115 @@
 import { css } from '@emotion/react'
-import { Link } from 'react-router-dom'
+import { faPencil } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from 'react-router-dom'
 import { AllLayout } from '../../components/Layouts'
-import MyLogList from '../../components/mylog/MyLogList'
-import MyLogSearch from '../../components/mylog/MyLogSearch'
-
-import BookImg from '../../assets/images/book.png'
-import myLogSamples from '../../components/Sample/MyLogSample'
-import RecordButton from '../../components/mylog/RecordButton'
-import { flexCenter } from '../../styles/theme'
-import { Book } from '../../types/book'
-import { onBookList } from '../../apis/myLogApi'
-import { useEffect, useState } from 'react'
+import EmptyMylog from '../../components/mylog/EmptyMylog'
+import SearchBar from '../../elements/SearchBar'
+import { body1, body2, calcRem, colors, flexCenter } from '../../styles/theme'
 
 const MyLog = () => {
-  const myLogs: Book[] = myLogSamples // 나의 로그 기록 있음(서버 연결되면 삭제)
-  // const myLogs = '' // 나의 로그 기록 없음(서버 연결되면 삭제)
+  const navigate = useNavigate()
+  // const { data, isLoading, isError } = getMyBookList()
 
-  // const [myLogs, setMyLogs] = useState([]) // 서버 연결되면 주석 해제
-
-  useEffect(() => {
-    // 서버 연결되면 주석 해제
-    // onBookList()
-    //   .then(data => {
-    //     setMyLogs(data)
-    //   })
-    //   .catch(error => {
-    //     // 에러 처리
-    //   })
-  }, [myLogs])
+  /**기록하기로 이동 */
+  const handleClick = () => {
+    navigate('/mylog/search-books') //  나의로그 책 검색하기
+  }
 
   return (
-    <div>
+    <>
       <AllLayout>
-        <div css={feedContainer}>
-          {myLogs?.length > 0 ? (
-            <div>
-              <MyLogSearch placeholder="나의 로그 검색하기" />
-              <MyLogList myLogList={myLogs} />
-              <div css={recordBtn}>
-                <RecordButton />
-              </div>
+        {false ? (
+          <EmptyMylog />
+        ) : (
+          <div css={myLogContainer}>
+            <div className="mylogList">
+              <SearchBar placeHolder="나의로그 검색하기" />
+              {['1', '2', '4', '1', '2', '4', '1', '2', '4', '1', '2', '4'].map((book, index) => (
+                <div className="bookBox" key={index}>
+                  <div>
+                    <img src="https://www.theyoungtimes.com/news/photo/202206/869_1682_3518.jpg" alt="책이미지" />
+                  </div>
+                  <p>책제목</p>
+                  <span>지은이</span>
+                </div>
+              ))}
             </div>
-          ) : (
-            <>
-              <img src={BookImg} css={image} />
-              <Link
-                to="/mylog/books"
-                css={css`
-                  margin-top: 3rem;
-                `}
-              >
-                ️✍️ 기록하기 ✍
-              </Link>
-            </>
-          )}
-        </div>
+          </div>
+        )}
       </AllLayout>
-    </div>
+      <div css={writeButton}>
+        <span>기록하기</span>
+        <button className="btn" onClick={handleClick}>
+          <FontAwesomeIcon icon={faPencil} size="xl" color={colors.main1} />
+        </button>
+      </div>
+    </>
   )
 }
 export default MyLog
 
-const feedContainer = css`
-  ${flexCenter}
-  flex-direction: column;
-  height: 100%;
-  text-align: center;
-  a {
-    color: #836565;
-    font-weight: bold;
+const myLogContainer = css`
+  ${flexCenter};
+
+  .mylogList {
+    margin-top: ${calcRem(50)};
+    display: grid;
+    justify-items: center;
+    gap: ${calcRem(15)};
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bookBox {
+    border: 1px solid ${colors.boxStroke};
+    border-radius: 0.5rem;
+    ${flexCenter};
+
+    flex-direction: column;
+    background-color: ${colors.boxFill};
+    width: ${calcRem(154)};
+    height: ${calcRem(172)};
+    img {
+      max-width: ${calcRem(70)};
+      max-height: ${calcRem(88)};
+    }
+    p {
+      margin-top: ${calcRem(12)};
+      margin-bottom: ${calcRem(8)};
+    }
+    span {
+      ${body2};
+    }
   }
 `
 
-const image = css`
-  width: 200px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-`
-
-const recordBtn = css`
-  margin-top: -22.5rem;
-  margin-left: 17rem;
+const writeButton = css`
   position: fixed;
-  z-index: 10;
+  bottom: 5rem;
+  right: 1rem;
+
+  @media (min-width: 450px) {
+    position: absolute;
+    bottom: 5rem;
+    right: 1rem;
+  }
+
+  display: flex;
+  align-items: center;
+
+  span {
+    ${body1};
+    color: ${colors.main1};
+    margin-top: ${calcRem(10)};
+    margin-right: ${calcRem(10)};
+  }
+
+  .btn {
+    ${flexCenter};
+    width: ${calcRem(47)};
+    height: ${calcRem(47)};
+    background-color: ${colors.button2};
+    border: 1px solid ${colors.button1};
+    border-radius: 50%;
+  }
 `

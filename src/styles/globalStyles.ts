@@ -7,7 +7,8 @@ export const globalStyles = css`
     height: 100vh;
     margin: auto;
     position: relative;
-    background-color: #fcfcfb;
+    background-color: #ffffff;
+    font-size: 1rem;
     font-family: 'Noto Sans KR', sans-serif;
   }
 
@@ -38,17 +39,9 @@ export const globalStyles = css`
     }
   }
 
-  /*배경이미지보고 다시 조정하기*/
-  @media all and (min-width: 900px) and (min-height: 500px) {
-    body {
-      background: url('/backgroud.jpg') no-repeat center;
-      background-color: #f4f5f4;
-      background-size: contain;
-    }
-  }
-
   /*엘리먼트 전체 적용*/
   * {
+    font-size: 1rem;
     font-family: 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
     resize: none;
