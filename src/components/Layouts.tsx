@@ -17,8 +17,8 @@ export const HeaderLayout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Topbar />
-      <div css={container}>
-        <div css={containerHeaderBox}>{children}</div>
+      <div css={header}>
+        <div className="container">{children}</div>
       </div>
     </>
   )
@@ -28,8 +28,8 @@ export const HeaderLayout = ({ children }: ILayoutProps) => {
 export const FooterLayout = ({ children }: ILayoutProps) => {
   return (
     <>
-      <div css={container}>
-        <div css={containerBox}>{children}</div>
+      <div css={footer}>
+        <div className="container">{children}</div>
       </div>
       <Footer />
     </>
@@ -41,31 +41,52 @@ export const AllLayout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Topbar />
-      <div css={container}>
-        <div css={containerHeaderBox}>{children}</div>
+      <div css={Allcontainer}>
+        <div className="container">{children}</div>
       </div>
       <Footer />
     </>
   )
 }
 
-const container = css`
+/**header */
+const header = css`
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  height: 100vh;
+
+  .container {
+    margin-top: 4rem;
+    padding: 1rem;
+  }
+`
+
+/**footer */
+const footer = css`
   width: 100%;
   position: absolute;
   overflow: auto;
   height: calc(100vh - 4rem);
+
+  .container {
+    padding: 1rem;
+  }
 `
 
-const containerHeaderBox = css`
-  padding: 1rem;
-  margin-top: 4rem;
+/**header +  footer */
+const Allcontainer = css`
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  height: calc(100vh - 4rem);
+
+  .container {
+    padding: 1rem;
+    margin-top: 4rem;
+  }
 `
 
-const containerBox = css`
-  padding: 1rem;
-`
-
-/**스플래쉬 박스 */
 const containerDefault = css`
   width: 100%;
   position: absolute;
