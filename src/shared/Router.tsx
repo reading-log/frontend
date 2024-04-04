@@ -6,8 +6,7 @@ import NotFound from '../pages/NotFound'
 import Splash from '../pages/Splash'
 import BookAutoRegister from '../pages/mylog/BookAutoRegister'
 import BookRegister from '../pages/mylog/BookRegister'
-import BookSearchPage from '../pages/mylog/BookSearchPage'
-import BookSearchResult from '../pages/mylog/BookSearchResult'
+
 import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogSearch from '../pages/mylog/MyLogSearch'
@@ -28,12 +27,10 @@ const Router = () => {
         <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
         <Route path="/readinglog/search" element={<SearchResult />} />
         <Route path="/mylog" element={<MyLog />} /> {/* 나의 로그 */}
-        <Route path="/mylog/search" element={<MyLogSearch />} /> {/* 나의 로그 검색 */}
-        <Route path="/mylog/detail" element={<MyLogDetail />} />
-        <Route path="/mylog/books" element={<BookSearchPage />} />
-        <Route path="/mylog/books/search" element={<BookSearchResult />} />
-        <Route path="/mylog/book_register" element={<BookRegister />} /> {/* 나의 로그 직접등록 */}
-        <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} /> {/* 나의 로그 자동등록 */}
+        <Route path="/mylog/:detail" element={<MyLogDetail />} /> {/* 나의 로그 상세 */}
+        <Route path="/mylog/search" element={<MyLogSearch />} /> {/* 나의 로그 기록하기 : 책 검색 */}
+        <Route path="/mylog/book_register" element={<BookRegister />} /> {/* 나의 로그 기록하기 : 직접등록 */}
+        <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} /> {/* 나의 로그 기록하기 : 자동등록 */}
         <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>

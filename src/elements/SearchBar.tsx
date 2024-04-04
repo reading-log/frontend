@@ -1,31 +1,43 @@
 import { css } from '@emotion/react'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
-import { calcRem, flexCenter } from '../styles/theme'
+import { useForm } from 'react-hook-form'
+import { calcRem, colors, flexCenter } from '../styles/theme'
 
 interface ISearchBarProps {
   /**검색어 placeholder */
   placeHolder: string
+  /**검색어를 저장*/
+  setSearchKeyWord: (keyword: string) => void
+}
+
+interface IFormValues {
+  keyword: string
 }
 
 /**검색바 */
-const SearchBar = ({ placeHolder }: ISearchBarProps) => {
-  const [searchKeyWord, setSearchKeyWord] = useState('')
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyWord(e.target.value)
+const SearchBar = ({ placeHolder, setSearchKeyWord }: ISearchBarProps) => {
+  const { register, handleSubmit } = useForm<IFormValues>()
+  /**검색어 저장 */
+  const submitKeyword = (data: IFormValues) => {
+    setSearchKeyWord(data.keyword)
   }
 
   return (
-    <div css={search}>
+    <form css={search} onSubmit={handleSubmit(submitKeyword)}>
       <div css={searchContainer}>
-        <input type="text" placeholder={placeHolder} onChange={handleChange} />
+        <input
+          type="text"
+          placeholder={placeHolder}
+          {...register('keyword', {
+            required: true,
+          })}
+        />
         <button>
-          <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" color="#836565" />
+          <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" color={colors.main1} />
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 
@@ -51,8 +63,7 @@ const searchContainer = css`
   align-items: center;
   width: ${calcRem(253)};
   height: ${calcRem(32)};
-  border: 1px solid #836565;
-
+  border: 1px solid ${colors.main1};
   input {
     font-weight: 500;
     width: 100%;

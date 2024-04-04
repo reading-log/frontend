@@ -9,6 +9,23 @@ export const getMyBookList = async () => {
   })
 }
 
+/**기록용 책 검색 (알라딘api 조회) */
+export const useSearchBook = (searchKeyword: string) => {
+  return useQuery(
+    ['MyLogBookSearch', searchKeyword],
+    async () => {
+      const response = await axios.get(`/api/books/search?q=${searchKeyword}`)
+      const { data } = response.data
+      return data.item
+    },
+    {
+      enabled: !!searchKeyword && searchKeyword?.trim() !== '', //검색어가 있고 공백이 아닐때만 실행
+      onSuccess: () => {},
+      onError: () => {},
+    },
+  )
+}
+
 /* 나의로그 페이지 - 등록한 책 목록 */
 export const onBookList = async () => {
   const response = await axios.get('/api/books') // api 미완성

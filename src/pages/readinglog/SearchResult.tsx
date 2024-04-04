@@ -1,11 +1,7 @@
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AllLayout } from '../../components/Layouts'
-import Feed from '../../components/readinglog/Feed'
-import Filtering from '../../components/readinglog/Filtering'
-import Search from '../../components/readinglog/Search'
-import { useSearchQuery } from '../../hooks/useSearchQuery'
 
 import { flexCenter } from '../../styles/theme'
 import { FeedType } from '../../types/feed'
@@ -18,18 +14,18 @@ const SearchResult = () => {
   const [logs, setLogs] = useState<FeedType[]>([])
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('q') || ''
-  const { data, isLoading } = useSearchQuery(keyword) // 리딩로그 검색 훅
+  // const { data, isLoading } = useSearchQuery(keyword) // 리딩로그 검색 훅
 
-  useEffect(() => {
-    setLogs(data)
-  }, [data])
+  // useEffect(() => {
+  //   setLogs(data)
+  // }, [data])
 
   // 카테고리에 따라 필터링된 피드 데이터 가져오기
   const feedByCategory = selectedCategory === '전체' ? logs : logs.filter(feed => selectedCategory === feed.category)
 
   return (
     <AllLayout>
-      <div css={feedContainer}>
+      {/* <div css={feedContainer}>
         <Search placeholder={keyword} />
         {isLoading ? (
           <div
@@ -45,7 +41,7 @@ const SearchResult = () => {
             {feedByCategory?.length > 0 ? (
               <>
                 {/* 키워드 검색 시 해당 로그 목록이 있을 경우 */}
-                {feedByCategory.map((feed, id) => (
+      {/* {feedByCategory.map((feed, id) => (
                   <span key={id}>
                     <Feed feed={feed} />
                   </span>
@@ -54,7 +50,7 @@ const SearchResult = () => {
             ) : (
               <>
                 {/* 키워드 검색 시 해당 로그 목록이 없을 경우 */}
-                <span
+      {/* <span
                   css={css`
                     margin-top: 1rem;
                   `}
@@ -64,8 +60,8 @@ const SearchResult = () => {
               </>
             )}
           </>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </AllLayout>
   )
 }
