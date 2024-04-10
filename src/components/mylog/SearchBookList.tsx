@@ -7,7 +7,7 @@ interface BookList {
   bookList: Book[]
 }
 
-const SearchBookList: React.FC<BookList> = ({ bookList }) => {
+const SearchBookList: React.FC<BookList> = ({ bookList, scrollRef }) => {
   const navigate = useNavigate()
 
   const handleClick = (book: Book) => {
@@ -28,6 +28,7 @@ const SearchBookList: React.FC<BookList> = ({ bookList }) => {
           </div>
         </div>
       ))}
+      <div ref={scrollRef}></div>
     </div>
   )
 }
@@ -46,7 +47,7 @@ const bookBoxContainer = css`
     display: flex;
     align-items: center;
     border-radius: ${calcRem(6)};
-    border: 1px solid ${colors.boxStroke};
+    border: 2px solid ${colors.boxStroke};
     padding: ${calcRem(13)} ${calcRem(4)};
   }
 

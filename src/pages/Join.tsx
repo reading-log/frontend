@@ -1,4 +1,6 @@
 import { css } from '@emotion/react'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { onJoin } from '../apis/userApi'
@@ -63,7 +65,7 @@ const Join = () => {
       <form css={container} onSubmit={handleSubmit(onHandleJoin)}>
         <p>이메일로 회원가입하기</p>
         <label css={profileImgBox} htmlFor="profile_img">
-          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage?.[0])} /> : <span>프로필 사진</span>}
+          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage?.[0])} /> : <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />}
           <input type="file" accept="image/*" id="profile_img" {...register('profileImage')} />
         </label>
         <div css={joinBox}>
@@ -171,10 +173,8 @@ const profileImgBox = css`
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: ${calcRem(30)};
-  background-color: #d9d9d9;
-
-  ${flexCenter}
-
+  background-color: ${colors.main1};
+  ${flexCenter};
   span {
     font-size: ${calcRem(14)};
     font-weight: 500;
@@ -203,7 +203,7 @@ const joinBox = css`
   }
 
   input {
-    border: 1px solid ${colors.main1};
+    border: 2px solid ${colors.main1};
     width: ${calcRem(300)};
     height: ${calcRem(33)};
   }
@@ -230,7 +230,7 @@ const joinBox = css`
 
     &.btn2 {
       margin-top: ${calcRem(11)};
-      border: 1px solid ${colors.main1};
+      border: 2px solid ${colors.main1};
       color: ${colors.main1};
       background-color: ${colors.innerBoxStroke};
     }

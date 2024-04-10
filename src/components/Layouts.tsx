@@ -67,7 +67,7 @@ const footer = css`
   width: 100%;
   position: absolute;
   overflow: auto;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5rem);
 
   .container {
     padding: 1rem;
@@ -79,7 +79,7 @@ const Allcontainer = css`
   width: 100%;
   position: absolute;
   overflow: auto;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 5rem);
 
   .container {
     padding: 1rem;

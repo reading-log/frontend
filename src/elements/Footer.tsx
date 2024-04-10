@@ -1,27 +1,30 @@
 import { css } from '@emotion/react'
+import { faBook, faBookOpen, faChartSimple, faGear } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink } from 'react-router-dom'
+import { colors } from '../styles/theme'
 
 const Footer = () => {
   const menuList = [
     {
       title: '리딩로그',
-      url: '/readinglog' || '/readinglog/search',
-      icon: 'home',
+      url: '/readinglog',
+      icon: faBookOpen,
     },
     {
       title: '나의로그',
       url: '/mylog',
-      icon: 'home',
+      icon: faBook,
     },
     {
       title: '로그분석',
       url: '/log-analysis',
-      icon: 'home',
+      icon: faChartSimple,
     },
     {
       title: '계정',
       url: '/account',
-      icon: 'home',
+      icon: faGear,
     },
   ]
 
@@ -30,6 +33,7 @@ const Footer = () => {
       {menuList.map((menu, id) => (
         <div css={footerCon} key={id}>
           <NavLink to={menu.url} className={({ isActive }) => (isActive ? 'active' : '')}>
+            <FontAwesomeIcon icon={menu.icon} size="2x" />
             <p>{menu.title}</p>
           </NavLink>
         </div>
@@ -44,7 +48,7 @@ export default Footer
 const footerBox = css`
   width: 100%;
   max-width: 26rem;
-  height: 4rem;
+  height: 5rem;
   background-color: #f3f0f0;
   position: fixed;
   bottom: 0px;
@@ -58,9 +62,13 @@ const footerCon = css`
   text-align: center;
   width: 5rem;
   margin-bottom: 0.6rem;
-  color: #526161;
+  color: #cec2c2;
 
   .active {
-    font-weight: 800;
+    color: ${colors.main1};
+  }
+
+  p {
+    margin-top: 0.5rem;
   }
 `

@@ -33,7 +33,7 @@ const SearchBar = ({ placeHolder, setSearchKeyWord }: ISearchBarProps) => {
             required: true,
           })}
         />
-        <button>
+        <button type="submit">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" color={colors.main1} />
         </button>
       </div>
@@ -63,7 +63,7 @@ const searchContainer = css`
   align-items: center;
   width: ${calcRem(253)};
   height: ${calcRem(32)};
-  border: 1px solid ${colors.main1};
+  border: 2px solid ${colors.main1};
   input {
     font-weight: 500;
     width: 100%;

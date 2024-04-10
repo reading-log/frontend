@@ -1,57 +1,119 @@
 import { css } from '@emotion/react'
 
-import categories from '../../components/Sample/CategorySample'
-import { FeedType } from '../../types/feed'
 import { useForm } from 'react-hook-form'
+import { calcRem, colors, flexCenter, title3 } from '../../styles/theme'
+import { AllLayout } from '../Layouts'
 
 interface BookProp {
-  isActive: boolean
-  bookInfo?: FeedType[]
+  bookInfo?: {
+    title: string
+    author: string
+    publisher: string
+    cover: string
+  }
 }
 
-const BookInput: React.FC<BookProp> = ({ isActive, bookInfo }) => {
-  const { register, watch, handleSubmit } = useForm()
+const BookInput = ({ bookInfo }: BookProp) => {
+  const { register, handleSubmit, watch } = useForm()
 
-  const selectCategory = categories.filter(category => category.name !== '전체')
-
-  const onSubmit = () => {
-    console.log(watch('title'))
-    console.log(watch('author'))
-    console.log(watch('publisher'))
-    console.log(watch('category'))
-  }
+  /**이미지 url */
+  const bookWatch = watch()
 
   return (
-    <form css={form} method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <span>제목:</span>
-        <input {...register('title')} placeholder={'제목을 입력하세요'} value={isActive ? watch('title') : bookInfo.title} readOnly={!isActive} css={isActive ? inputRegister : ''} />
+    <AllLayout>
+      <div css={feedContainer}>
+        <form>
+          <label className="defaultCover" htmlFor="bookCover">
+            {bookWatch?.cover?.[0] ? (
+              <img src={URL.createObjectURL(bookWatch?.cover?.[0])} />
+            ) : (
+              <h3>
+                Reading
+                <br /> Log
+              </h3>
+            )}
+            <input type="file" id="bookCover" accept="image/*" hidden {...register('cover')} />
+          </label>
+        </form>
+        <div className="formText">
+          <div className="inputBox">
+            <span>제목:</span>
+            <input {...register('title')} />
+          </div>
+          <div className="inputBox">
+            <span>지은이:</span>
+            <input {...register('author')} />
+          </div>
+          <div className="inputBox">
+            <span>출판사:</span>
+            <input {...register('publisher')} />
+          </div>
+          <div className="inputBox">
+            <span>카테고리:</span>
+            <select {...register('category')}>
+              <option>선택하세요</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div>
-        <span>지은이:</span>
-        <input {...register('author')} placeholder="지은이를 입력하세요" value={isActive ? watch('author') : bookInfo.author} readOnly={!isActive} css={isActive ? inputRegister : ''} />
-      </div>
-      <div>
-        <span>출판사:</span>
-        <input {...register('publisher')} placeholder="출판사를 입력하세요" value={isActive ? watch('publisher') : bookInfo.publisher} readOnly={!isActive} css={isActive ? inputRegister : ''} />
-      </div>
-      <div>
-        <span>카테고리:</span>
-        <select defaultValue="" {...register('category')}>
-          <option value="" disabled>
-            카테고리를 선택하세요
-          </option>
-          {selectCategory.map((category, id) => (
-            <option key={id}>{category.name}</option>
-          ))}
-        </select>
-      </div>
-      <button css={saveButton}>저장하기</button>
-    </form>
+    </AllLayout>
   )
 }
 
 export default BookInput
+
+const feedContainer = css`
+  ${flexCenter}
+  flex-direction: column;
+  height: calc(100vh - 12rem);
+  border: 2px solid #c1b2b2;
+  border-radius: 6px;
+  padding: 2rem;
+
+  .defaultCover {
+    h3 {
+      ${title3}
+      text-align: center;
+    }
+    ${flexCenter}
+    background-color: ${colors.innerBoxStroke};
+    width: ${calcRem(160)};
+    height: ${calcRem(190)};
+    border: 2px solid ${colors.main1};
+    margin-bottom: 4rem;
+
+    img {
+      height: 100%;
+      max-width: ${calcRem(160)};
+      max-height: ${calcRem(190)};
+    }
+  }
+
+  .inputBox {
+    font-weight: 500;
+    font-size: ${calcRem(15)};
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+
+    span {
+      display: flex;
+      width: 4rem;
+      justify-content: flex-end;
+      margin-right: 2rem;
+    }
+    input {
+      width: 10rem;
+      background-color: ${colors.innerBoxStroke};
+      border: none;
+    }
+    select {
+      width: 10rem;
+      background-color: ${colors.innerBoxStroke};
+      border: none;
+    }
+  }
+`
 
 const form = css`
   display: flex; /* 요소들을 수평으로 정렬 */

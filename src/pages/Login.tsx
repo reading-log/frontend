@@ -114,7 +114,7 @@ const inputBox = css`
   margin-bottom: ${calcRem(16)};
 
   input {
-    border: 1px solid ${colors.main1};
+    border: 2px solid ${colors.main1};
     width: ${calcRem(169)};
     height: ${calcRem(25)};
   }

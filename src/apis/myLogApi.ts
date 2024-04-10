@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useQuery } from 'react-query'
+import { useInfiniteQuery, useQuery } from 'react-query'
 
 /**내가 등록한 책 목록 조회 */
 export const getMyBookList = async () => {
@@ -9,21 +9,26 @@ export const getMyBookList = async () => {
   })
 }
 
-/**기록용 책 검색 (알라딘api 조회) */
-export const useSearchBook = (searchKeyword: string) => {
-  return useQuery(
-    ['MyLogBookSearch', searchKeyword],
-    async () => {
-      const response = await axios.get(`/api/books/search?q=${searchKeyword}`)
-      const { data } = response.data
-      return data.item
+/**기록용 책 검색(알라딘 api 조회) 무한 스크롤 */
+export const useSearchBookInfiniteScroll = (searchKeyword: string) => {
+  //검색어 내역 가져오기
+  const getSearchBook = async ({ pageParam = 0 }) => {
+    const { data } = await axios.get(`/api/books/search?q=${searchKeyword}&start=${pageParam}`)
+    return data
+  }
+
+  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } = useInfiniteQuery(['MyLogBookSearch'], getSearchBook, {
+    getNextPageParam: lastPage => {
+      const { data } = lastPage
+
+      return data.startIndex * data.itemsPerPage === data.start
     },
-    {
-      enabled: !!searchKeyword && searchKeyword?.trim() !== '', //검색어가 있고 공백이 아닐때만 실행
-      onSuccess: () => {},
-      onError: () => {},
+    onSuccess: res => {
+      console.log('szzz', res)
     },
-  )
+  })
+
+  return { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage }
 }
 
 /* 나의로그 페이지 - 등록한 책 목록 */

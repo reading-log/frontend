@@ -16,7 +16,7 @@ const MyBook = () => {
 export default MyBook
 
 const myBookBox = css`
-  border: 1px solid ${colors.boxStroke};
+  border: 2px solid ${colors.boxStroke};
   border-radius: 0.5rem;
   ${flexCenter};
 
