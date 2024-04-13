@@ -22,7 +22,7 @@ const Footer = () => {
       icon: faChartSimple,
     },
     {
-      title: '계정',
+      title: '설정',
       url: '/account',
       icon: faGear,
     },

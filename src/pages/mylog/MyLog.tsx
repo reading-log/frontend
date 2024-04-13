@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { useGetMyBookList } from '../../apis/myLogApi'
 import { AllLayout } from '../../components/Layouts'
 import EmptyMylog from '../../components/mylog/EmptyMylog'
 import MyBook from '../../components/mylog/MyBook'
@@ -7,6 +8,8 @@ import SearchBar from '../../elements/SearchBar'
 import { calcRem, flexCenter } from '../../styles/theme'
 
 const MyLog = () => {
+  const { isFetchingNextPage, fetchNextPage, hasNextPage, isLoading } = useGetMyBookList()
+
   return (
     <>
       <AllLayout>

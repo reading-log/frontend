@@ -1,12 +1,30 @@
 import axios from 'axios'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 
 /**내가 등록한 책 목록 조회 */
-export const getMyBookList = async () => {
-  return useQuery(['MyBookList'], async () => {
-    const { data } = await axios.get(`/api/books`)
+export const useGetMyBookList = async () => {
+  const getMyBookList = async ({ pageParam = 0 }) => {
+    const { data } = await axios.get(`/api/books/me`, {
+      params: {
+        page: pageParam, //현재 페이지 번호
+        size: 10, //몇개를 가져올 건지
+      },
+    })
     return data
+  }
+
+  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } = useInfiniteQuery(['MyBooks'], getMyBookList, {
+    getNextPageParam: lastPage => {
+      const { data } = lastPage
+
+      return data.startIndex * data.itemsPerPage === data.start
+    },
+    onSuccess: res => {
+      console.log('szzz', res)
+    },
   })
+
+  return { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage }
 }
 
 /**기록용 책 검색(알라딘 api 조회) 무한 스크롤 */
