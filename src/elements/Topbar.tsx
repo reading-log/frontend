@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
+import { colors } from '../styles/theme'
 
 const Topbar = () => {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Topbar = () => {
   return (
     <div css={topbar}>
       <button onClick={handleClick} css={backBtn}>
-        <FontAwesomeIcon icon={faChevronLeft} size="xl" color="#836565" />
+        <FontAwesomeIcon icon={faChevronLeft} size="xl" color={colors.main1} />
       </button>
       <h1 css={title}>ReadingLog</h1>
     </div>
@@ -41,7 +42,7 @@ const title = css`
   font-style: normal;
   font-size: 27px;
   font-weight: bold;
-  color: #836565;
+  color: ${colors.main1};
 `
 
 const backBtn = css`

@@ -2,13 +2,14 @@ import { css } from '@emotion/react'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Cookies from 'js-cookie'
 import { Link } from 'react-router-dom'
+import { useGetUser } from '../../apis/userApi'
 import { FooterLayout } from '../../components/Layouts'
 import { calcRem, colors, flexCenter } from '../../styles/theme'
 
 const Account = () => {
-  const token = Cookies.get('accessToken')
+  const { data, isLoading, isError } = useGetUser()
+  console.log(data)
 
   /**회원 탈퇴 */
   const leaveAccount = () => {}
