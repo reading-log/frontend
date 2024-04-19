@@ -3,7 +3,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { onJoin } from '../apis/userApi'
+import { checkNickname, onJoin } from '../apis/userApi'
 import { HeaderLayout } from '../components/Layouts'
 import { useToken } from '../hooks/useToken'
 import { calcRem, colors, flexCenter } from '../styles/theme'
@@ -24,11 +24,27 @@ const Join = () => {
     register,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
   } = useForm<IFormValues>()
 
   /**이미지 url */
   const profileImage = watch('profileImage')
+  /**닉네임 검사 */
+  const watchNickname = watch('nickname')
+
+  /**닉네임 중복 검사(포커스 아웃시) */
+  const onCheckNickname = () => {
+    if (!!watchNickname) {
+      //중복검사
+      checkNickname(watchNickname).catch(() => {
+        setError('nickname', {
+          type: 'validate',
+          message: '이미 존재하는 닉네임입니다.',
+        })
+      })
+    }
+  }
 
   const onHandleJoin = (data: IFormValues) => {
     const formData = new FormData()
@@ -102,6 +118,7 @@ const Join = () => {
                   value: /^[a-zA-Z0-9가-힣]{2,8}$/,
                   message: '닉네임은 영문, 한글, 숫자만 입력해주세요.',
                 },
+                onBlur: () => onCheckNickname(),
               })}
             />
             {errors.nickname && <span>{errors.nickname.message}</span>}
