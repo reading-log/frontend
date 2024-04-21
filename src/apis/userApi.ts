@@ -26,7 +26,7 @@ export const checkNickname = async (nickname: string) => {
 }
 
 /**회원정보 조회 */
-export const useGetUser = (token?: boolean) => {
+export const useGetUser = (token?: string) => {
   return useQuery(
     ['user', token],
     async () => {
@@ -34,7 +34,7 @@ export const useGetUser = (token?: boolean) => {
       return data
     },
     {
-      enabled: token,
+      enabled: !!token,
     },
   )
 }
@@ -67,4 +67,36 @@ export const onLogout = async () => {
   return response
 }
 
+/**회원 탈퇴 */
+export const onDeleteUser = async (password: string) => {
+  const response = await axios.delete('/api/members/me', {
+    data: {
+      password,
+    },
+  })
+  return response
+}
+
+/**이메일 인증 */
+export const onSendEmail = async (email: string) => {
+  const response = await axios.post('/api/members/send-authCode', { email })
+  return response
+}
+
+/**이메일과 인증코드 확인 */
+export const onCheckEmainAndCode = async (data: { email: string; authCode: string }) => {
+  const response = await axios.post('/api/members/verify-authCode', data)
+  return response
+}
+
+/**이메일로 임시 비밀번호 전송 */
+export const onSendTempPassword = async (email: string) => {
+  const response = await axios.post('/api/members/send-temporaryPassword', { email })
+  return response
+}
+
 /**비밀번호 변경 */
+export const onChangePassword = async (data: { currentPassword: string; newPassword: string; newPasswordConfirm: string }) => {
+  const response = await axios.patch('/api/members/password', data)
+  return response
+}

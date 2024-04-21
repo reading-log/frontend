@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -25,6 +26,7 @@ const Login = () => {
         //헤더에서 토큰 가져와서 쿠키에 저장
         const token = res.headers.authorization
         Cookies.set('accessToken', token)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         navigate('/readinglog')
       })
       .catch(() => alert('아이디 또는 비밀번호가 일치하지 않습니다.'))

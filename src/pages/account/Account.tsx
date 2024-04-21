@@ -2,10 +2,11 @@ import { css } from '@emotion/react'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useGetUser } from '../../apis/userApi'
+import { onDeleteUser, onLogout, useGetUser } from '../../apis/userApi'
 import { FooterLayout } from '../../components/Layouts'
 import { LoadingIndicator } from '../../elements/Loading'
 import { calcRem, colors, flexCenter } from '../../styles/theme'
@@ -18,17 +19,32 @@ const Account = () => {
     setIsLogin(!!token)
   }, [token])
 
-  const { data, isLoading } = useGetUser(isLogin)
+  const { data, isLoading } = useGetUser(token)
   const user = data?.data
 
   /**로그아웃 */
   const logoutUser = () => {
-    Cookies.remove('accessToken')
-    setIsLogin(false)
+    onLogout().then(() => {
+      delete axios.defaults.headers.common['Authorization']
+      Cookies.remove('accessToken')
+      setIsLogin(false)
+    })
   }
 
   /**회원 탈퇴 */
-  const leaveAccount = () => {}
+  const leaveAccount = () => {
+    const userAnswer = prompt('정말로 탈퇴하시겠습니까? 계정의 비밀번호를 재입력해주세요.')
+    if (userAnswer) {
+      onDeleteUser(userAnswer)
+        .then(() => {
+          delete axios.defaults.headers.common['Authorization']
+          Cookies.remove('accessToken')
+          setIsLogin(false)
+          alert('회원 탈퇴가 완료되었습니다.')
+        })
+        .catch(() => alert('비밀번호가 일치하지 않습니다. 다시 시도해주세요.'))
+    }
+  }
 
   return (
     <>
@@ -59,7 +75,6 @@ const Account = () => {
             </div>
             <div className="accountList">
               <Link to="/account/likes">좋아요한 피드 보기</Link>
-              <Link to="/account/find-pw">비밀번호 찾기</Link>
               <Link to="/account/change-pw">비밀번호 변경하기</Link>
               <button onClick={logoutUser}>로그아웃</button>
               <button onClick={leaveAccount}>회원 탈퇴</button>
