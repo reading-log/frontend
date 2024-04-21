@@ -37,7 +37,7 @@ export const useGetUser = () => {
 export const useModifyUser = async () => {
   return useMutation(
     async (data: FormData) => {
-      const response = await axios.patch(`api/doctor`, data, {
+      const response = await axios.patch(`api/members/me`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -45,7 +45,9 @@ export const useModifyUser = async () => {
       return response
     },
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        alert('회원정보가 수정되었습니다.')
+      },
       onError: () => {
         alert('회원정보 수정에 실패했습니다. 잠시후 다시 시도해주세요.')
       },

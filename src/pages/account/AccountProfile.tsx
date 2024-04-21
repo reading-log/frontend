@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
 import { AllLayout } from '../../components/Layouts'
 import { calcRem, colors, flexCenter } from '../../styles/theme'
+import { useLocation } from 'react-router-dom'
 
 const AccountProfile = () => {
+  const { state } = useLocation()
+  console.log(state.userData)
   const { handleSubmit, register, watch } = useForm()
 
   /**이미지 url */
@@ -18,7 +21,11 @@ const AccountProfile = () => {
     <AllLayout>
       <form css={profBox} onSubmit={handleSubmit(editProfile)}>
         <label css={profileImgBox} htmlFor="profile_img">
-          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage?.[0])} /> : <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />}
+          {state?.userData?.profileImg || profileImage?.[0] ? (
+            <img src={state?.userData?.profileImg || URL.createObjectURL(profileImage?.[0])} />
+          ) : (
+            <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />
+          )}
           <input type="file" accept="image/*" id="profile_img" {...register('profileImage')} />
         </label>
         <input className="nick_input" type="text" placeholder="닉네임" {...register('nickname')} />
