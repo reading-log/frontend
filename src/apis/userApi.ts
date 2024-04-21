@@ -3,13 +3,13 @@ import { useMutation, useQuery } from 'react-query'
 
 /**회원 로그인 */
 export const onLogin = async (data: { email: string; password: string }) => {
-  const response = await axios.post('api/members/login', data)
+  const response = await axios.post('/api/members/login', data)
   return response
 }
 
 /**회원가입 */
 export const onJoin = async (data: FormData) => {
-  const response = await axios.post('api/members/join', data, {
+  const response = await axios.post('/api/members/join', data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -19,25 +19,31 @@ export const onJoin = async (data: FormData) => {
 
 /**닉네임 중복 검사 */
 export const checkNickname = async (nickname: string) => {
-  const response = await axios.post(`api/members/join-nickname`, null, {
+  const response = await axios.post(`/api/members/join-nickname`, null, {
     params: { nickname },
   })
   return response
 }
 
 /**회원정보 조회 */
-export const useGetUser = () => {
-  return useQuery(['user'], async () => {
-    const { data } = await axios.get('api/members/me')
-    return data
-  })
+export const useGetUser = (token?: boolean) => {
+  return useQuery(
+    ['user', token],
+    async () => {
+      const { data } = await axios.get('/api/members/me')
+      return data
+    },
+    {
+      enabled: token,
+    },
+  )
 }
 
 /**회원 정보 (닉네임, 프로필이미지) 수정 */
-export const useModifyUser = async () => {
+export const useModifyUser = () => {
   return useMutation(
     async (data: FormData) => {
-      const response = await axios.patch(`api/members/me`, data, {
+      const response = await axios.patch(`/api/members/me`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -53,6 +59,12 @@ export const useModifyUser = async () => {
       },
     },
   )
+}
+
+/**로그아웃 */
+export const onLogout = async () => {
+  const response = await axios.post('/api/members/logout')
+  return response
 }
 
 /**비밀번호 변경 */
