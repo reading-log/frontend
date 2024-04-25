@@ -9,6 +9,14 @@ export const LoadingIndicator = () => {
   )
 }
 
+export const LoadingSpinner = () => {
+  return (
+    <div css={spinContainer}>
+      <div className="spin" />
+    </div>
+  )
+}
+
 const container = css`
   width: 100%;
   height: 100vh;
@@ -32,6 +40,34 @@ const circle = css`
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+`
+
+const spinContainer = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .spin {
+    &:after {
+      content: ' ';
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin: 8px;
+      border-radius: 50%;
+      border: 4px solid ${colors.main1};
+      border-color: ${colors.main1} transparent ${colors.main1} transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   }
 `

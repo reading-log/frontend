@@ -77,6 +77,12 @@ export const onDeleteUser = async (password: string) => {
   return response
 }
 
+/**소셜 회원 탈퇴 */
+export const onDeleteSocialUser = async () => {
+  const response = await axios.delete('/api/members/social/me')
+  return response
+}
+
 /**이메일 인증 */
 export const onSendEmail = async (email: string) => {
   const response = await axios.post('/api/members/send-authCode', { email })
@@ -99,4 +105,10 @@ export const onSendTempPassword = async (email: string) => {
 export const onChangePassword = async (data: { currentPassword: string; newPassword: string; newPasswordConfirm: string }) => {
   const response = await axios.patch('/api/members/password', data)
   return response
+}
+
+/**토큰 재발급 : 액세스 토큰이 만료된 경우, 리프레시 토큰을 이용하여 재발급 */
+export const getRefreshToken = async () => {
+  const { data } = await axios.get('/api/members/reissue')
+  return data
 }

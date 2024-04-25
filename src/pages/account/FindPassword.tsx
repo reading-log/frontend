@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { onCheckEmainAndCode, onSendEmail, onSendTempPassword } from '../../apis/userApi'
 import { AllLayout } from '../../components/Layouts'
 import { calcRem, colors, flexCenter } from '../../styles/theme'
@@ -11,6 +12,7 @@ interface IFormValues {
 }
 
 const FindPassword = () => {
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm<IFormValues>()
 
   /**이메일인증 여부 */
@@ -37,7 +39,10 @@ const FindPassword = () => {
         .then(() => {
           //임시 비밀번호 발송
           onSendTempPassword(data.email)
-            .then(() => alert('인증된 이메일로 임시 비밀번호를 발송합니다.'))
+            .then(() => {
+              alert('인증된 이메일로 임시 비밀번호를 발송합니다. 비밀번호를 꼭 변경해주세요.')
+              navigate('/login')
+            })
             .catch(() => alert('임시 비밀번호 발송에 실패했습니다. 다시 시도해주세요.'))
         })
         .catch(() => {

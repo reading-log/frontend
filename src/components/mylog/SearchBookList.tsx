@@ -1,33 +1,38 @@
 import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
+import { LoadingSpinner } from '../../elements/Loading'
 import { body1, body2, calcRem, colors, flexCenter } from '../../styles/theme'
-import { Book } from '../../types/book'
+import { ISearchBook } from '../../types/book'
 
 interface BookList {
-  bookList: Book[]
+  bookList?: ISearchBook[]
+  scrollRef: (node?: Element | null | undefined) => void
+  isLoading: boolean
+  scroll?: React.MutableRefObject<HTMLDivElement | null>
 }
 
-const SearchBookList: React.FC<BookList> = ({ bookList, scrollRef }) => {
+const SearchBookList: React.FC<BookList> = ({ bookList, scrollRef, isLoading, scroll }) => {
   const navigate = useNavigate()
 
-  const handleClick = (book: Book) => {
+  const handleClick = (book: ISearchBook) => {
     navigate('/mylog/book_auto_register', { state: { book } })
   }
 
   return (
-    <div css={bookBoxContainer}>
+    <div css={bookBoxContainer} ref={scroll}>
       {bookList?.map((book, id) => (
         <div key={id} className="bookBox" onClick={() => handleClick(book)}>
           <div className="booxCover">
-            <img src={book.cover} />
+            <img src={book?.cover} />
           </div>
           <div css={contentWrapper}>
-            <p className="title">{book.title}</p>
-            <p>{book.author}</p>
-            <p>{book.publisher}</p>
+            <p className="title">{book?.title}</p>
+            <p>{book?.author}</p>
+            <p>{book?.publisher}</p>
           </div>
         </div>
       ))}
+      {isLoading && <LoadingSpinner />}
       <div ref={scrollRef}></div>
     </div>
   )

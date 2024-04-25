@@ -9,6 +9,8 @@ interface ISearchBarProps {
   placeHolder: string
   /**검색어를 저장*/
   setSearchKeyWord: (keyword: string) => void
+  /**스크롤 최상단으로 이동 */
+  onScrollTop?: () => void
 }
 
 interface IFormValues {
@@ -16,11 +18,13 @@ interface IFormValues {
 }
 
 /**검색바 */
-const SearchBar = ({ placeHolder, setSearchKeyWord }: ISearchBarProps) => {
+const SearchBar = ({ placeHolder, setSearchKeyWord, onScrollTop }: ISearchBarProps) => {
   const { register, handleSubmit } = useForm<IFormValues>()
+
   /**검색어 저장 */
   const submitKeyword = (data: IFormValues) => {
     setSearchKeyWord(data.keyword)
+    if (onScrollTop) onScrollTop()
   }
 
   return (

@@ -1,61 +1,82 @@
 import { css } from '@emotion/react'
 
 import { useForm } from 'react-hook-form'
+import { useRegisterMyBook } from '../../apis/myLogApi'
 import { calcRem, colors, flexCenter, title3 } from '../../styles/theme'
+import { bookCategory } from '../../utils/bookCatergory'
 import { AllLayout } from '../Layouts'
 
 interface BookProp {
-  bookInfo?: {
-    title: string
-    author: string
-    publisher: string
-    cover: string
-  }
+  title: string
+  author: string
+  publisher: string
+  cover?: string | FileList
 }
 
-const BookInput = ({ bookInfo }: BookProp) => {
-  const { register, handleSubmit, watch } = useForm()
+interface BookInputProp extends BookProp {
+  category: string
+}
+
+const BookInput = ({ bookInfo }: { bookInfo?: BookProp }) => {
+  const { register, handleSubmit, watch } = useForm<BookInputProp>({})
 
   /**이미지 url */
-  const bookWatch = watch()
+  const cover = watch('cover')
+
+  const registerBookMutation = useRegisterMyBook()
+
+  /**책 등록 */
+  const onSubmitBook = (data: BookInputProp) => {
+    const formData = new FormData()
+    formData.append('title', data.title)
+    formData.append('author', data.author)
+    formData.append('publisher', data.publisher)
+    formData.append('category', data.category)
+    formData.append('cover', data.cover[0] ?? bookInfo?.cover)
+    registerBookMutation.mutate(formData)
+  }
 
   return (
     <AllLayout>
-      <div css={feedContainer}>
-        <form>
-          <label className="defaultCover" htmlFor="bookCover">
-            {bookWatch?.cover?.[0] ? (
-              <img src={URL.createObjectURL(bookWatch?.cover?.[0])} />
-            ) : (
-              <h3>
-                Reading
-                <br /> Log
-              </h3>
-            )}
-            <input type="file" id="bookCover" accept="image/*" hidden {...register('cover')} />
-          </label>
-        </form>
-        <div className="formText">
-          <div className="inputBox">
-            <span>제목:</span>
-            <input {...register('title')} />
-          </div>
-          <div className="inputBox">
-            <span>지은이:</span>
-            <input {...register('author')} />
-          </div>
-          <div className="inputBox">
-            <span>출판사:</span>
-            <input {...register('publisher')} />
-          </div>
-          <div className="inputBox">
-            <span>카테고리:</span>
-            <select {...register('category')}>
-              <option>선택하세요</option>
-            </select>
-          </div>
+      <form css={feedContainer} onSubmit={handleSubmit(onSubmitBook)}>
+        <label className="defaultCover" htmlFor="bookCover">
+          {bookInfo?.cover || cover?.[0] ? (
+            <img src={cover?.[0] ? URL.createObjectURL(cover?.[0]) : bookInfo?.cover} />
+          ) : (
+            <h3>
+              Reading
+              <br /> Log
+            </h3>
+          )}
+          <input type="file" id="bookCover" accept="image/*" hidden {...register('cover')} />
+        </label>
+        <div className="inputBox">
+          <span>제목:</span>
+          <input {...register('title')} defaultValue={bookInfo?.title} />
         </div>
-      </div>
+        <div className="inputBox">
+          <span>지은이:</span>
+          <input {...register('author')} defaultValue={bookInfo?.author} />
+        </div>
+        <div className="inputBox">
+          <span>출판사:</span>
+          <input {...register('publisher')} defaultValue={bookInfo?.publisher} />
+        </div>
+        <div className="inputBox">
+          <span>카테고리:</span>
+          <select {...register('category')}>
+            <option value="">선택</option>
+            {bookCategory.map((category, id) => (
+              <option key={id} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button className="submitBtn" type="submit">
+          등록하기
+        </button>
+      </form>
     </AllLayout>
   )
 }
@@ -89,6 +110,16 @@ const feedContainer = css`
     }
   }
 
+  .submitBtn {
+    margin-top: ${calcRem(40)};
+    width: 100%;
+    padding: ${calcRem(4)};
+    border-radius: ${calcRem(6)};
+    margin-bottom: ${calcRem(3)};
+    background-color: ${colors.button2};
+    border: 2px solid ${colors.button1};
+  }
+
   .inputBox {
     font-weight: 500;
     font-size: ${calcRem(15)};
@@ -113,30 +144,4 @@ const feedContainer = css`
       border: none;
     }
   }
-`
-
-const form = css`
-  display: flex; /* 요소들을 수평으로 정렬 */
-  flex-direction: column; /* 요소들을 세로로 배치 */
-  text-align: center;
-  input {
-    width: 13rem;
-    font-size: 15px;
-    /* font-weight: 700; */
-    border: none;
-    padding: 0.3rem;
-  }
-`
-
-const inputRegister = css`
-  background: #eae5e5;
-`
-
-const saveButton = css`
-  /* #836565를 RGBA 색상으로 변환하여 투명도 30%로 설정  */
-  background: rgba(131, 101, 101, 0.3);
-  width: 20rem;
-  height: 2rem;
-  border-radius: 6px;
-  margin-top: 2rem;
 `

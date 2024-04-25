@@ -1,13 +1,14 @@
 import { css } from '@emotion/react'
 import { faFaceSadTear } from '@fortawesome/free-regular-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { calcRem, colors, flexCenter } from '../../styles/theme'
 
-const EmptySearch = () => {
+const EmptySearch = ({ searchKeyWord }: { searchKeyWord: string }) => {
   return (
     <div css={searchContainer}>
-      <FontAwesomeIcon icon={faFaceSadTear} size="6x" color={colors.main1} />
-      <p className="emptyText">검색 결과가 없습니다.</p>
+      <FontAwesomeIcon icon={searchKeyWord ? faFaceSadTear : faMagnifyingGlass} size="6x" color={colors.main1} />
+      <p className="emptyText">{searchKeyWord ? `검색 결과가 없습니다.` : `검색어를 입력해주세요.`}</p>
     </div>
   )
 }

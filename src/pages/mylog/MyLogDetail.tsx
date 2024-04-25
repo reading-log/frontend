@@ -1,14 +1,12 @@
+import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AllLayout } from '../../components/Layouts'
-import { css } from '@emotion/react'
-import FeedDetail from '../../components/readinglog/FeedDetail'
-import SnowmanButton from '../../components/mylog/SnowmanButton'
 import HighlightBox from '../../components/mylog/HighlightBox'
-import ReviewBox from '../../components/mylog/ReviewBox'
 import OneLineBox from '../../components/mylog/OneLineBox'
-import RecordList from '../../components/mylog/RecordList'
-import { onBookDetail } from '../../apis/myLogApi'
+
+import ReviewBox from '../../components/mylog/ReviewBox'
+import FeedDetail from '../../components/readinglog/FeedDetail'
 
 const MyLogDetail = () => {
   const [changeOneLine, setChangeOneLine] = useState(false) // 한 줄 평 수정

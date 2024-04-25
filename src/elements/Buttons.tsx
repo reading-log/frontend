@@ -9,6 +9,7 @@ export const RecordBtn = ({ path, text }: { text: string; path: string }) => {
 
   /**기록하기로 이동 */
   const handleClick = () => {
+    //스크롤 최상단으로 이동
     navigate(path) //  나의로그 책 검색하기
   }
 
