@@ -3,22 +3,12 @@ import { css } from '@emotion/react'
 import { useForm } from 'react-hook-form'
 import { useRegisterMyBook } from '../../apis/myLogApi'
 import { calcRem, colors, flexCenter, title3 } from '../../styles/theme'
+import { IBookInputProp, IBookProp } from '../../types/book'
 import { bookCategory } from '../../utils/bookCatergory'
 import { AllLayout } from '../Layouts'
 
-interface BookProp {
-  title: string
-  author: string
-  publisher: string
-  cover?: string | FileList
-}
-
-interface BookInputProp extends BookProp {
-  category: string
-}
-
-const BookInput = ({ bookInfo }: { bookInfo?: BookProp }) => {
-  const { register, handleSubmit, watch } = useForm<BookInputProp>({})
+const BookInput = ({ bookInfo, isAuto }: { bookInfo?: IBookProp; isAuto?: Boolean }) => {
+  const { register, handleSubmit, watch } = useForm<IBookInputProp>({})
 
   /**이미지 url */
   const cover = watch('cover')
@@ -26,14 +16,21 @@ const BookInput = ({ bookInfo }: { bookInfo?: BookProp }) => {
   const registerBookMutation = useRegisterMyBook()
 
   /**책 등록 */
-  const onSubmitBook = (data: BookInputProp) => {
-    const formData = new FormData()
-    formData.append('title', data.title)
-    formData.append('author', data.author)
-    formData.append('publisher', data.publisher)
-    formData.append('category', data.category)
-    formData.append('cover', data.cover[0] ?? bookInfo?.cover)
-    registerBookMutation.mutate(formData)
+  const onSubmitBook = (data: IBookInputProp) => {
+    if (isAuto) {
+      if (!data.category) return alert('카테고리를 선택해주세요')
+      registerBookMutation.mutate(data)
+    } else {
+      if (!data.category) return alert('카테고리를 선택해주세요')
+      if (!data.cover) return alert('커버를 선택해주세요')
+      const formData = new FormData()
+      formData.append('title', data.title)
+      formData.append('author', data.author)
+      formData.append('publisher', data.publisher)
+      formData.append('category', data.category)
+      formData.append('cover', data.cover[0])
+      registerBookMutation.mutate(formData)
+    }
   }
 
   return (
@@ -48,19 +45,19 @@ const BookInput = ({ bookInfo }: { bookInfo?: BookProp }) => {
               <br /> Log
             </h3>
           )}
-          <input type="file" id="bookCover" accept="image/*" hidden {...register('cover')} />
+          <input type="file" id="bookCover" accept="image/*" hidden {...register('cover')} disabled={!!isAuto} />
         </label>
         <div className="inputBox">
           <span>제목:</span>
-          <input {...register('title')} defaultValue={bookInfo?.title} />
+          <input {...register('title')} defaultValue={bookInfo?.title} disabled={!!isAuto} />
         </div>
         <div className="inputBox">
           <span>지은이:</span>
-          <input {...register('author')} defaultValue={bookInfo?.author} />
+          <input {...register('author')} defaultValue={bookInfo?.author} disabled={!!isAuto} />
         </div>
         <div className="inputBox">
           <span>출판사:</span>
-          <input {...register('publisher')} defaultValue={bookInfo?.publisher} />
+          <input {...register('publisher')} defaultValue={bookInfo?.publisher} disabled={!!isAuto} />
         </div>
         <div className="inputBox">
           <span>카테고리:</span>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useInfiniteQuery, useMutation } from 'react-query'
-import { ISearchBook } from '../types/book'
+import { IBookInputProp, ISearchBook } from '../types/book'
 
 /**내가 등록한 책 목록 조회 */
 export const useGetMyBookList = async () => {
@@ -59,7 +59,7 @@ export const useSearchBookInfiniteScroll = (searchKeyword: string) => {
 /**책 등록 */
 export const useRegisterMyBook = () => {
   return useMutation(
-    async (data: FormData) => {
+    async (data: FormData | IBookInputProp) => {
       const response = await axios.post(`/api/books`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
