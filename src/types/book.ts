@@ -13,6 +13,10 @@ export interface IBookProp {
   cover: string
 }
 
-export interface IBookInputProp extends IBookProp {
+export interface IBookInputProp {
+  title: string
+  author: string
+  publisher: string
+  cover: FileList
   category: string
 }

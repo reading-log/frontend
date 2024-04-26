@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useInfiniteQuery, useMutation } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import { IBookInputProp, ISearchBook } from '../types/book'
 
 /**내가 등록한 책 목록 조회 */
@@ -58,6 +59,8 @@ export const useSearchBookInfiniteScroll = (searchKeyword: string) => {
 
 /**책 등록 */
 export const useRegisterMyBook = () => {
+  const navigate = useNavigate()
+
   return useMutation(
     async (data: FormData | IBookInputProp) => {
       const response = await axios.post(`/api/books`, data, {
@@ -70,6 +73,7 @@ export const useRegisterMyBook = () => {
     {
       onSuccess: () => {
         alert('책이 등록되었습니다.')
+        navigate('/mylog')
       },
       onError: () => {
         alert('책 등록에 실패했습니다.')

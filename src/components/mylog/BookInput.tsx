@@ -21,8 +21,9 @@ const BookInput = ({ bookInfo, isAuto }: { bookInfo?: IBookProp; isAuto?: Boolea
       if (!data.category) return alert('카테고리를 선택해주세요')
       registerBookMutation.mutate(data)
     } else {
-      if (!data.category) return alert('카테고리를 선택해주세요')
+      if (!data.title || !data.author || !data.publisher) return alert('내용을 입력해주세요')
       if (!data.cover) return alert('커버를 선택해주세요')
+      if (!data.category) return alert('카테고리를 선택해주세요')
       const formData = new FormData()
       formData.append('title', data.title)
       formData.append('author', data.author)
