@@ -2,15 +2,16 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useInfiniteQuery, useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-import { IBookInputProp, ISearchBook } from '../types/book'
+import { IBookInputProp2, ISearchBook } from '../types/book'
 
 /**내가 등록한 책 목록 조회 */
-export const useGetMyBookList = async () => {
+export const useGetMyBookList = (searchKeyword: string) => {
   const [result, setResult] = useState<ISearchBook[]>([])
 
   const getMyBookList = async ({ pageParam = 0 }) => {
     const { data } = await axios.get(`/api/books/me`, {
       params: {
+        keyword: searchKeyword, //검색어
         page: pageParam, //현재 페이지 번호
         size: 10, //몇개를 가져올 건지
       },
@@ -18,13 +19,13 @@ export const useGetMyBookList = async () => {
     return data
   }
 
-  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } = useInfiniteQuery(['MyBooks'], getMyBookList, {
+  const { fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } = useInfiniteQuery(['MyBooks', searchKeyword], getMyBookList, {
     getNextPageParam: lastPage => {
       const { data } = lastPage
-      console.log(data)
+      return data.last ? undefined : data?.pageable?.pageNumber + 1
     },
     onSuccess: res => {
-      const flattenedData = res.pages.map(page => page.data.item).flat()
+      const flattenedData = res.pages.map(page => page.data.content).flat()
       setResult(flattenedData)
     },
   })
@@ -60,13 +61,14 @@ export const useSearchBookInfiniteScroll = (searchKeyword: string) => {
 /**책 등록 */
 export const useRegisterMyBook = () => {
   const navigate = useNavigate()
-
   return useMutation(
-    async (data: FormData | IBookInputProp) => {
+    async (data: FormData | IBookInputProp2) => {
+      const headers = {
+        'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json',
+      }
+
       const response = await axios.post(`/api/books`, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers,
       })
       return response
     },

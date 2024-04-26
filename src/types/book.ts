@@ -20,3 +20,11 @@ export interface IBookInputProp {
   cover: FileList
   category: string
 }
+
+export interface IBookInputProp2 {
+  title: string
+  author: string
+  publisher: string
+  cover: string
+  category: string
+}

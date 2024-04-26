@@ -12,14 +12,13 @@ const BookInput = ({ bookInfo, isAuto }: { bookInfo?: IBookProp; isAuto?: Boolea
 
   /**이미지 url */
   const cover = watch('cover')
-
   const registerBookMutation = useRegisterMyBook()
 
   /**책 등록 */
   const onSubmitBook = (data: IBookInputProp) => {
-    if (isAuto) {
+    if (isAuto && bookInfo) {
       if (!data.category) return alert('카테고리를 선택해주세요')
-      registerBookMutation.mutate(data)
+      registerBookMutation.mutate({ category: data.category, title: bookInfo.title, author: bookInfo.author, publisher: bookInfo.publisher, cover: bookInfo.cover })
     } else {
       if (!data.title || !data.author || !data.publisher) return alert('내용을 입력해주세요')
       if (!data.cover) return alert('커버를 선택해주세요')

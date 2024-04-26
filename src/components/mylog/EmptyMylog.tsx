@@ -9,7 +9,7 @@ const EmptyMylog = () => {
       <FontAwesomeIcon icon={faBoxOpen} size="6x" color={colors.main1} />
       <div className="emptyText">
         <p>기록된 책이 없습니다.</p>
-        <p>기록하기를 눌러 첫번째 책을 기록해보세요!</p>
+        <p>기록하기를 눌러 책을 기록해보세요!</p>
       </div>
     </div>
   )
