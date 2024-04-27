@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 /**rem 계산기 */
 export const calcRem = (size: number) => `${size / 16}rem`
 
-/*정가운데 정렬 */
+/** 정가운데 정렬 */
 export const flexCenter = css`
   display: flex;
   justify-content: center;
@@ -26,7 +26,7 @@ export const title2 = css`
 
 /**타이틀 텍스트3 */
 export const title3 = css`
-  font-size: ${calcRem(27)};
+  font-size: ${calcRem(26)};
   font-weight: 700;
   font-family: 'Josefin Slab', sans-serif;
   color: #836565;

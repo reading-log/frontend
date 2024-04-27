@@ -46,12 +46,13 @@ export default Footer
 
 /*전체 블록 */
 const footerBox = css`
+  position: absolute;
+  bottom: 0;
+
   width: 100%;
-  max-width: 26rem;
   height: 5rem;
-  background-color: #f3f0f0;
-  position: fixed;
-  bottom: 0px;
+  background-color: ${colors.innerBoxStroke};
+
   display: flex;
   justify-content: space-evenly;
   align-items: flex-end;
