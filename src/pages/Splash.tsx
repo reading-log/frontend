@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { DefaultLayout } from '../components/Layouts'
+import { Layout } from '../components/Layouts'
 import { title1 } from '../styles/theme'
 
 const Splash = () => {
@@ -14,9 +14,9 @@ const Splash = () => {
   }, [navigate])
 
   return (
-    <DefaultLayout>
+    <Layout>
       <h1 css={title1}>ReadingLog</h1>
-    </DefaultLayout>
+    </Layout>
   )
 }
 
