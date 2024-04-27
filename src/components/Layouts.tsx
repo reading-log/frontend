@@ -37,7 +37,6 @@ export const Layout = ({ children, isHeader, isFooter, isBack }: ILayoutProps) =
 const layoutContainer = css`
   width: 100%;
   height: 100vh;
-  background-color: #a4cef8;
   ${flexCenter}
   flex-direction: column;
 `

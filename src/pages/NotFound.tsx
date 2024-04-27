@@ -7,7 +7,7 @@ import { calcRem, colors, flexCenter } from '../styles/theme'
 
 const NotFound = () => {
   return (
-    <Layout isHeader isBack isFooter>
+    <Layout>
       <div css={notFound}>
         <FontAwesomeIcon icon={faTriangleExclamation} size="8x" color={colors.main1} />
         <p>페이지를 찾을 수 없습니다.</p>
