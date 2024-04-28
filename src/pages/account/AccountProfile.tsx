@@ -2,8 +2,8 @@ import { css } from '@emotion/react'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useModifyUser } from '../../apis/userApi'
-import { AllLayout } from '../../components/Layouts'
-import { calcRem, colors, flexCenter } from '../../styles/theme'
+import { Layout } from '../../components/Layouts'
+import { colors, flexCenter } from '../../styles/theme'
 import { handleKeyDown } from '../../utils/onKeyDownEnter'
 
 const AccountProfile = () => {
@@ -42,81 +42,84 @@ const AccountProfile = () => {
   }
 
   return (
-    <AllLayout>
-      <form css={profBox} onSubmit={handleSubmit(editProfile)} onKeyDown={handleKeyDown}>
-        <label css={profileImgBox} htmlFor="profile_img">
-          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage?.[0])} /> : <img src={state?.userData?.profileImg} />}
-          <input type="file" accept="image/*" id="profile_img" {...register('profileImage')} />
-        </label>
-        <input className="nick_input" type="text" placeholder="닉네임" {...register('nickname')} defaultValue={state?.userData?.nickname} />
-        <button className="cancle_btn" type="button" onClick={() => navigate('/account')}>
-          취소하기
-        </button>
-        <button className="edit_btn" type="submit">
-          확인하기
-        </button>
+    <Layout isFooter>
+      <form css={profileContainer} onSubmit={handleSubmit(editProfile)} onKeyDown={handleKeyDown}>
+        <div className="editBox">
+          <label className="userInfoBox" htmlFor="profile_img">
+            {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage[0])} /> : <img src={state?.userData?.profileImg} />}
+            <input type="file" accept="image/*" id="profile_img" {...register('profileImage')} />
+          </label>
+          <input className="nick_input" type="text" placeholder="닉네임" {...register('nickname')} defaultValue={state?.userData?.nickname} />
+          <button className="cancle_btn" type="button" onClick={() => navigate('/account')}>
+            취소하기
+          </button>
+          <button className="edit_btn" type="submit">
+            확인하기
+          </button>
+        </div>
       </form>
-    </AllLayout>
+    </Layout>
   )
 }
 
 export default AccountProfile
 
-const profBox = css`
-  margin-top: ${calcRem(35)};
+const profileContainer = css`
+  height: calc(100vh - 5rem);
   padding: 1rem;
-  border-radius: ${calcRem(6)};
-  width: 100%;
-  height: 100%;
-  border: 2px solid ${colors.boxStroke};
-  ${flexCenter};
-  flex-direction: column;
+
+  .editBox {
+    width: 100%;
+    height: 18rem;
+    border: 2px solid ${colors.boxStroke};
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 
   .nick_input {
     width: 10rem;
+    margin-bottom: 1.5rem;
     background-color: ${colors.innerBoxStroke};
     border: none;
     text-align: center;
-    margin-bottom: ${calcRem(44)};
+  }
+
+  .userInfoBox {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    overflow: hidden;
+
+    margin: 1.5rem 0;
+    background-color: ${colors.main1};
+    ${flexCenter};
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    input {
+      display: none;
+    }
   }
 
   button {
-    width: 100%;
-    padding: ${calcRem(4)};
-    border-radius: ${calcRem(6)};
-
-    margin-bottom: ${calcRem(3)};
+    width: 95%;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.4rem;
   }
+
   .cancle_btn {
     border: 2px solid ${colors.button2};
   }
   .edit_btn {
     background-color: ${colors.button2};
     border: 2px solid ${colors.button1};
-  }
-`
-/**프로필 사진 박스 */
-const profileImgBox = css`
-  width: ${calcRem(100)};
-  height: ${calcRem(100)};
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: ${calcRem(25)};
-  background-color: ${colors.main1};
-  ${flexCenter};
-  span {
-    font-size: ${calcRem(14)};
-    font-weight: 500;
-    color: ${colors.gray};
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  input {
-    display: none;
   }
 `

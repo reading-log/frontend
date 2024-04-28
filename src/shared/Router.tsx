@@ -46,8 +46,8 @@ const Router = () => {
           {/* 로그 분석*/}
           <Route path="/log-analysis" element={<ReadingLogChart />} />
           {/* 설정 */}
-          <Route path="/account" element={<Account />} /> {/**계정 메뉴 페이지 */}
-          <Route path="/account/profile" element={<AccountProfile />} />
+          <Route path="/account" element={<Account />} /> {/**계정 메뉴 */}
+          <Route path="/account/profile" element={<AccountProfile />} /> {/**프로필 수정 */}
           <Route path="/account/likes" element={<LikeFeed />} />
           <Route path="/account/change-pw" element={<EditPassword />} />
         </Route>

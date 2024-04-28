@@ -3,7 +3,6 @@ import { faPenToSquare, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { onDeleteUser, onLogout, useGetUser } from '../../apis/userApi'
 import { Layout } from '../../components/Layouts'
@@ -12,9 +11,6 @@ import { body2, colors, flexCenter } from '../../styles/theme'
 
 const Account = () => {
   const token = Cookies.get('accessToken')
-
-  /**로그인 여부 판단 */
-  const [isLogin, setIsLogin] = useState(false)
 
   /**유저정보 조회 */
   const { data, isLoading } = useGetUser(token)
@@ -25,7 +21,6 @@ const Account = () => {
     onLogout().then(() => {
       delete axios.defaults.headers.common['Authorization']
       Cookies.remove('accessToken')
-      setIsLogin(false)
     })
   }
 
@@ -49,53 +44,52 @@ const Account = () => {
     }
   }
 
-  useEffect(() => {
-    setIsLogin(!!token)
-  }, [token])
-
   return (
     <Layout isFooter>
-      {isLoading && <LoadingIndicator />}
-      <div css={accountContainer}>
-        {isLogin ? (
-          <>
-            <div className="loginBox">
-              {user?.profileImg ? (
-                <img className="imgBox" src={user.profileImg} alt="profile" />
-              ) : (
-                <div className="imgBox">
-                  <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <div css={accountContainer}>
+          {!!token ? (
+            <>
+              <div className="loginBox">
+                {user?.profileImg ? (
+                  <img className="imgBox" src={user.profileImg} alt="profile" />
+                ) : (
+                  <div className="imgBox">
+                    <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />
+                  </div>
+                )}
+                <div className="userInfoBox">
+                  <p>{user?.nickname}</p>
+                  <Link
+                    className="btn_nav"
+                    to="/account/profile"
+                    state={{
+                      userData: user,
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} color={colors.main1} />
+                  </Link>
                 </div>
-              )}
-              <div className="userInfoBox">
-                <p>{user?.nickname}</p>
-                <Link
-                  className="btn_nav"
-                  to="/account/profile"
-                  state={{
-                    userData: user,
-                  }}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} color={colors.main1} />
-                </Link>
               </div>
+              <div className="accountList">
+                <Link to="/account/likes">좋아요한 피드 보기</Link>
+                <Link to="/account/change-pw">비밀번호 변경하기</Link>
+                <button onClick={logoutUser}>로그아웃</button>
+                <button onClick={leaveAccount}>회원 탈퇴</button>
+              </div>
+            </>
+          ) : (
+            <div className="notLoginUserBox">
+              <p>로그인 후 이용해주세요.</p>
+              <Link className="loginBtn" to="/login">
+                로그인
+              </Link>
             </div>
-            <div className="accountList">
-              <Link to="/account/likes">좋아요한 피드 보기</Link>
-              <Link to="/account/change-pw">비밀번호 변경하기</Link>
-              <button onClick={logoutUser}>로그아웃</button>
-              <button onClick={leaveAccount}>회원 탈퇴</button>
-            </div>
-          </>
-        ) : (
-          <div className="notLoginUserBox">
-            <p>로그인 후 이용해주세요.</p>
-            <Link className="loginBtn" to="/login">
-              로그인
-            </Link>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </Layout>
   )
 }
@@ -153,7 +147,10 @@ export const accountContainer = css`
   .notLoginUserBox {
     ${flexCenter};
     flex-direction: column;
-    height: 100%;
+    height: 12rem;
+    border: 2px solid ${colors.boxStroke};
+    border-radius: 0.5rem;
+
     .loginBtn {
       margin-top: 1rem;
       ${flexCenter};
