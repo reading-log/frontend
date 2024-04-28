@@ -5,23 +5,22 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { onLogin } from '../apis/userApi'
 import { Layout } from '../components/Layouts'
-import { useToken } from '../hooks/useToken'
 import { body3, calcRem, colors, flexCenter, title2 } from '../styles/theme'
 import { socialList } from '../utils/socialUtils'
-import NotAllow from './NotAllow'
 
-interface IFormValues {
+interface ILoginValues {
   email: string
   password: string
 }
 
 const Login = () => {
   const navigate = useNavigate()
-  const { register, handleSubmit } = useForm<IFormValues>()
+  const { register, handleSubmit } = useForm<ILoginValues>()
 
   /**로그인 요청 */
-  const onHandleLogin = (data: IFormValues) => {
+  const onHandleLogin = (data: ILoginValues) => {
     if (data.email === '' || data.password === '') return alert('아이디와 비밀번호를 입력해주세요.')
+
     onLogin(data)
       .then(res => {
         //헤더에서 토큰 가져와서 쿠키에 저장
@@ -33,13 +32,9 @@ const Login = () => {
       .catch(() => alert('아이디 또는 비밀번호가 일치하지 않습니다.'))
   }
 
-  /**로그인 되어있으면 리턴 */
-  const isLogin = useToken()
-  if (isLogin) return <NotAllow />
-
   return (
     <Layout>
-      <form css={formContainer}>
+      <form css={formContainer} onSubmit={handleSubmit(onHandleLogin)}>
         <h2 css={title2}>ReadingLog</h2>
         <div css={inputBox}>
           <input type="text" placeholder="아이디" className="input1" {...register('email')} />
@@ -59,7 +54,7 @@ const Login = () => {
       <div css={otherLogin}>
         <Link to="/join">회원가입</Link>
         <span />
-        <Link to="/account/find-pw">비밀번호 찾기</Link>
+        <Link to="/find-pw">비밀번호 찾기</Link>
       </div>
     </Layout>
   )

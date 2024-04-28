@@ -6,6 +6,7 @@ import Splash from '../pages/Splash'
 import BookAutoRegister from '../pages/mylog/BookAutoRegister'
 import BookRegister from '../pages/mylog/BookRegister'
 
+import LoginCheck from '../components/LoginCheck'
 import TokenCheck from '../components/TokenCheck'
 import ReadingLogChart from '../pages/ReadingLogChart'
 import Account from '../pages/account/Account'
@@ -24,11 +25,14 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="*" element={<NotFound />} /> {/**404 페이지 */}
+        <Route path="/" element={<Splash />} /> {/**스플래시 페이지 */}
+        <Route element={<LoginCheck />}>
+          <Route path="/login" element={<Login />} /> {/**로그인 페이지 */}
+          <Route path="/join" element={<Join />} /> {/**회원가입 페이지 */}
+          <Route path="/find-pw" element={<FindPassword />} />
+        </Route>
         <Route element={<TokenCheck />}>
-          <Route path="*" element={<NotFound />} /> {/**404 페이지 */}
-          <Route path="/" element={<Splash />} /> {/**스플래시 페이지 */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
           {/* 리딩 로그 메뉴 페이지 */}
           <Route path="/readinglog" element={<ReadingLog />} />
           <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
@@ -45,7 +49,6 @@ const Router = () => {
           <Route path="/account" element={<Account />} /> {/**계정 메뉴 페이지 */}
           <Route path="/account/profile" element={<AccountProfile />} />
           <Route path="/account/likes" element={<LikeFeed />} />
-          <Route path="/account/find-pw" element={<FindPassword />} />
           <Route path="/account/change-pw" element={<EditPassword />} />
         </Route>
       </Routes>

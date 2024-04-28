@@ -4,12 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { checkNickname, onJoin } from '../apis/userApi'
-import { HeaderLayout } from '../components/Layouts'
-import { useToken } from '../hooks/useToken'
-import { calcRem, colors, flexCenter } from '../styles/theme'
-import NotAllow from './NotAllow'
+import { Layout } from '../components/Layouts'
+import { body2, body3, colors, flexCenter } from '../styles/theme'
 
-interface IFormValues {
+interface IJoinValues {
   profileImage: File[]
   email: string
   nickname: string
@@ -26,7 +24,7 @@ const Join = () => {
     watch,
     setError,
     formState: { errors },
-  } = useForm<IFormValues>()
+  } = useForm<IJoinValues>()
 
   /**이미지 url */
   const profileImage = watch('profileImage')
@@ -46,7 +44,7 @@ const Join = () => {
     }
   }
 
-  const onHandleJoin = (data: IFormValues) => {
+  const onHandleJoin = (data: IJoinValues) => {
     const formData = new FormData()
 
     /** formdata에 추가 */
@@ -72,16 +70,12 @@ const Join = () => {
       })
   }
 
-  /**로그인 되어있으면 리턴 */
-  const isLogin = useToken()
-  if (isLogin) return <NotAllow />
-
   return (
-    <HeaderLayout>
-      <form css={container} onSubmit={handleSubmit(onHandleJoin)}>
-        <p>이메일로 회원가입하기</p>
+    <Layout isBack isHeader>
+      <form css={JoinContainer} onSubmit={handleSubmit(onHandleJoin)}>
+        <p className="joinTitle">이메일로 회원가입하기</p>
         <label css={profileImgBox} htmlFor="profile_img">
-          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage?.[0])} /> : <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />}
+          {profileImage?.[0] ? <img src={URL.createObjectURL(profileImage[0])} /> : <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />}
           <input type="file" accept="image/*" id="profile_img" {...register('profileImage')} />
         </label>
         <div css={joinBox}>
@@ -169,34 +163,36 @@ const Join = () => {
           </button>
         </div>
       </form>
-    </HeaderLayout>
+    </Layout>
   )
 }
 
 export default Join
 
-const container = css`
-  ${flexCenter}
+const JoinContainer = css`
+  margin-top: 2rem;
+  height: 100vh;
+
+  ${flexCenter};
   flex-direction: column;
-  p {
-    margin-top: ${calcRem(18)};
-    margin-bottom: ${calcRem(14)};
+
+  .joinTitle {
+    font-weight: 500;
+    margin-bottom: 1rem;
   }
 `
+
 /**프로필 사진 박스 */
 const profileImgBox = css`
-  width: ${calcRem(100)};
-  height: ${calcRem(100)};
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: ${calcRem(30)};
+
+  margin-bottom: 1.5rem;
   background-color: ${colors.main1};
+
   ${flexCenter};
-  span {
-    font-size: ${calcRem(14)};
-    font-weight: 500;
-    color: ${colors.gray};
-  }
 
   img {
     width: 100%;
@@ -213,40 +209,43 @@ const profileImgBox = css`
 const joinBox = css`
   ${flexCenter}
   flex-direction: column;
+
   .field {
-    margin-bottom: ${calcRem(13)};
+    margin-bottom: 0.8rem;
     display: flex;
     flex-direction: column;
   }
 
   input {
+    ${body2};
+    padding: 0.2rem;
     border: 2px solid ${colors.main1};
-    width: ${calcRem(300)};
-    height: ${calcRem(33)};
+    width: 16rem;
   }
 
   label {
-    margin-bottom: ${calcRem(3)};
+    font-weight: 500;
+    margin-bottom: 0.3rem;
   }
 
   span {
     color: ${colors.red};
-    margin-top: ${calcRem(3)};
-    font-size: ${calcRem(12)};
+    margin-top: 0.3rem;
+    ${body3};
   }
 
   button {
-    width: ${calcRem(300)};
-    height: ${calcRem(33)};
+    width: 16rem;
+    height: 1.8rem;
 
     &.btn1 {
-      margin-top: ${calcRem(23)};
+      margin-top: 1.5rem;
       color: #ffffff;
       background-color: ${colors.main1};
     }
 
     &.btn2 {
-      margin-top: ${calcRem(11)};
+      margin-top: 0.5rem;
       border: 2px solid ${colors.main1};
       color: ${colors.main1};
       background-color: ${colors.innerBoxStroke};

@@ -1,10 +1,10 @@
-import { DefaultLayout } from '../components/Layouts'
+import { Layout } from '../components/Layouts'
 
 const NotAllow = () => {
   return (
-    <DefaultLayout>
+    <Layout>
       <span>접근 권한이 없습니다.</span>
-    </DefaultLayout>
+    </Layout>
   )
 }
 
