@@ -3,6 +3,7 @@ import { faPenToSquare, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { onDeleteUser, onLogout, useGetUser } from '../../apis/userApi'
 import { Layout } from '../../components/Layouts'
@@ -11,6 +12,9 @@ import { body2, colors, flexCenter } from '../../styles/theme'
 
 const Account = () => {
   const token = Cookies.get('accessToken')
+
+  /**로그인 여부 판단 */
+  const [isLogin, setIsLogin] = useState(!!token)
 
   /**유저정보 조회 */
   const { data, isLoading } = useGetUser(token)
@@ -21,6 +25,7 @@ const Account = () => {
     onLogout().then(() => {
       delete axios.defaults.headers.common['Authorization']
       Cookies.remove('accessToken')
+      setIsLogin(false)
     })
   }
 
@@ -44,13 +49,17 @@ const Account = () => {
     }
   }
 
+  useEffect(() => {
+    setIsLogin(!!token)
+  }, [token])
+
   return (
     <Layout isFooter>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
         <div css={accountContainer}>
-          {!!token ? (
+          {isLogin ? (
             <>
               <div className="loginBox">
                 {user?.profileImg ? (

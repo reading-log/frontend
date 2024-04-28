@@ -48,8 +48,8 @@ const Router = () => {
           {/* 설정 */}
           <Route path="/account" element={<Account />} /> {/**계정 메뉴 */}
           <Route path="/account/profile" element={<AccountProfile />} /> {/**프로필 수정 */}
+          <Route path="/account/change-pw" element={<EditPassword />} /> {/**비밀번호 변경 */}
           <Route path="/account/likes" element={<LikeFeed />} />
-          <Route path="/account/change-pw" element={<EditPassword />} />
         </Route>
       </Routes>
     </BrowserRouter>
