@@ -2,13 +2,12 @@ import { css } from '@emotion/react'
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { useSearchBookInfiniteScroll } from '../../apis/myLogApi'
-import { AllLayout } from '../../components/Layouts'
+import { Layout } from '../../components/Layouts'
 import EmptySearch from '../../components/mylog/EmptySearch'
 import RecordBtn from '../../components/mylog/RecordBtn'
 import SearchBookList from '../../components/mylog/SearchBookList'
-import { LoadingSpinner } from '../../elements/Loading'
+import { LoadingIndicator } from '../../elements/Loading'
 import SearchBar from '../../elements/SearchBar'
-import { flexCenter } from '../../styles/theme'
 
 const MyLogSearch = () => {
   const [searchKeyWord, setSearchKeyWord] = useState('')
@@ -25,25 +24,24 @@ const MyLogSearch = () => {
 
   const scroll = useRef<HTMLDivElement>(null)
 
-  /**스크롤바 최상단으로 올리기 */
-  const onScrollTop = () => {
-    scroll.current?.scrollIntoView()
-  }
-
   return (
     <>
-      <AllLayout>
-        <SearchBar placeHolder="책 검색하기" setSearchKeyWord={setSearchKeyWord} onScrollTop={onScrollTop} />
+      <Layout isBack isFooter isHeader>
         {isLoading ? (
-          <div css={myLogContainer}>
-            <LoadingSpinner />
-          </div>
-        ) : result.length > 0 ? (
-          <SearchBookList bookList={result} scrollRef={ref} isLoading={isFetchingNextPage} scroll={scroll} />
+          <LoadingIndicator />
         ) : (
-          <EmptySearch searchKeyWord={searchKeyWord} />
+          <div css={myLogSearchContainer}>
+            <SearchBar placeHolder="책 검색하기" setSearchKeyWord={setSearchKeyWord} searchKeyWord={searchKeyWord} />
+            {result?.length > 0 ? (
+              <div className="bookList">
+                <SearchBookList bookList={result} scrollRef={ref} isLoading={isFetchingNextPage} scroll={scroll} />
+              </div>
+            ) : (
+              <EmptySearch searchKeyWord={searchKeyWord} />
+            )}
+          </div>
         )}
-      </AllLayout>
+      </Layout>
       <RecordBtn text="직접 기록하기" path="/mylog/book_register" />
     </>
   )
@@ -51,7 +49,13 @@ const MyLogSearch = () => {
 
 export default MyLogSearch
 
-const myLogContainer = css`
-  ${flexCenter};
-  height: 100vh;
+const myLogSearchContainer = css`
+  height: calc(100vh - 8rem);
+  margin-top: 2.5rem;
+  padding: 1rem;
+
+  .bookList {
+    height: calc(100vh - 11rem);
+    overflow: auto;
+  }
 `

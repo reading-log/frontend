@@ -9,6 +9,12 @@ export const flexCenter = css`
   justify-content: center;
   align-items: center;
 `
+/**글씨 ... 처리 */
+export const ellipsis = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
 /**타이틀 텍스트1 */
 export const title1 = css`
   font-weight: 700;

@@ -39,7 +39,7 @@ const Router = () => {
           {/* 나의 로그 */}
           <Route path="/mylog" element={<MyLog />} /> {/**나의 로그 (기록된 로그) */}
           <Route path="/mylog/:detail" element={<MyLogDetail />} />
-          <Route path="/mylog/search" element={<MyLogSearch />} />
+          <Route path="/mylog/search" element={<MyLogSearch />} /> {/**책 등록용 검색 */}
           <Route path="/mylog/book_register" element={<BookRegister />} />
           <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} />
           {/* 로그 분석*/}

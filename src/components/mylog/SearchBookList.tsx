@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
 import { LoadingSpinner } from '../../elements/Loading'
-import { body1, body2, calcRem, colors, flexCenter } from '../../styles/theme'
+import { body1, body2, body3, colors, ellipsis, flexCenter } from '../../styles/theme'
 import { ISearchBook } from '../../types/book'
 
 interface BookList {
@@ -22,13 +22,13 @@ const SearchBookList: React.FC<BookList> = ({ bookList, scrollRef, isLoading, sc
     <div css={bookBoxContainer} ref={scroll}>
       {bookList?.map((book, id) => (
         <div key={id} className="bookBox" onClick={() => handleClick(book)}>
-          <div className="booxCover">
+          <div className="bookCover">
             <img src={book?.cover} />
           </div>
           <div css={contentWrapper}>
             <p className="title">{book?.title}</p>
             <p>{book?.author}</p>
-            <p>{book?.publisher}</p>
+            <p className="publisher">{book?.publisher}</p>
           </div>
         </div>
       ))}
@@ -43,50 +43,52 @@ export default SearchBookList
 const bookBoxContainer = css`
   display: flex;
   flex-direction: column;
-  margin-top: 3rem;
   gap: 1rem;
 
   .bookBox {
-    height: ${calcRem(120)};
+    height: 7rem;
     background: ${colors.boxFill};
     display: flex;
     align-items: center;
-    border-radius: ${calcRem(6)};
+    border-radius: 0.5rem;
     border: 2px solid ${colors.boxStroke};
-    padding: ${calcRem(13)} ${calcRem(4)};
+    padding: 0.5rem;
   }
 
-  .booxCover {
-    width: 25%;
+  .bookCover {
+    background-color: beige;
+    max-width: 5rem;
+    width: 6rem;
+
     ${flexCenter};
     img {
-      max-width: ${calcRem(70)};
-      max-height: ${calcRem(88)};
+      max-width: 5rem;
+      max-height: 6rem;
       height: 100%;
     }
   }
 `
 
 const contentWrapper = css`
-  width: 75%;
+  width: 14rem;
+  margin-left: 1rem;
   display: flex;
-  gap: ${calcRem(9)};
+  gap: 0.5rem;
   flex-direction: column;
 
   .title {
     ${body1}
-    line-height: 1.2rem;
     font-weight: 500;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    ${ellipsis};
+    margin-bottom: 0.2rem;
   }
 
   p {
     ${body2}
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    ${ellipsis};
+  }
+
+  .publisher {
+    ${body3}
   }
 `
