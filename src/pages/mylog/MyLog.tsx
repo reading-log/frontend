@@ -56,7 +56,6 @@ const myLogContainer = css`
   .bookList {
     height: calc(100vh - 12rem);
     overflow: auto;
-    background-color: aqua;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
