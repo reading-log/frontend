@@ -2,9 +2,11 @@ import { css } from '@emotion/react'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
-import { calcRem, colors, flexCenter } from '../styles/theme'
+import { colors, flexCenter } from '../styles/theme'
 
 interface ISearchBarProps {
+  /**검색어 */
+  searchKeyWord: string
   /**검색어 placeholder */
   placeHolder: string
   /**검색어를 저장*/
@@ -13,30 +15,23 @@ interface ISearchBarProps {
   onScrollTop?: () => void
 }
 
-interface IFormValues {
+interface IKeyWordValues {
   keyword: string
 }
 
 /**검색바 */
-const SearchBar = ({ placeHolder, setSearchKeyWord, onScrollTop }: ISearchBarProps) => {
-  const { register, handleSubmit } = useForm<IFormValues>()
+const SearchBar = ({ placeHolder, setSearchKeyWord, searchKeyWord }: ISearchBarProps) => {
+  const { register, handleSubmit } = useForm<IKeyWordValues>()
 
   /**검색어 저장 */
-  const submitKeyword = (data: IFormValues) => {
+  const submitKeyword = (data: IKeyWordValues) => {
     setSearchKeyWord(data.keyword)
-    if (onScrollTop) onScrollTop()
   }
 
   return (
-    <form css={search} onSubmit={handleSubmit(submitKeyword)}>
-      <div css={searchContainer}>
-        <input
-          type="text"
-          placeholder={placeHolder}
-          {...register('keyword', {
-            required: true,
-          })}
-        />
+    <form css={searchContainer} onSubmit={handleSubmit(submitKeyword)}>
+      <div className="searchBox">
+        <input type="text" placeholder={placeHolder} {...register('keyword')} defaultValue={searchKeyWord} />
         <button type="submit">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" color={colors.main1} />
         </button>
@@ -47,32 +42,19 @@ const SearchBar = ({ placeHolder, setSearchKeyWord, onScrollTop }: ISearchBarPro
 
 export default SearchBar
 
-const search = css`
-  margin-top: 4rem;
+const searchContainer = css`
   width: 100%;
-  max-width: 26rem;
-  left: 50%;
-  transform: translateX(-50%);
-  position: fixed;
-  top: 0;
-  background-color: #ffffff;
   ${flexCenter}
   flex-direction: row;
-  height: ${calcRem(50)};
+  margin: 0.5rem 0;
   z-index: 10;
-`
 
-const searchContainer = css`
-  display: flex;
-  align-items: center;
-  width: ${calcRem(253)};
-  height: ${calcRem(32)};
-  border: 2px solid ${colors.main1};
-  input {
-    font-weight: 500;
-    width: 100%;
-    background: transparent;
-    padding: ${calcRem(5)} ${calcRem(10)};
-    border: none;
+  .searchBox {
+    border: 2px solid ${colors.main1};
+
+    input {
+      padding: 0.2rem 0.4rem;
+      border: none;
+    }
   }
 `

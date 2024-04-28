@@ -15,13 +15,13 @@ const SearchBookList: React.FC<BookList> = ({ bookList, scrollRef, isLoading, sc
   const navigate = useNavigate()
 
   const handleClick = (book: ISearchBook) => {
-    navigate('/mylog/book_auto_register', { state: { book } })
+    navigate('/mylog/post-mylog', { state: { book } })
   }
 
   return (
     <div css={bookBoxContainer} ref={scroll}>
-      {bookList?.map((book, id) => (
-        <div key={id} className="bookBox" onClick={() => handleClick(book)}>
+      {bookList?.map(book => (
+        <div key={book.itemId} className="bookBox" onClick={() => handleClick(book)}>
           <div className="bookCover">
             <img src={book?.cover} />
           </div>

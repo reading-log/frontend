@@ -60,6 +60,5 @@ const myLogContainer = css`
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    gap: 0.8rem;
   }
 `

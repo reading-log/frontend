@@ -11,10 +11,9 @@ import Account from '../pages/account/Account'
 import AccountProfile from '../pages/account/AccountProfile'
 import EditPassword from '../pages/account/EditPassword'
 import LikeFeed from '../pages/account/LikeFeed'
-import BookAutoRegister from '../pages/mylog/BookAutoRegister'
-import BookRegister from '../pages/mylog/BookRegister'
 import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
+import MyLogPost from '../pages/mylog/MyLogPost'
 import MyLogSearch from '../pages/mylog/MyLogSearch'
 import ReadingLog from '../pages/readinglog/ReadingLog'
 import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
@@ -40,8 +39,7 @@ const Router = () => {
           <Route path="/mylog" element={<MyLog />} /> {/**나의 로그 (기록된 로그) */}
           <Route path="/mylog/:detail" element={<MyLogDetail />} />
           <Route path="/mylog/search" element={<MyLogSearch />} /> {/**책 등록용 검색 */}
-          <Route path="/mylog/book_register" element={<BookRegister />} />
-          <Route path="/mylog/book_auto_register" element={<BookAutoRegister />} />
+          <Route path="/mylog/post-mylog" element={<MyLogPost />} /> {/**책 등록 */}
           {/* 로그 분석*/}
           <Route path="/log-analysis" element={<ReadingLogChart />} />
           {/* 설정 */}

@@ -8,11 +8,14 @@ import RecordBtn from '../../components/mylog/RecordBtn'
 import SearchBookList from '../../components/mylog/SearchBookList'
 import { LoadingIndicator } from '../../elements/Loading'
 import SearchBar from '../../elements/SearchBar'
+import { useSearchParam } from '../../hooks/useSearchParam'
+import { getSearchParam } from '../../utils/getSearchParam'
 
 const MyLogSearch = () => {
-  const [searchKeyWord, setSearchKeyWord] = useState('')
+  const [searchKeyWord, setSearchKeyWord] = useState(getSearchParam() || '')
+  const { isFetchingNextPage, fetchNextPage, hasNextPage, isLoading, result, isDataLoading } = useSearchBookInfiniteScroll(searchKeyWord)
 
-  const { isFetchingNextPage, fetchNextPage, hasNextPage, isLoading, result } = useSearchBookInfiniteScroll(searchKeyWord)
+  useSearchParam(searchKeyWord)
 
   const { ref, inView } = useInView()
 
@@ -27,7 +30,7 @@ const MyLogSearch = () => {
   return (
     <>
       <Layout isBack isFooter isHeader>
-        {isLoading ? (
+        {isLoading || isDataLoading ? (
           <LoadingIndicator />
         ) : (
           <div css={myLogSearchContainer}>
@@ -42,7 +45,7 @@ const MyLogSearch = () => {
           </div>
         )}
       </Layout>
-      <RecordBtn text="직접 기록하기" path="/mylog/book_register" />
+      <RecordBtn text="직접 기록하기" path="/mylog/post-mylog" />
     </>
   )
 }
