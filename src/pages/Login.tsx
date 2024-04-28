@@ -4,8 +4,9 @@ import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { onLogin } from '../apis/userApi'
+import { Layout } from '../components/Layouts'
 import { useToken } from '../hooks/useToken'
-import { body2, calcRem, colors, title2 } from '../styles/theme'
+import { body3, calcRem, colors, flexCenter, title2 } from '../styles/theme'
 import { socialList } from '../utils/socialUtils'
 import NotAllow from './NotAllow'
 
@@ -37,9 +38,9 @@ const Login = () => {
   if (isLogin) return <NotAllow />
 
   return (
-    <div css={loginBox}>
-      <form className="formBox" onSubmit={handleSubmit(onHandleLogin)}>
-        <h2 css={logo}>ReadingLog</h2>
+    <Layout>
+      <form css={formContainer}>
+        <h2 css={title2}>ReadingLog</h2>
         <div css={inputBox}>
           <input type="text" placeholder="아이디" className="input1" {...register('email')} />
           <input type="password" placeholder="비밀번호" {...register('password')} />
@@ -48,77 +49,50 @@ const Login = () => {
           로그인
         </button>
       </form>
-      <div css={socialBox}>
+      <div css={socialLogin}>
         {socialList.map((social, index) => (
           <a key={index} href={`${import.meta.env.VITE_API_URL}oauth2/authorization/${social.site}`}>
             <img src={social.btnImage} alt={social.site} />
           </a>
         ))}
       </div>
-      <div className="otherLogin">
+      <div css={otherLogin}>
         <Link to="/join">회원가입</Link>
         <span />
         <Link to="/account/find-pw">비밀번호 찾기</Link>
       </div>
-    </div>
+    </Layout>
   )
 }
 
 export default Login
 
-const loginBox = css`
-  width: 100%;
-  position: absolute;
-  overflow: auto;
-  height: 100vh;
-  display: flex;
+const formContainer = css`
+  ${flexCenter};
   flex-direction: column;
-  align-items: center;
-  ${body2}
 
-  .formBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  h2 {
+    margin-bottom: 3rem;
   }
 
   .loginBtn {
-    width: ${calcRem(169)};
+    width: 10rem;
     height: ${calcRem(25)};
     background-color: ${colors.main1};
     color: #ffffff;
   }
-
-  .otherLogin {
-    display: flex;
-    margin: ${calcRem(70)} 0;
-    font-size: ${calcRem(12)};
-    span {
-      display: inline-block;
-      height: ${calcRem(12)};
-      width: ${calcRem(1)};
-      background-color: #000000;
-      margin: 0 ${calcRem(5)};
-    }
-  }
-`
-
-const logo = css`
-  ${title2}
-  margin-top: ${calcRem(100)};
-  margin-bottom: ${calcRem(67)};
 `
 
 const inputBox = css`
-  display: flex;
+  margin-bottom: 1rem;
+  ${flexCenter};
   flex-direction: column;
-  align-items: center;
-  margin-bottom: ${calcRem(16)};
 
   input {
+    width: 10rem;
+    padding: 0.2rem;
     border: 2px solid ${colors.main1};
-    width: ${calcRem(169)};
-    height: ${calcRem(25)};
+    height: 1.8rem;
   }
 
   .input1 {
@@ -126,14 +100,32 @@ const inputBox = css`
   }
 `
 
-const socialBox = css`
-  margin-top: ${calcRem(54)};
-  display: flex;
+const socialLogin = css`
+  ${flexCenter};
   flex-direction: column;
-  gap: ${calcRem(15)};
+  margin-top: 2rem;
 
-  img {
-    width: ${calcRem(169)};
-    height: ${calcRem(40)};
+  a {
+    margin-bottom: 1rem;
+    img {
+      width: 10rem;
+    }
+  }
+`
+
+const otherLogin = css`
+  ${flexCenter};
+  margin-top: 2rem;
+
+  a {
+    ${body3};
+  }
+
+  span {
+    display: inline-block;
+    height: 0.8rem;
+    width: 0.8px;
+    background-color: ${colors.black};
+    margin: 0 0.4rem;
   }
 `
