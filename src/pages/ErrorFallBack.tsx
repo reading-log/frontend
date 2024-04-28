@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Layout } from '../components/Layouts'
 import { colors, flexCenter } from '../styles/theme'
@@ -21,7 +21,7 @@ const ErrorFallBack = ({ error, resetErrorBoundary }: IErrorFallBackProps) => {
   return (
     <Layout>
       <div css={notFound}>
-        <FontAwesomeIcon icon={faTriangleExclamation} size="8x" color={colors.main1} />
+        <FontAwesomeIcon icon={faCircleExclamation} size="8x" color={colors.main1} />
         <p>에러가 발생했습니다.</p>
         <div className="btnBox">
           <button onClick={resetErrorBoundary}>다시 시도</button>

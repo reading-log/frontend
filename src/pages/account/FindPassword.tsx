@@ -3,22 +3,22 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { onCheckEmainAndCode, onSendEmail, onSendTempPassword } from '../../apis/userApi'
-import { AllLayout } from '../../components/Layouts'
-import { calcRem, colors, flexCenter } from '../../styles/theme'
+import { Layout } from '../../components/Layouts'
+import { body2, colors, flexCenter } from '../../styles/theme'
 
-interface IFormValues {
+interface IFindPasswordValues {
   email: string
   authcode: string
 }
 
 const FindPassword = () => {
   const navigate = useNavigate()
-  const { register, handleSubmit } = useForm<IFormValues>()
+  const { register, handleSubmit } = useForm<IFindPasswordValues>()
 
   /**이메일인증 여부 */
   const [isAuth, setIsAuth] = useState(false)
 
-  const findPassword = (data: IFormValues) => {
+  const findPassword = (data: IFindPasswordValues) => {
     if (!isAuth) {
       //이메일 인증 => 인증코드 발송
       onSendEmail(data.email)
@@ -52,75 +52,86 @@ const FindPassword = () => {
   }
 
   return (
-    <AllLayout>
-      <form css={container} onSubmit={handleSubmit(findPassword)}>
-        <p>비밀번호를 찾기 위해서 </p>
-        <p>사용하시는 이메일을 입력해주세요.</p>
-        <div className="field">
-          <p>이메일</p>
-          <input
-            className="nick_input"
-            type="text"
-            {...register('email', {
-              required: '이메일을 입력해주세요.',
-            })}
-          />
+    <Layout isHeader isBack>
+      <form css={findForm} onSubmit={handleSubmit(findPassword)}>
+        <div className="findBox">
+          <p>비밀번호를 찾기 위해서 </p>
+          <p>사용하시는 이메일을 입력해주세요.</p>
+          <div className="field">
+            <p>이메일</p>
+            <input
+              className="nick_input"
+              type="text"
+              {...register('email', {
+                required: '이메일을 입력해주세요.',
+              })}
+            />
+          </div>
+          {isAuth && (
+            <>
+              <div className="field">
+                <p>인증코드</p>
+                <input className="nick_input" type="text" {...register('authcode')} />
+              </div>
+              <p className="code_error"> Gmail을 사용하시는 경우, 이메일이 스팸 폴더로 분류될 수 있습니다. 메일을 받지 못하신 경우 스팸 폴더도 확인해주세요.</p>
+            </>
+          )}
+          <button className="btn">확인하기</button>
         </div>
-        {isAuth && (
-          <>
-            <div className="field">
-              <p>인증코드</p>
-              <input className="nick_input" type="text" {...register('authcode')} />
-            </div>
-            <p className="code_error"> Gmail을 사용하시는 경우, 이메일이 스팸 폴더로 분류될 수 있습니다. 메일을 받지 못하신 경우 스팸 폴더도 확인해주세요.</p>
-          </>
-        )}
-        <button>확인하기</button>
       </form>
-    </AllLayout>
+    </Layout>
   )
 }
 
 export default FindPassword
 
-const container = css`
-  margin-top: ${calcRem(35)};
-  padding: 1rem;
-  border-radius: ${calcRem(6)};
-  width: 100%;
-  height: 100%;
-  border: 2px solid ${colors.boxStroke};
+const findForm = css`
   ${flexCenter};
   flex-direction: column;
+
+  margin-top: 3.5rem;
+  padding: 1rem;
+
+  .findBox {
+    ${flexCenter};
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border: 2px solid ${colors.boxStroke};
+    border-radius: 0.5rem;
+  }
 
   .field {
     display: flex;
     align-items: center;
-    margin-top: ${calcRem(35)};
+    margin-top: 2rem;
 
     p {
-      margin-right: ${calcRem(6)};
-      display: inline-block;
+      ${flexCenter};
+      margin-right: 0.5rem;
     }
 
     input {
-      width: ${calcRem(230)};
+      width: 14rem;
+      padding: 0.2rem;
       background-color: ${colors.innerBoxStroke};
       border: none;
     }
   }
 
   .code_error {
-    margin-top: ${calcRem(10)};
+    margin-top: 2rem;
     color: ${colors.main1};
-    font-size: ${calcRem(12)};
+    ${body2};
   }
 
-  button {
+  .btn {
     width: 100%;
-    padding: ${calcRem(4)};
-    border-radius: ${calcRem(6)};
-    margin-top: ${calcRem(44)};
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
     background-color: ${colors.button2};
     border: 2px solid ${colors.button1};
   }

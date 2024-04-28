@@ -26,11 +26,11 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<NotFound />} /> {/**404 페이지 */}
-        <Route path="/" element={<Splash />} /> {/**스플래시 페이지 */}
+        <Route path="/" element={<Splash />} /> {/**스플래시 */}
         <Route element={<LoginCheck />}>
-          <Route path="/login" element={<Login />} /> {/**로그인 페이지 */}
-          <Route path="/join" element={<Join />} /> {/**회원가입 페이지 */}
-          <Route path="/find-pw" element={<FindPassword />} />
+          <Route path="/login" element={<Login />} /> {/**로그인 */}
+          <Route path="/join" element={<Join />} /> {/**회원가입 */}
+          <Route path="/find-pw" element={<FindPassword />} /> {/**비밀번호 찾기 */}
         </Route>
         <Route element={<TokenCheck />}>
           {/* 리딩 로그 메뉴 페이지 */}
