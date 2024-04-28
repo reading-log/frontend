@@ -1,22 +1,20 @@
 import { css } from '@emotion/react'
-import { FeedProps } from '../../types/feed'
 import { useState } from 'react'
-import blackHeart from '../../assets/images/free-icon-love.png'
-import redHeart from '../../assets/images/free-icon-love-fill.png'
-import UserInfo from './UserInfo'
+import { FeedProps } from '../../types/feed'
 import BookDetailInfo from './BookDetailInfo'
+import UserInfo from './UserInfo'
 
 const FeedDetail: React.FC<FeedProps> = ({ feed }) => {
   const [isLike, setIsLike] = useState(false)
-  const [imageSrc, setImageSrc] = useState(blackHeart)
+  const [imageSrc, setImageSrc] = useState('')
 
   const handleToggle = () => {
     // 좋아요 하트 아이콘
     setIsLike(prev => !prev)
     if (isLike) {
-      setImageSrc(redHeart)
+      setImageSrc('')
     } else {
-      setImageSrc(blackHeart)
+      setImageSrc('')
     }
   }
 
@@ -27,7 +25,7 @@ const FeedDetail: React.FC<FeedProps> = ({ feed }) => {
 
         <span css={likeBox}>
           <img src={imageSrc} onClick={handleToggle} alt="Like" />
-          <span>{feed.like}</span>
+          <span>{feed?.like}</span>
         </span>
       </span>
 

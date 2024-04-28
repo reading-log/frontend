@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
+import { useNavigate } from 'react-router-dom'
 import { LoadingSpinner } from '../../elements/Loading'
-import { body2, calcRem, colors, flexCenter } from '../../styles/theme'
+import { body2, body3, colors, ellipsis, flexCenter } from '../../styles/theme'
 
 interface IMyBookProps {
   scrollRef: (node?: Element | null | undefined) => void
@@ -9,10 +10,16 @@ interface IMyBookProps {
 }
 
 const MyBook = ({ scrollRef, myBooks, isLoading }: IMyBookProps) => {
+  const navigate = useNavigate()
+
+  const handleBookClick = (bookId: number) => {
+    navigate(`/mylog/${bookId}`)
+  }
+
   return (
     <>
       {myBooks?.map((book: any) => (
-        <div css={myBookBox} key={book?.bookId}>
+        <div css={myBookBox} key={book?.bookId} onClick={() => handleBookClick(book?.bookId)}>
           <div>
             <img src={book?.cover} alt="책이미지" />
           </div>
@@ -32,26 +39,30 @@ const myBookBox = css`
   border: 2px solid ${colors.boxStroke};
   border-radius: 0.5rem;
   ${flexCenter};
-
   flex-direction: column;
   background-color: ${colors.boxFill};
-  width: ${calcRem(154)};
-  height: ${calcRem(172)};
+  padding: 1rem 0.5rem;
+  margin-bottom: 0.8rem;
+
+  width: 10rem;
+  height: 13rem;
+
   img {
-    max-width: ${calcRem(70)};
-    max-height: ${calcRem(88)};
+    max-width: 6rem;
+    max-height: 7rem;
   }
+
   p {
-    max-width: ${calcRem(120)};
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-top: ${calcRem(12)};
-    margin-bottom: ${calcRem(8)};
+    ${ellipsis}
+    ${body2};
+    font-weight: 500;
+    max-width: 9rem;
+    margin: 0.6rem 0;
   }
   span {
-    ${body2};
-    max-width: ${calcRem(120)};
+    ${body3};
+    ${ellipsis}
+    max-width: 9rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

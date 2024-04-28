@@ -1,101 +1,61 @@
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { AllLayout } from '../../components/Layouts'
-import HighlightBox from '../../components/mylog/HighlightBox'
-import OneLineBox from '../../components/mylog/OneLineBox'
-
-import ReviewBox from '../../components/mylog/ReviewBox'
-import FeedDetail from '../../components/readinglog/FeedDetail'
+import { useParams } from 'react-router-dom'
+import { useGetBookInfo } from '../../apis/myLogApi'
+import { Layout } from '../../components/Layouts'
+import BookComment from '../../components/mylog/detail/BookComment'
+import BookDate from '../../components/mylog/detail/BookDate'
+import BookHighlightSummary from '../../components/mylog/detail/BookHighlightSummary'
+import BookInfo from '../../components/mylog/detail/BookInfo'
+import BookUserInfo from '../../components/mylog/detail/BookUserInfo'
+import { LoadingIndicator } from '../../elements/Loading'
+import { colors } from '../../styles/theme'
 
 const MyLogDetail = () => {
-  const [changeOneLine, setChangeOneLine] = useState(false) // 한 줄 평 수정
-  const [changeHighlight, setChangeHighlight] = useState(false) // 하이라이트 수정
-  const [changeReview, setChangeReview] = useState(false) // 서평 수정
+  const { bookId } = useParams()
 
-  const [showHighlight, setShowHighlight] = useState(true) // 처음에 하이라이트를 보이기
-  const [showReview, setShowReview] = useState(false) // 처음에 서평은 숨김
-
-  const [bookDetail, setBookDetail] = useState([]) // 책 상세 정보
-  const location = useLocation()
-  const { myLog } = location.state
-
-  useEffect(() => {
-    // onBookDetail(myLog.bookId)
-    //   .then(data => {
-    //     setBookDetail(data)
-    //   })
-    //   .catch(error => {
-    //     // 에러 처리
-    //   })
-  }, [])
-
-  const handleHighlightToggle = () => {
-    setShowHighlight(true)
-    setShowReview(false)
-  }
-
-  const handleReviewToggle = () => {
-    setShowReview(true)
-    setShowHighlight(false)
-  }
+  /**책 정보 조회 */
+  const { data, isLoading } = useGetBookInfo(bookId)
+  const bookData = data?.data
 
   return (
-    <AllLayout>
-      <div css={myLogDetailBox}>
-        {/* 서버 연결되면 feed={bookDetail}로 변경 */}
-        <FeedDetail feed={myLog} />
-
-        {/* 기록 */}
-        <div css={outterBox}>
-          <RecordList bookId={myLog.bookId} />
+    <Layout isBack isFooter isHeader>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <div css={bookDetailContainer}>
+          <div className="bookLayout">
+            <BookUserInfo />
+            <BookInfo bookData={bookData} />
+            <div className="lineBlock" />
+            <BookDate />
+            <div className="lineBlock" />
+            <BookComment />
+            <div className="lineBlock" />
+            <BookHighlightSummary />
+          </div>
         </div>
-
-        {/* 한 줄 평 */}
-        <div css={outterBox}>
-          {/* oneLineTest={myLog.oneLine} => 서버 연결되면 bookId={myLog.bookId}로 수정해야됨 */}
-          <OneLineBox oneLineTest={myLog.oneLine} changeOneLine={changeOneLine} setChangeOneLine={setChangeOneLine} />
-        </div>
-
-        <div css={outterBox}>
-          <span onClick={() => handleHighlightToggle()} css={showHighlight ? colorBlack : colorGray}>
-            하이라이트
-          </span>
-          ㅣ{/* 선택(하이라이트, 서평) 칸막이 */}
-          <span onClick={() => handleReviewToggle()} css={showReview ? colorBlack : colorGray}>
-            서평
-          </span>
-          <HighlightBox highlightList={myLog.highlight} showHighlight={showHighlight} changeHighlight={changeHighlight} setChangeHighlight={setChangeHighlight} />
-          <ReviewBox reviewList={myLog.review} showReview={showReview} changeReview={changeReview} setChangeReview={setChangeReview} />
-        </div>
-      </div>
-    </AllLayout>
+      )}
+    </Layout>
   )
 }
 
 export default MyLogDetail
 
-const myLogDetailBox = css`
-  background: #eae5e5;
-  border: 1px solid #c1b2b2;
-  border-radius: 6px;
-`
+const bookDetailContainer = css`
+  margin-top: 3.5rem;
+  padding: 1rem 1.5rem;
+  height: calc(100vh - 8.5rem);
+  overflow-y: auto;
 
-const outterBox = css`
-  background: #ffffff;
-  width: 100%;
-  height: auto;
-  padding: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  span {
-    font-weight: bold;
+  .bookLayout {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    border: 2px solid ${colors.boxStroke};
   }
-`
 
-const colorBlack = css`
-  color: black;
-`
-const colorGray = css`
-  color: gray;
+  .lineBlock {
+    display: block;
+    height: 1.4rem;
+    background-color: ${colors.boxFill};
+  }
 `

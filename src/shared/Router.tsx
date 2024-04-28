@@ -15,9 +15,7 @@ import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogPost from '../pages/mylog/MyLogPost'
 import MyLogSearch from '../pages/mylog/MyLogSearch'
-import ReadingLog from '../pages/readinglog/ReadingLog'
-import ReadingLogDetail from '../pages/readinglog/ReadingLogDetail'
-import SearchResult from '../pages/readinglog/SearchResult'
+import ReadinglogFeed from '../pages/readinglog/ReadinglogFeed'
 
 const Router = () => {
   return (
@@ -32,12 +30,13 @@ const Router = () => {
         </Route>
         <Route element={<TokenCheck />}>
           {/* 리딩 로그  */}
-          <Route path="/readinglog" element={<ReadingLog />} />
+          <Route path="/readinglog" element={<ReadinglogFeed />} />
+          {/* <Route path="/readinglog" element={<ReadingLog />} />
           <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
-          <Route path="/readinglog/search" element={<SearchResult />} />
+          <Route path="/readinglog/search" element={<SearchResult />} /> */}
           {/* 나의 로그 */}
           <Route path="/mylog" element={<MyLog />} /> {/**나의 로그 (기록된 로그) */}
-          <Route path="/mylog/:detail" element={<MyLogDetail />} />
+          <Route path="/mylog/:bookId" element={<MyLogDetail />} /> {/**나의 로그 상세보기 */}
           <Route path="/mylog/search" element={<MyLogSearch />} /> {/**책 등록용 검색 */}
           <Route path="/mylog/post-mylog" element={<MyLogPost />} /> {/**책 등록 */}
           {/* 로그 분석*/}

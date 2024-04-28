@@ -1,11 +1,16 @@
-import { FooterLayout } from '../components/Layouts'
+import { css } from '@emotion/react'
+import { Layout } from '../components/Layouts'
 
 const ReadingLogChart = () => {
   return (
-    <FooterLayout>
-      <h1>리딩로그 차트</h1>
-    </FooterLayout>
+    <Layout isFooter>
+      <div css={chartContainer}>리딩로그 차트</div>
+    </Layout>
   )
 }
 
 export default ReadingLogChart
+
+const chartContainer = css`
+  background-color: aquamarine;
+`
