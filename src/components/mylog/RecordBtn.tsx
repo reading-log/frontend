@@ -2,15 +2,15 @@ import { css } from '@emotion/react'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
-import { body1, calcRem, colors, flexCenter } from '../styles/theme'
+import { body1, colors, flexCenter } from '../../styles/theme'
 
-export const RecordBtn = ({ path, text }: { text: string; path: string }) => {
+/**기록하기 버튼 */
+const RecordBtn = ({ path, text }: { text: string; path: string }) => {
   const navigate = useNavigate()
 
   /**기록하기로 이동 */
   const handleClick = () => {
-    //스크롤 최상단으로 이동
-    navigate(path) //  나의로그 책 검색하기
+    navigate(path)
   }
 
   return (
@@ -22,6 +22,8 @@ export const RecordBtn = ({ path, text }: { text: string; path: string }) => {
     </div>
   )
 }
+
+export default RecordBtn
 
 const writeButton = css`
   position: fixed;
@@ -40,14 +42,14 @@ const writeButton = css`
   span {
     ${body1};
     color: ${colors.main1};
-    margin-top: ${calcRem(10)};
-    margin-right: ${calcRem(10)};
+    margin-top: 0.5rem;
+    margin-right: 0.8rem;
   }
 
   .btn {
     ${flexCenter};
-    width: ${calcRem(47)};
-    height: ${calcRem(47)};
+    width: 3rem;
+    height: 3rem;
     background-color: ${colors.button2};
     border: 2px solid ${colors.button1};
     border-radius: 50%;

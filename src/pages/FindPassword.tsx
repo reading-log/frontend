@@ -2,9 +2,9 @@ import { css } from '@emotion/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { onCheckEmainAndCode, onSendEmail, onSendTempPassword } from '../../apis/userApi'
-import { Layout } from '../../components/Layouts'
-import { body2, colors, flexCenter } from '../../styles/theme'
+import { onCheckEmainAndCode, onSendEmail, onSendTempPassword } from '../apis/userApi'
+import { Layout } from '../components/Layouts'
+import { body2, colors, flexCenter } from '../styles/theme'
 
 interface IFindPasswordValues {
   email: string

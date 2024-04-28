@@ -1,19 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import LoginCheck from '../components/LoginCheck'
+import TokenCheck from '../components/TokenCheck'
+import FindPassword from '../pages/FindPassword'
 import Join from '../pages/Join'
 import Login from '../pages/Login'
 import NotFound from '../pages/NotFound'
-import Splash from '../pages/Splash'
-import BookAutoRegister from '../pages/mylog/BookAutoRegister'
-import BookRegister from '../pages/mylog/BookRegister'
-
-import LoginCheck from '../components/LoginCheck'
-import TokenCheck from '../components/TokenCheck'
 import ReadingLogChart from '../pages/ReadingLogChart'
+import Splash from '../pages/Splash'
 import Account from '../pages/account/Account'
 import AccountProfile from '../pages/account/AccountProfile'
 import EditPassword from '../pages/account/EditPassword'
-import FindPassword from '../pages/account/FindPassword'
 import LikeFeed from '../pages/account/LikeFeed'
+import BookAutoRegister from '../pages/mylog/BookAutoRegister'
+import BookRegister from '../pages/mylog/BookRegister'
 import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogSearch from '../pages/mylog/MyLogSearch'
@@ -33,12 +32,12 @@ const Router = () => {
           <Route path="/find-pw" element={<FindPassword />} /> {/**비밀번호 찾기 */}
         </Route>
         <Route element={<TokenCheck />}>
-          {/* 리딩 로그 메뉴 페이지 */}
+          {/* 리딩 로그  */}
           <Route path="/readinglog" element={<ReadingLog />} />
           <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
           <Route path="/readinglog/search" element={<SearchResult />} />
           {/* 나의 로그 */}
-          <Route path="/mylog" element={<MyLog />} />
+          <Route path="/mylog" element={<MyLog />} /> {/**나의 로그 (기록된 로그) */}
           <Route path="/mylog/:detail" element={<MyLogDetail />} />
           <Route path="/mylog/search" element={<MyLogSearch />} />
           <Route path="/mylog/book_register" element={<BookRegister />} />

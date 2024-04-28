@@ -3,6 +3,7 @@ import { faBoxOpen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { colors, flexCenter } from '../../styles/theme'
 
+/**기록된 책이 없음 */
 const EmptyMylog = () => {
   return (
     <div css={container}>
@@ -18,14 +19,9 @@ const EmptyMylog = () => {
 export default EmptyMylog
 
 const container = css`
-  height: calc(100vh - 11rem);
+  height: 100%;
   ${flexCenter}
   flex-direction: column;
-
-  button {
-    font-weight: 700;
-    color: ${colors.main1};
-  }
 
   .emptyText {
     margin-top: 2rem;

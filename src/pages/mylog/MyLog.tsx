@@ -2,13 +2,12 @@ import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { useGetMyBookList } from '../../apis/myLogApi'
-import { AllLayout } from '../../components/Layouts'
+import { Layout } from '../../components/Layouts'
 import EmptyMylog from '../../components/mylog/EmptyMylog'
 import MyBook from '../../components/mylog/MyBook'
-import { RecordBtn } from '../../elements/Buttons'
-import { LoadingSpinner } from '../../elements/Loading'
+import RecordBtn from '../../components/mylog/RecordBtn'
+import { LoadingIndicator } from '../../elements/Loading'
 import SearchBar from '../../elements/SearchBar'
-import { calcRem, flexCenter } from '../../styles/theme'
 
 const MyLog = () => {
   /**검색어 키워드 */
@@ -26,22 +25,24 @@ const MyLog = () => {
 
   return (
     <>
-      <AllLayout>
+      <Layout isFooter isHeader>
         {isLoading ? (
-          <div css={spinContainer}>
-            <LoadingSpinner />
-          </div>
-        ) : result?.length > 0 ? (
-          <div css={myLogContainer}>
-            <div className="mylogList">
-              <SearchBar placeHolder="나의로그 검색하기" setSearchKeyWord={setSearchKeyWord} />
-              <MyBook myBooks={result} scrollRef={ref} isLoading={isFetchingNextPage} />
-            </div>
-          </div>
+          <LoadingIndicator />
         ) : (
-          <EmptyMylog />
+          <>
+            {result?.length > 0 ? (
+              <div css={myLogContainer}>
+                <SearchBar placeHolder="나의로그 검색하기" setSearchKeyWord={setSearchKeyWord} searchKeyWord={searchKeyWord} />
+                <div className="bookList">
+                  <MyBook myBooks={result} scrollRef={ref} isLoading={isFetchingNextPage} />
+                </div>
+              </div>
+            ) : (
+              <EmptyMylog />
+            )}
+          </>
         )}
-      </AllLayout>
+      </Layout>
       <RecordBtn text="기록하기" path="/mylog/search" />
     </>
   )
@@ -49,16 +50,17 @@ const MyLog = () => {
 export default MyLog
 
 const myLogContainer = css`
-  ${flexCenter};
-  .mylogList {
-    margin-top: ${calcRem(50)};
+  margin-top: 2.4rem;
+  padding: 1rem;
+
+  .bookList {
+    height: calc(100vh - 12rem);
+    overflow: auto;
+    background-color: aqua;
+
     display: grid;
-    justify-items: center;
-    gap: ${calcRem(15)};
     grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 0.8rem;
   }
-`
-const spinContainer = css`
-  ${flexCenter};
-  height: 100vh;
 `
