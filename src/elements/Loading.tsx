@@ -27,8 +27,8 @@ const container = css`
 `
 const circle = css`
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 5px solid #f3f3f3;
   border-radius: 50%;
   border-top: 5px solid ${colors.main1};
@@ -53,9 +53,9 @@ const spinContainer = css`
     &:after {
       content: ' ';
       display: block;
-      width: 30px;
-      height: 30px;
-      margin: 8px;
+      width: 2rem;
+      height: 2rem;
+      margin: 0.5rem;
       border-radius: 50%;
       border: 4px solid ${colors.main1};
       border-color: ${colors.main1} transparent ${colors.main1} transparent;
