@@ -2,15 +2,11 @@ import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
 import { LoadingSpinner } from '../../elements/Loading'
 import { body2, body3, colors, ellipsis, flexCenter } from '../../styles/theme'
+import { IBook } from '../../types/book'
 
 interface IMyBookProps {
   scrollRef: (node?: Element | null | undefined) => void
-  myBooks: {
-    bookId: number
-    author: string
-    cover: string
-    title: string
-  }[]
+  myBooks?: IBook[]
   isLoading: boolean
 }
 

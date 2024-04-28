@@ -1,14 +1,12 @@
-import { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import SetupInterceptors from '../apis/interceptor'
+import { Outlet } from 'react-router-dom'
 
 const TokenCheck = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  //인터셉터 설정
-  useEffect(() => {
-    SetupInterceptors(navigate)
-  }, [navigate])
+  // //인터셉터 설정
+  // useEffect(() => {
+  //   SetupInterceptors(navigate)
+  // }, [navigate])
 
   return (
     <>

@@ -2,11 +2,11 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-import { IBookInput, ISearchBook } from '../types/book'
+import { IBook, IBookInput, ISearchBook } from '../types/book'
 
 /**내가 등록한 책 목록 조회 */
 export const useGetMyBookList = (searchKeyword: string) => {
-  const [result, setResult] = useState<ISearchBook[]>([])
+  const [result, setResult] = useState<IBook[]>([])
 
   const getMyBookList = async ({ pageParam = 0 }) => {
     const { data } = await axios.get(`/api/books/me`, {
