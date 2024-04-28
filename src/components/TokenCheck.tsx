@@ -1,0 +1,20 @@
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import SetupInterceptors from '../apis/interceptor'
+
+const TokenCheck = () => {
+  const navigate = useNavigate()
+
+  //인터셉터 설정
+  useEffect(() => {
+    SetupInterceptors(navigate)
+  }, [navigate])
+
+  return (
+    <>
+      <Outlet />
+    </>
+  )
+}
+
+export default TokenCheck

@@ -1,9 +1,20 @@
 export interface Highlight {
-  content: string[]
   page: number
+  content: string
 }
 
-export type FeedType = {
+export interface Review {
+  content: string
+}
+
+export interface FeedType {
+  bookAuthor: string
+  bookCover: string
+  bookTitle: string
+  content: string
+  createdAt: string
+
+  /* 피드 더미 데이터 타입 */
   id: number
   profileImg: string
   nickname: string
@@ -16,13 +27,18 @@ export type FeedType = {
   category: string
   oneLine: string
   highlight: Highlight[]
-  review: string
+  review: Review[]
 }
 
-export type FeedProps = {
+// export interface Feed {
+//   bookAuthor: string
+//   bookCover: string
+//   bookTitle: string
+//   content: string
+//   createdAt: string
+//   nickname: string
+// }
+
+export interface FeedProps {
   feed: FeedType
-}
-
-export type CategoryProps = {
-  selectedCategory: string
 }
