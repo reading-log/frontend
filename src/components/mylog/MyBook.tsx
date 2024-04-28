@@ -5,7 +5,12 @@ import { body2, body3, colors, ellipsis, flexCenter } from '../../styles/theme'
 
 interface IMyBookProps {
   scrollRef: (node?: Element | null | undefined) => void
-  myBooks: any
+  myBooks: {
+    bookId: number
+    author: string
+    cover: string
+    title: string
+  }[]
   isLoading: boolean
 }
 
@@ -18,7 +23,7 @@ const MyBook = ({ scrollRef, myBooks, isLoading }: IMyBookProps) => {
 
   return (
     <>
-      {myBooks?.map((book: any) => (
+      {myBooks?.map(book => (
         <div css={myBookBox} key={book?.bookId} onClick={() => handleBookClick(book?.bookId)}>
           <div>
             <img src={book?.cover} alt="책이미지" />
