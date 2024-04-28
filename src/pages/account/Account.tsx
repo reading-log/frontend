@@ -1,24 +1,22 @@
 import { css } from '@emotion/react'
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { onDeleteUser, onLogout, useGetUser } from '../../apis/userApi'
-import { FooterLayout } from '../../components/Layouts'
+import { Layout } from '../../components/Layouts'
 import { LoadingIndicator } from '../../elements/Loading'
-import { calcRem, colors, flexCenter } from '../../styles/theme'
+import { body2, colors, flexCenter } from '../../styles/theme'
 
 const Account = () => {
   const token = Cookies.get('accessToken')
+
+  /**로그인 여부 판단 */
   const [isLogin, setIsLogin] = useState(false)
 
-  useEffect(() => {
-    setIsLogin(!!token)
-  }, [token])
-
+  /**유저정보 조회 */
   const { data, isLoading } = useGetUser(token)
   const user = data?.data
 
@@ -33,35 +31,44 @@ const Account = () => {
 
   /**회원 탈퇴 */
   const leaveAccount = () => {
-    const userAnswer = prompt('정말로 탈퇴하시겠습니까? 계정의 비밀번호를 재입력해주세요.')
-    if (userAnswer) {
-      onDeleteUser(userAnswer)
-        .then(() => {
-          delete axios.defaults.headers.common['Authorization']
-          Cookies.remove('accessToken')
-          setIsLogin(false)
-          alert('회원 탈퇴가 완료되었습니다.')
-        })
-        .catch(() => alert('비밀번호가 일치하지 않습니다. 다시 시도해주세요.'))
+    //이메일로 가입한 회원 탈퇴
+    if (user.role === 'MEMBER_NORMAL') {
+      const userAnswer = prompt('정말로 탈퇴하시겠습니까? 계정의 이메일을 재입력해주세요.')
+      if (userAnswer) {
+        onDeleteUser(userAnswer)
+          .then(() => {
+            delete axios.defaults.headers.common['Authorization']
+            Cookies.remove('accessToken')
+            setIsLogin(false)
+            alert('회원 탈퇴가 완료되었습니다.')
+          })
+          .catch(() => alert('이메일이 일치하지 않습니다. 다시 시도해주세요.'))
+      }
+    } else {
+      //소셜로그인 회원 탈퇴 : todo
     }
   }
 
+  useEffect(() => {
+    setIsLogin(!!token)
+  }, [token])
+
   return (
-    <>
+    <Layout isFooter>
       {isLoading && <LoadingIndicator />}
-      <FooterLayout>
+      <div css={accountContainer}>
         {isLogin ? (
-          <div css={loginBox}>
-            <div className="profBox">
-              {!user?.profileImg ? (
+          <>
+            <div className="loginBox">
+              {user?.profileImg ? (
+                <img className="imgBox" src={user.profileImg} alt="profile" />
+              ) : (
                 <div className="imgBox">
                   <FontAwesomeIcon size="3x" icon={faUser} color="#ffffff" />
                 </div>
-              ) : (
-                <img className="imgBox" src={user?.profileImg} alt="profile" />
               )}
-              <p>
-                {user?.nickname}
+              <div className="userInfoBox">
+                <p>{user?.nickname}</p>
                 <Link
                   className="btn_nav"
                   to="/account/profile"
@@ -71,7 +78,7 @@ const Account = () => {
                 >
                   <FontAwesomeIcon icon={faPenToSquare} color={colors.main1} />
                 </Link>
-              </p>
+              </div>
             </div>
             <div className="accountList">
               <Link to="/account/likes">좋아요한 피드 보기</Link>
@@ -79,50 +86,61 @@ const Account = () => {
               <button onClick={logoutUser}>로그아웃</button>
               <button onClick={leaveAccount}>회원 탈퇴</button>
             </div>
-          </div>
+          </>
         ) : (
-          <div css={notLoginBox}>
+          <div className="notLoginUserBox">
             <p>로그인 후 이용해주세요.</p>
             <Link className="loginBtn" to="/login">
               로그인
             </Link>
           </div>
         )}
-      </FooterLayout>
-    </>
+      </div>
+    </Layout>
   )
 }
 
 export default Account
 
-const loginBox = css`
-  margin-top: ${calcRem(100)};
-  .profBox {
-    padding: 1rem;
-    border-radius: ${calcRem(6)};
+export const accountContainer = css`
+  padding: 1rem;
+  height: calc(100vh - 5rem);
+
+  .loginBox {
     width: 100%;
-    height: 100%;
+    height: 12rem;
+    padding: 1rem;
     border: 2px solid ${colors.boxStroke};
+    border-radius: 0.5rem;
+
     ${flexCenter};
     flex-direction: column;
 
     .imgBox {
-      width: ${calcRem(100)};
-      height: ${calcRem(100)};
+      width: 6rem;
+      height: 6rem;
       object-fit: cover;
       border-radius: 50%;
-      margin-bottom: ${calcRem(10)};
+      margin-bottom: 1.2rem;
       background-color: ${colors.main1};
       ${flexCenter};
     }
 
-    margin-bottom: ${calcRem(52)};
+    .userInfoBox {
+      display: flex;
+      align-items: center;
+
+      .btn_nav {
+        margin-left: 0.5rem;
+      }
+    }
   }
 
   .accountList {
     display: flex;
     flex-direction: column;
-    gap: ${calcRem(17)};
+    gap: 1rem;
+    margin-top: 1.5rem;
 
     button {
       padding: 0;
@@ -131,27 +149,19 @@ const loginBox = css`
     }
   }
 
-  .btn_nav {
-    margin-left: ${calcRem(6)};
-  }
-`
-
-const notLoginBox = css`
-  margin-top: ${calcRem(100)};
-  border-radius: ${calcRem(6)};
-  width: 100%;
-  height: 10rem;
-  border: 2px solid ${colors.boxStroke};
-  ${flexCenter};
-  flex-direction: column;
-
-  .loginBtn {
+  //비로그인 유저
+  .notLoginUserBox {
     ${flexCenter};
-    margin-top: ${calcRem(40)};
-    width: ${calcRem(169)};
-    height: ${calcRem(25)};
-    background-color: ${colors.main1};
-    color: white;
-    font-size: ${calcRem(14)};
+    flex-direction: column;
+    height: 100%;
+    .loginBtn {
+      margin-top: 1rem;
+      ${flexCenter};
+      width: 12rem;
+      height: 1.5rem;
+      background-color: ${colors.main1};
+      color: #ffffff;
+      ${body2};
+    }
   }
 `
