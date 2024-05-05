@@ -105,7 +105,7 @@ const Account = () => {
 
 export default Account
 
-export const accountContainer = css`
+const accountContainer = css`
   padding: 1rem;
   height: calc(100vh - 5rem);
 

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import { useParams } from 'react-router-dom'
-import { useGetBookInfo } from '../../apis/myLogApi'
+import { useGetBookInfo, useGetBookRecordDate } from '../../apis/myLogApi'
 import { Layout } from '../../components/Layouts'
 import BookComment from '../../components/mylog/detail/BookComment'
 import BookDate from '../../components/mylog/detail/BookDate'
@@ -14,12 +14,16 @@ const MyLogDetail = () => {
   const { bookId } = useParams()
 
   /**책 정보 조회 */
-  const { data, isLoading } = useGetBookInfo(bookId)
-  const bookData = data?.data
+  const { data: bookInfo, isLoading: isBookInfo } = useGetBookInfo(bookId)
+  const bookData = bookInfo?.data
+
+  /**책 날짜 정보 조회 */
+  const { data: bookDate, isLoading: isBookDate } = useGetBookRecordDate(bookId)
+  const bookRecordDate = bookDate?.data
 
   return (
     <Layout isBack isFooter isHeader>
-      {isLoading ? (
+      {isBookInfo || isBookDate ? (
         <LoadingIndicator />
       ) : (
         <div css={bookDetailContainer}>
@@ -27,7 +31,7 @@ const MyLogDetail = () => {
             <BookUserInfo />
             <BookInfo bookData={bookData} />
             <div className="lineBlock" />
-            <BookDate />
+            <BookDate bookRecordDate={bookRecordDate} bookId={bookId} />
             <div className="lineBlock" />
             <BookComment />
             <div className="lineBlock" />

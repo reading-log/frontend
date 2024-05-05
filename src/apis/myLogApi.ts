@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import { IBook, IBookInput, ISearchBook } from '../types/book'
 
@@ -110,6 +110,26 @@ export const useGetBookRecordDate = (bookId?: string) => {
     },
     {
       enabled: !!bookId,
+    },
+  )
+}
+
+/**등록한 책의 낧짜 기록 추가 */
+export const usePostBookRecordDate = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { bookId?: string; data: { startDate: string; endDate: string } }) => {
+      const response = await axios.post(`/api/records/${payload.bookId}`, payload.data)
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookRecordDate')
+        alert('날짜가 등록되었습니다.')
+      },
+      onError: () => {
+        alert('날짜 등록에 실패했습니다.')
+      },
     },
   )
 }

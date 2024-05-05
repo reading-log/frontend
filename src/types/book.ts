@@ -27,3 +27,15 @@ export interface IBookInfo {
   publisher: string
   title: string
 }
+
+/**책 등록 날짜 정보 */
+export interface IBookDate {
+  bookId?: string
+  bookRecordDate?: {
+    bookId: number
+    endDate: string
+    memberId: number
+    recordId: number
+    startDate: string
+  }[]
+}
