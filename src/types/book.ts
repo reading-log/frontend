@@ -39,3 +39,39 @@ export interface IBookDate {
     startDate: string
   }[]
 }
+
+/**하이라이트 */
+type TBookHighlight = {
+  content: string
+  createdAt: string
+  page: number
+}[]
+
+/**서평 */
+type TBookReview = {
+  content: string
+  createdAt: string
+}[]
+
+/**책 요약 정보(하이라이트, 서평) */
+export interface IBookSummary {
+  bookId?: string
+  bookHighlightData?: TBookHighlight
+  bookReviewData?: TBookReview
+}
+
+export interface IBookHighlight {
+  bookId?: string
+  bookHighlightData?: TBookHighlight
+}
+
+export interface IBookReview {
+  bookId?: string
+  bookReviewData?: TBookReview
+  isReviewEdit: {
+    toggle: boolean
+    edit: boolean
+    content: string
+  }
+  setIsReviewEdit: React.Dispatch<React.SetStateAction<{ toggle: boolean; edit: boolean; content: string }>>
+}

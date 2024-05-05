@@ -89,7 +89,7 @@ export const useRegisterMyBook = () => {
 /**등록한 책의 정보 조회 */
 export const useGetBookInfo = (bookId?: string) => {
   return useQuery(
-    ['BookInfo'],
+    ['BookInfo', bookId],
     async () => {
       const { data } = await axios.get(`/api/books/${bookId}`)
       return data
@@ -103,7 +103,7 @@ export const useGetBookInfo = (bookId?: string) => {
 /**등록한 책의 날짜 기록 조회 */
 export const useGetBookRecordDate = (bookId?: string) => {
   return useQuery(
-    ['BookRecordDate'],
+    ['BookRecordDate', bookId],
     async () => {
       const { data } = await axios.get(`/api/records/${bookId}`)
       return data
@@ -133,3 +133,113 @@ export const usePostBookRecordDate = () => {
     },
   )
 }
+
+/**등록한 책의 하이라이트 조회 */
+export const useGetBookHighlight = (bookId?: string) => {
+  return useQuery(
+    ['BookHighlight', bookId],
+    async () => {
+      const { data } = await axios.get(`/api/highlights/${bookId}/me`)
+      return data
+    },
+    {
+      enabled: !!bookId,
+    },
+  )
+}
+
+/**등록한 책의 하이라이트 수정 */
+export const usePutBookHighlight = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { highlightId: string; content: string; page: number }) => {
+      const response = await axios.patch(`/api/highlights/${payload.highlightId}`, { content: payload.content, page: payload.page })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookHighlight')
+        alert('하이라이트가 수정되었습니다.')
+      },
+      onError: () => {
+        alert('하이라이트 수정에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책의 하이라이트 작성 */
+export const usePostBookHighlight = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { bookId?: string; content: string; page: number }) => {
+      const response = await axios.post(`/api/highlights/${payload.bookId}`, { content: payload.content, page: payload.page })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookHighlight')
+        alert('하이라이트가 등록되었습니다.')
+      },
+      onError: () => {
+        alert('하이라이트 등록에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책의 하이라이트 삭제 */
+export const useDeleteBookHighlight = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (highlightId: string) => {
+      const response = await axios.delete(`/api/highlights/${highlightId}`)
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookHighlight')
+        alert('하이라이트가 삭제되었습니다.')
+      },
+      onError: () => {
+        alert('하이라이트 삭제에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책의 서평 조회 */
+export const useGetBookReview = (bookId?: string) => {
+  return useQuery(
+    ['BookReview', bookId],
+    async () => {
+      const { data } = await axios.get(`/api/reviews/${bookId}/me`)
+      return data
+    },
+    {
+      enabled: !!bookId,
+    },
+  )
+}
+
+/**등록한 책의 서평 등록 */
+export const usePostBookReview = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { bookId?: string; content: string }) => {
+      const response = await axios.post(`/api/reviews/${payload.bookId}`, { content: payload.content })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookReview')
+        alert('서평이 등록되었습니다.')
+      },
+      onError: () => {
+        alert('서평 등록에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책 한줄평 조회 */
