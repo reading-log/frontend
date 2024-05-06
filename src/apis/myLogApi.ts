@@ -134,6 +134,8 @@ export const usePostBookRecordDate = () => {
   )
 }
 
+/*=======================================하이라이트 ================================================ */
+
 /**등록한 책의 하이라이트 조회 */
 export const useGetBookHighlight = (bookId?: string) => {
   return useQuery(
@@ -149,10 +151,10 @@ export const useGetBookHighlight = (bookId?: string) => {
 }
 
 /**등록한 책의 하이라이트 수정 */
-export const usePutBookHighlight = () => {
+export const useEditBookHighlight = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    async (payload: { highlightId: string; content: string; page: number }) => {
+    async (payload: { highlightId: number; content: string; page: number }) => {
       const response = await axios.patch(`/api/highlights/${payload.highlightId}`, { content: payload.content, page: payload.page })
       return response
     },
@@ -192,7 +194,7 @@ export const usePostBookHighlight = () => {
 export const useDeleteBookHighlight = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    async (highlightId: string) => {
+    async (highlightId: number) => {
       const response = await axios.delete(`/api/highlights/${highlightId}`)
       return response
     },

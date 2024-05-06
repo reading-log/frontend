@@ -6,7 +6,6 @@ import BookComment from '../../components/mylog/detail/BookComment'
 import BookDate from '../../components/mylog/detail/BookDate'
 import BookInfo from '../../components/mylog/detail/BookInfo'
 import BookSummary from '../../components/mylog/detail/BookSummary'
-import BookUserInfo from '../../components/mylog/detail/BookUserInfo'
 import { LoadingIndicator } from '../../elements/Loading'
 import { colors } from '../../styles/theme'
 
@@ -42,7 +41,6 @@ const MyLogDetail = () => {
       ) : (
         <div css={bookDetailContainer}>
           <div className="bookLayout">
-            <BookUserInfo />
             <BookInfo bookData={bookData} />
             <div className="lineBlock" />
             <BookDate bookRecordDate={bookRecordDate} bookId={bookId} />
