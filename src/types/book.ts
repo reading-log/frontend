@@ -44,6 +44,7 @@ export interface IBookDate {
 type TBookHighlight = {
   content: string
   createdAt: string
+  id: number
   page: number
 }[]
 
@@ -51,13 +52,14 @@ type TBookHighlight = {
 type TBookReview = {
   content: string
   createdAt: string
+  id: number
 }[]
 
 /**책 요약 정보(하이라이트, 서평) */
 export interface IBookSummary {
   bookId?: string
-  bookHighlightData?: TBookHighlight
-  bookReviewData?: TBookReview
+  bookHighlightData: TBookHighlight
+  bookReviewData: TBookReview
 }
 
 export interface IBookHighlight {
@@ -67,7 +69,7 @@ export interface IBookHighlight {
 
 export interface IBookReview {
   bookId?: string
-  bookReviewData?: TBookReview
+  bookReviewData: TBookReview
   isReviewEdit: {
     toggle: boolean
     edit: boolean

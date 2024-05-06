@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { usePostBookReview } from '../../../apis/myLogApi'
+import { useEditBookReview, usePostBookReview } from '../../../apis/myLogApi'
 import { body2, colors } from '../../../styles/theme'
 import { IBookReview } from '../../../types/book'
 
@@ -33,11 +33,32 @@ const BookReview = ({ isReviewEdit, setIsReviewEdit, bookReviewData, bookId }: I
       },
       {
         onSuccess: () => {
-          setIsReviewEdit({
-            toggle: false,
-            edit: false,
+          setIsReviewEdit(prev => ({
+            ...prev,
+            edit: !prev.edit,
             content: '',
-          })
+          }))
+        },
+      },
+    )
+  }
+
+  const editBookReviewMutation = useEditBookReview()
+  /**서평 수정 */
+  const handleEditReview = () => {
+    if (!isReviewEdit.content) return alert('서평을 수정해주세요.')
+    editBookReviewMutation.mutate(
+      {
+        reviewId: bookReviewData?.[0]?.id,
+        content: isReviewEdit.content,
+      },
+      {
+        onSuccess: () => {
+          setIsReviewEdit(prev => ({
+            ...prev,
+            edit: !prev.edit,
+            content: '',
+          }))
         },
       },
     )
@@ -47,18 +68,24 @@ const BookReview = ({ isReviewEdit, setIsReviewEdit, bookReviewData, bookId }: I
     <div css={reviewBox}>
       {isReviewEdit.edit ? (
         <div className="write">
-          <textarea placeholder="서평을 입력해주세요." maxLength={300} onChange={handleContent} />
+          <textarea placeholder="서평을 입력해주세요." defaultValue={bookReviewData?.[0]?.content} maxLength={300} onChange={handleContent} />
           <div className="btnBox">
             <button onClick={handleEditCancel} className="cancel_btn">
               취소
             </button>
-            <button onClick={handleAddReview} className="save_btn">
-              저장
-            </button>
+            {bookReviewData?.[0]?.content ? (
+              <button onClick={handleEditReview} className="save_btn">
+                수정
+              </button>
+            ) : (
+              <button onClick={handleAddReview} className="save_btn">
+                저장
+              </button>
+            )}
           </div>
         </div>
       ) : (
-        <>{bookReviewData?.[0].content || '서평을 등록해주세요.'}</>
+        <>{bookReviewData?.[0]?.content ? <p>{bookReviewData?.[0]?.content}</p> : <p className="example_text">책을 읽고 서평을 기록해주세요.</p>}</>
       )}
     </div>
   )
@@ -109,5 +136,9 @@ const reviewBox = css`
       background-color: ${colors.button2};
       border: 2px solid ${colors.button1};
     }
+  }
+
+  .example_text {
+    color: ${colors.gray};
   }
 `

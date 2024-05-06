@@ -70,7 +70,7 @@ const BookComment = ({ bookCommentData, bookId }: IBookComment) => {
   const editCommentMutation = useEditBookComment()
   /**한줄평 수정 */
   const handleEditComment = () => {
-    if (!isCommentEdit.content) return alert('한줄평을 입력해주세요.')
+    if (!isCommentEdit.content) return alert('한줄평을 수정해주세요.')
     editCommentMutation.mutate(
       { summaryId: bookCommentData[0]?.id, content: isCommentEdit.content },
       {
@@ -88,15 +88,24 @@ const BookComment = ({ bookCommentData, bookId }: IBookComment) => {
   const deleteCommentMutation = useDeleteBookComment()
   /**한줄평 삭제 */
   const handleDeleteComment = () => {
-    deleteCommentMutation.mutate(bookCommentData[0]?.id, {
-      onSuccess: () => {
-        setIsCommentEdit(prev => ({
-          ...prev,
-          isEdit: false,
-          isToggle: false,
-        }))
-      },
-    })
+    if (!bookCommentData[0]?.id) {
+      setIsCommentEdit(prev => ({
+        ...prev,
+        isToggle: false,
+      }))
+      alert('삭제할 한줄평이 없습니다.')
+    } else {
+      if (window.confirm('한줄평을 삭제하시겠습니까?')) {
+        deleteCommentMutation.mutate(bookCommentData[0]?.id, {
+          onSuccess: () => {
+            setIsCommentEdit(prev => ({
+              ...prev,
+              isToggle: false,
+            }))
+          },
+        })
+      }
+    }
   }
 
   return (
@@ -130,7 +139,7 @@ const BookComment = ({ bookCommentData, bookId }: IBookComment) => {
           </div>
         </div>
       ) : (
-        <div className="comment">{bookCommentData?.[0]?.content ? <p>{bookCommentData[0]?.content}</p> : <p className="example_text">책을 읽고 느낀 점을 기록해보세요.</p>}</div>
+        <div className="comment">{bookCommentData?.[0]?.content ? <p>{bookCommentData[0]?.content}</p> : <p className="example_text">책을 읽고 한줄평을 기록해주세요.</p>}</div>
       )}
     </div>
   )

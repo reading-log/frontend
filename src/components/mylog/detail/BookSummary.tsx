@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
+import { useDeleteBookReview } from '../../../apis/myLogApi'
 import { body2, colors } from '../../../styles/theme'
 import { IBookSummary } from '../../../types/book'
 import BookHighlight from './BookHighlight'
@@ -44,6 +45,29 @@ const BookSummary = ({ bookHighlightData, bookReviewData, bookId }: IBookSummary
     }))
   }, [])
 
+  const deleteBookReviewMutation = useDeleteBookReview()
+  /**서평 삭제 */
+  const handleDeleteReview = () => {
+    if (!bookReviewData[0]?.id) {
+      setIsReviewEdit(prev => ({
+        ...prev,
+        toggle: false,
+      }))
+      alert('삭제할 서평이 없습니다.')
+    } else {
+      if (window.confirm('서평을 삭제하시겠습니까?')) {
+        deleteBookReviewMutation.mutate(bookReviewData[0]?.id, {
+          onSuccess: () => {
+            setIsReviewEdit(prev => ({
+              ...prev,
+              toggle: false,
+            }))
+          },
+        })
+      }
+    }
+  }
+
   return (
     <div css={bookHighlight}>
       <div className="header">
@@ -59,8 +83,8 @@ const BookSummary = ({ bookHighlightData, bookReviewData, bookId }: IBookSummary
         {clickMenu === 'summary' && <FontAwesomeIcon icon={faEllipsisVertical} color={colors.gray} onClick={handleToggle} />}
         {isReviewEdit.toggle && (
           <div css={toggle}>
-            <button onClick={handleEditToggle}>수정</button>
-            <button>삭제</button>
+            <button onClick={handleEditToggle}>{bookReviewData?.[0]?.content ? '수정' : '작성'}</button>
+            <button onClick={handleDeleteReview}>삭제</button>
           </div>
         )}
       </div>

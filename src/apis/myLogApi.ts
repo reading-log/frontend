@@ -208,6 +208,8 @@ export const useDeleteBookHighlight = () => {
   )
 }
 
+/*=======================================서평 ================================================ */
+
 /**등록한 책의 서평 조회 */
 export const useGetBookReview = (bookId?: string) => {
   return useQuery(
@@ -237,6 +239,46 @@ export const usePostBookReview = () => {
       },
       onError: () => {
         alert('서평 등록에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책의 서평 수정 */
+export const useEditBookReview = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { reviewId: number; content: string }) => {
+      const response = await axios.patch(`/api/reviews/${payload.reviewId}`, { content: payload.content })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookReview')
+        alert('서평이 수정되었습니다.')
+      },
+      onError: () => {
+        alert('서평 수정에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책의 서평 삭제 */
+export const useDeleteBookReview = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (reviewId: number) => {
+      const response = await axios.delete(`/api/reviews/${reviewId}`)
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookReview')
+        alert('서평이 삭제되었습니다.')
+      },
+      onError: () => {
+        alert('서평 삭제에 실패했습니다.')
       },
     },
   )
