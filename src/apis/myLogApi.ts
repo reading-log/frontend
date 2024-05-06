@@ -242,4 +242,78 @@ export const usePostBookReview = () => {
   )
 }
 
+/*=======================================한줄평 ================================================ */
+
 /**등록한 책 한줄평 조회 */
+export const useGetBookComment = (bookId?: string) => {
+  return useQuery(
+    ['BookComment', bookId],
+    async () => {
+      const { data } = await axios.get(`/api/summaries/${bookId}/me`)
+      return data
+    },
+    {
+      enabled: !!bookId,
+    },
+  )
+}
+
+/**등록한 책 한줄평 등록 */
+export const usePostBookComment = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { bookId?: string; content: string }) => {
+      const response = await axios.post(`/api/summaries/${payload.bookId}`, { content: payload.content })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookComment')
+        alert('한줄평이 등록되었습니다.')
+      },
+      onError: () => {
+        alert('한줄평 등록에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책 한줄평 수정 */
+export const useEditBookComment = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (payload: { summaryId: number; content: string }) => {
+      const response = await axios.patch(`/api/summaries/${payload.summaryId}`, { content: payload.content })
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookComment')
+        alert('한줄평이 수정되었습니다.')
+      },
+      onError: () => {
+        alert('한줄평 수정에 실패했습니다.')
+      },
+    },
+  )
+}
+
+/**등록한 책 한줄평 삭제 */
+export const useDeleteBookComment = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (summaryId: number) => {
+      const response = await axios.delete(`/api/summaries/${summaryId}`)
+      return response
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('BookComment')
+        alert('한줄평이 삭제되었습니다.')
+      },
+      onError: () => {
+        alert('한줄평 삭제에 실패했습니다.')
+      },
+    },
+  )
+}

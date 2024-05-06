@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import { useParams } from 'react-router-dom'
-import { useGetBookHighlight, useGetBookInfo, useGetBookRecordDate, useGetBookReview } from '../../apis/myLogApi'
+import { useGetBookComment, useGetBookHighlight, useGetBookInfo, useGetBookRecordDate, useGetBookReview } from '../../apis/myLogApi'
 import { Layout } from '../../components/Layouts'
 import BookComment from '../../components/mylog/detail/BookComment'
 import BookDate from '../../components/mylog/detail/BookDate'
@@ -22,6 +22,8 @@ const MyLogDetail = () => {
   const bookRecordDate = bookDate?.data
 
   /**책 한줄평 조회 */
+  const { data: bookComment, isLoading: isBookComment } = useGetBookComment(bookId)
+  const bookCommentData = bookComment?.data
 
   /**책 하이라이트 조회 */
   const { data: bookHighlight, isLoading: isBookHighlight } = useGetBookHighlight(bookId)
@@ -31,7 +33,7 @@ const MyLogDetail = () => {
   const { data: bookReview, isLoading: isBookReview } = useGetBookReview(bookId)
   const bookReviewData = bookReview?.data
 
-  const isLoading = isBookInfo || isBookDate || isBookHighlight || isBookReview
+  const isLoading = isBookInfo || isBookDate || isBookHighlight || isBookReview || isBookComment
 
   return (
     <Layout isBack isFooter isHeader>
@@ -45,7 +47,7 @@ const MyLogDetail = () => {
             <div className="lineBlock" />
             <BookDate bookRecordDate={bookRecordDate} bookId={bookId} />
             <div className="lineBlock" />
-            <BookComment />
+            <BookComment bookCommentData={bookCommentData} bookId={bookId} />
             <div className="lineBlock" />
             <BookSummary bookHighlightData={bookHighlightData} bookReviewData={bookReviewData} bookId={bookId} />
           </div>

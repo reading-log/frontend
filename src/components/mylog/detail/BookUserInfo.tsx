@@ -10,7 +10,6 @@ const BookUserInfo = () => {
         <img />
         <div>
           <p className="userName">닉네임은여덟글자</p>
-          <p className="userDate">2020.30.30</p>
         </div>
         <div className="userHeart">
           <FontAwesomeIcon icon={faHeart} size="1x" />
@@ -29,14 +28,14 @@ const detailBox = css`
     display: flex;
     align-items: center;
     flex-direction: row;
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     background-color: ${colors.boxFill};
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
 
     img {
-      width: 2.3rem;
-      height: 2.3rem;
+      width: 2rem;
+      height: 2rem;
       margin-right: 1rem;
       border-radius: 50%;
       background-color: ${colors.main1};

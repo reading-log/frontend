@@ -75,3 +75,15 @@ export interface IBookReview {
   }
   setIsReviewEdit: React.Dispatch<React.SetStateAction<{ toggle: boolean; edit: boolean; content: string }>>
 }
+
+/**책 한줄평 */
+export interface IBookComment {
+  bookId?: string
+  bookCommentData: {
+    content: string
+    createdAt: string
+    id: number
+    modifiedAt: string
+    nickname: string
+  }[]
+}
