@@ -40,6 +40,19 @@ export interface IBookDate {
   }[]
 }
 
+export type TBookLog = {
+  bookAuthor: string
+  bookCover: string
+  bookId: number
+  bookTitle: string
+  content: string
+  createdAt: string
+  id: number
+  likeCount: number
+  memberId: number
+  nickname: string
+}
+
 /**하이라이트 */
 type TBookHighlight = {
   content: string

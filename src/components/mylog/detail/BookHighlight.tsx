@@ -72,37 +72,41 @@ const BookHighlight = ({ bookHighlightData, bookId }: IBookHighlight) => {
 
   return (
     <div css={highlightBox}>
-      {bookHighlightData?.map(highlight => <HighlightText highlight={highlight} key={highlight.id} />)}
-      <div>
-        {isEdit.edit ? (
-          <div className="contentBox write">
-            <textarea placeholder="하이라이트를 입력해주세요." maxLength={300} onChange={handleContent} />
-            <div className="page_write">
-              p.
-              <input type="number" onChange={handlePage} />
+      {bookHighlightData?.map(highlight => <HighlightText highlight={highlight} key={highlight.id} bookId={bookId} />)}
+      {bookId ? (
+        <div>
+          {isEdit.edit ? (
+            <div className="contentBox write">
+              <textarea placeholder="하이라이트를 입력해주세요." maxLength={300} onChange={handleContent} />
+              <div className="page_write">
+                p.
+                <input type="number" onChange={handlePage} />
+              </div>
+              <div className="btnBox">
+                <button onClick={handleEditCancel} className="cancel_btn">
+                  취소
+                </button>
+                <button className="save_btn" onClick={handleAddHighlight}>
+                  저장
+                </button>
+              </div>
             </div>
-            <div className="btnBox">
-              <button onClick={handleEditCancel} className="cancel_btn">
-                취소
-              </button>
-              <button className="save_btn" onClick={handleAddHighlight}>
-                저장
-              </button>
+          ) : (
+            <div className="non_write" onClick={handleEditClick}>
+              +
             </div>
-          </div>
-        ) : (
-          <div className="non_write" onClick={handleEditClick}>
-            +
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <div className="contentBox write empty_text">하이라이트가 없습니다.</div>
+      )}
     </div>
   )
 }
 
 export default BookHighlight
 
-export const HighlightText = ({ highlight }: { highlight: { content: string; createdAt: string; id: number; page: number } }) => {
+export const HighlightText = ({ highlight, bookId }: { highlight: { content: string; createdAt: string; id: number; page: number }; bookId?: string }) => {
   /**하이라이트 수정 */
   const [isEdit, setIsEdit] = useState({
     edit: false,
@@ -197,10 +201,12 @@ export const HighlightText = ({ highlight }: { highlight: { content: string; cre
           {highlight?.content}
           <div className="footBox">
             <p className="page">p.{highlight?.page}</p>
-            <div className="iconBox">
-              <FontAwesomeIcon icon={faPen} color={colors.main1} onClick={handleEditClick} />
-              <FontAwesomeIcon icon={faTrashCan} color={colors.main1} onClick={handleDeleteHighlight} />
-            </div>
+            {bookId && (
+              <div className="iconBox">
+                <FontAwesomeIcon icon={faPen} color={colors.main1} onClick={handleEditClick} />
+                <FontAwesomeIcon icon={faTrashCan} color={colors.main1} onClick={handleDeleteHighlight} />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -246,6 +252,7 @@ const highlightBox = css`
   }
 
   .write {
+    ${body2};
     textarea {
       ${body2};
       width: 100%;
@@ -254,6 +261,10 @@ const highlightBox = css`
       border: none;
       background-color: ${colors.edit_innerboxFill};
     }
+  }
+
+  .empty_text {
+    color: ${colors.gray};
   }
 
   .page_write {

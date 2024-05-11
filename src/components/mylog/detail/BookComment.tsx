@@ -112,7 +112,7 @@ const BookComment = ({ bookCommentData, bookId }: IBookComment) => {
     <div css={bookCommentBox}>
       <div className="header">
         <p className="title">한줄평</p>
-        <FontAwesomeIcon icon={faEllipsisVertical} color={colors.gray} onClick={handleToggle} />
+        {bookId && <FontAwesomeIcon icon={faEllipsisVertical} color={colors.gray} onClick={handleToggle} />}
       </div>
       {isCommentEdit.isToggle && (
         <div css={toggle}>

@@ -1,19 +1,41 @@
 import { css } from '@emotion/react'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { body2, body3, colors } from '../../../styles/theme'
+import { useState } from 'react'
+import { useDeleteLike, usePostLike } from '../../apis/readingLogApi'
+import { body2, colors } from '../../styles/theme'
 
-const BookUserInfo = () => {
+const BookUserInfo = ({ nickname, likeCount, id }: { nickname: string; likeCount: number; id: number | string }) => {
+  const [heartCount, setHeartCount] = useState(likeCount)
+
+  const postLikeMutation = usePostLike()
+  const deleteLikeMutation = useDeleteLike()
+  /**좋아요 등록 */
+  const handlelike = () => {
+    if (true) {
+      setHeartCount(heartCount + 1)
+      postLikeMutation.mutate(id, {
+        onError: () => {
+          setHeartCount(heartCount)
+        },
+      })
+    } else {
+      setHeartCount(heartCount - 1)
+      deleteLikeMutation.mutate(id, {
+        onError: () => {
+          setHeartCount(heartCount)
+        },
+      })
+    }
+  }
+
   return (
     <div css={detailBox}>
       <div className="userInfoBox">
-        <img />
-        <div>
-          <p className="userName">닉네임은여덟글자</p>
-        </div>
+        <p className="userName">{nickname}</p>
         <div className="userHeart">
-          <FontAwesomeIcon icon={faHeart} size="1x" />
-          <p>23</p>
+          <FontAwesomeIcon icon={faHeart} size="1x" onClick={handlelike} />
+          <p>{heartCount}</p>
         </div>
       </div>
     </div>
@@ -43,11 +65,6 @@ const detailBox = css`
 
     .userName {
       ${body2};
-      margin-bottom: 0.5rem;
-    }
-
-    .userDate {
-      ${body3};
     }
 
     .userHeart {

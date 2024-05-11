@@ -85,7 +85,7 @@ const BookReview = ({ isReviewEdit, setIsReviewEdit, bookReviewData, bookId }: I
           </div>
         </div>
       ) : (
-        <>{bookReviewData?.[0]?.content ? <p>{bookReviewData?.[0]?.content}</p> : <p className="example_text">책을 읽고 서평을 기록해주세요.</p>}</>
+        <>{bookReviewData?.[0]?.content ? <p>{bookReviewData?.[0]?.content}</p> : <p className="example_text">{bookId ? '책을 읽고 서평을 기록해주세요.' : '등록된 서평이 없습니다.'}</p>}</>
       )}
     </div>
   )

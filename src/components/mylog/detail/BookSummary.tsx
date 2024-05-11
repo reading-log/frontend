@@ -80,7 +80,7 @@ const BookSummary = ({ bookHighlightData, bookReviewData, bookId }: IBookSummary
             서평
           </p>
         </div>
-        {clickMenu === 'summary' && <FontAwesomeIcon icon={faEllipsisVertical} color={colors.gray} onClick={handleToggle} />}
+        {clickMenu === 'summary' && bookId && <FontAwesomeIcon icon={faEllipsisVertical} color={colors.gray} onClick={handleToggle} />}
         {isReviewEdit.toggle && (
           <div css={toggle}>
             <button onClick={handleEditToggle}>{bookReviewData?.[0]?.content ? '수정' : '작성'}</button>

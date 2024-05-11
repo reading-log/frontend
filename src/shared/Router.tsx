@@ -15,6 +15,7 @@ import MyLog from '../pages/mylog/MyLog'
 import MyLogDetail from '../pages/mylog/MyLogDetail'
 import MyLogPost from '../pages/mylog/MyLogPost'
 import MyLogSearch from '../pages/mylog/MyLogSearch'
+import ReadinglogDetail from '../pages/readinglog/ReadinglogDetail'
 import ReadinglogFeed from '../pages/readinglog/ReadinglogFeed'
 
 const Router = () => {
@@ -31,9 +32,7 @@ const Router = () => {
         <Route element={<TokenCheck />}>
           {/* 리딩 로그  */}
           <Route path="/readinglog" element={<ReadinglogFeed />} />
-          {/* <Route path="/readinglog" element={<ReadingLog />} />
-          <Route path="/readinglog/detail" element={<ReadingLogDetail />} />
-          <Route path="/readinglog/search" element={<SearchResult />} /> */}
+          <Route path="/readinglog/:bookId/:memberId" element={<ReadinglogDetail />} /> {/**리딩 로그 상세보기 */}
           {/* 나의 로그 */}
           <Route path="/mylog" element={<MyLog />} /> {/**나의 로그 (기록된 로그) */}
           <Route path="/mylog/:bookId" element={<MyLogDetail />} /> {/**나의 로그 상세보기 */}

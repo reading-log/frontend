@@ -112,3 +112,11 @@ export const getRefreshToken = async () => {
   const { data } = await axios.get('/api/members/reissue')
   return data
 }
+
+/**좋아요한 북록그 조회 */
+export const useGetLikeBookLogs = () => {
+  return useQuery('ikeBookLogs', async () => {
+    const { data } = await axios.get('/api/members/likes/summaries')
+    return data
+  })
+}
