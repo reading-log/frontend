@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { colors, flexCenter } from '../../styles/theme'
 
 /**기록된 책이 없음 */
-const EmptyMylog = ({ isLike }: { isLike: boolean }) => {
+const EmptyMylog = ({ isLike }: { isLike?: boolean }) => {
   return (
     <div css={container}>
       <FontAwesomeIcon icon={faBoxOpen} size="6x" color={colors.main1} />

@@ -115,7 +115,7 @@ export const getRefreshToken = async () => {
 
 /**좋아요한 북록그 조회 */
 export const useGetLikeBookLogs = () => {
-  return useQuery('ikeBookLogs', async () => {
+  return useQuery('likeBookLogs', async () => {
     const { data } = await axios.get('/api/members/likes/summaries')
     return data
   })
